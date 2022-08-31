@@ -29,7 +29,7 @@ const stockSchema = new Schema({
     },
 
     price: {
-        type: String,
+        type: Number,
         required: [true, 'Price is required']
     }
 

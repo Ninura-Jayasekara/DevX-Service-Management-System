@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 
 //import mongoose model
-const User = require('../Models/adminModel')
 const Admin = require('../Models/adminModel')
 
 // Create new admin 
