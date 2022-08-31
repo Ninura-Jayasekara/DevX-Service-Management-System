@@ -6,7 +6,7 @@ const cors = require("cors");
 const connection = require("./DB");
 
 //import routers by creating constant variables
-
+const adminRouter = require('./Routes/adminRoutes');
 
 
 // database connection
@@ -18,7 +18,7 @@ app.use(cors());
 
 
 // routes
-
+app.use("/api/admin", adminRouter);
 
 
 const port = process.env.PORT || 3000;
