@@ -78,5 +78,5 @@ const createAdmin = asyncHandler(async (req, res) => {
 
   module.exports = {
     createAdmin,
-    loginAdmin,
+    loginAdmin
   }
