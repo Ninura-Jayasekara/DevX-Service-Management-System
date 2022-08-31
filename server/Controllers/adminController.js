@@ -4,6 +4,8 @@ const asyncHandler = require('express-async-handler')
 
 //import mongoose model
 const Admin = require('../Models/adminModel')
+const Stock = require('../Models/stockModel')
+
 
 // Create new admin 
 
@@ -38,6 +40,7 @@ const createAdmin = asyncHandler(async (req, res) => {
   
     if (admin) {
       res.status(201)
+      res.json("Admin added to the system successfully !")
     } else {
       res.status(400)
       throw new Error('Invalid user ! please check again')
@@ -74,6 +77,7 @@ const createAdmin = asyncHandler(async (req, res) => {
       expiresIn: '1h',
     })
   }
+  
 
   module.exports = {
     createAdmin,

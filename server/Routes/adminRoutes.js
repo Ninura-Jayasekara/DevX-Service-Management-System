@@ -6,7 +6,6 @@ const {
     loginAdmin
 } = require('../Controllers/adminController')
 
-const { protect } = require('../Middleware/authMiddleware')
 
 router.post('/', createAdmin)
 router.post('/login', loginAdmin)
