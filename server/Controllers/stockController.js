@@ -43,7 +43,7 @@ const fetchPart = asyncHandler(async(req, res)=>{
   
     console.log(filter)
   
-    User.findOne({$or: filter} )
+    Stock.findOne({$or: filter} )
     .then((stocks)=>{
         console.log(stocks)
         res.status(200).send({status: "Spare part fetched successfully !",stocks});
