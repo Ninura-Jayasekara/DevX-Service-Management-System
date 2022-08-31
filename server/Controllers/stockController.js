@@ -33,6 +33,28 @@ const addStock = asyncHandler(async (req, res) => {
 
 })
 
+//fetch by item code or spare part name
+
+const fetchPart = asyncHandler(async(req, res)=>{
+    let q = req.query.q;
+    let filter = [];
+  
+      filter.push(...[{itemCode:q},{sparePart:q}])
+  
+    console.log(filter)
+  
+    User.findOne({$or: filter} )
+    .then((stocks)=>{
+        console.log(stocks)
+        res.status(200).send({status: "Spare part fetched successfully !",stocks});
+    
+    }).catch((err)=>{
+        console.log(err.message);
+        res.status(500).send({status: "Error with fetching...", error: err.message});
+    })
+  })
+
 module.exports = {
-    addStock
+    addStock,
+    fetchPart
 }
