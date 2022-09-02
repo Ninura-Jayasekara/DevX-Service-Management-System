@@ -8,6 +8,7 @@ const connection = require("./DB");
 //import routers by creating constant variables
 const adminRouter = require('./Routes/adminRoutes');
 const stockRouter = require('./Routes/stockRoutes');
+const facilityRouter = require('./Routes/serviceFacilityRoutes');
 
 
 // database connection
@@ -21,6 +22,7 @@ app.use(cors());
 // routes
 app.use("/api/admin", adminRouter);
 app.use("/api/stock", stockRouter);
+app.use("/api/facility", facilityRouter);
 
 
 const port = process.env.PORT || 3000;
