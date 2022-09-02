@@ -119,12 +119,12 @@ function Footer() {
           <div>Dahanayake M. U.</div>
         </div>
         <div>
-          <DevImg src={NinuraImg} />
-          <div>Jayasekara N. S.</div>
-        </div>
-        <div>
           <DevImg src={InsafImg} />
           <div>Insaf N. M.</div>
+        </div>
+        <div>
+          <DevImg src={NinuraImg} />
+          <div>Jayasekara N. S.</div>
         </div>
         <div>
           <DevImg src={MishanImg} />
