@@ -5,9 +5,7 @@ const {
     addFacility
 } = require('../Controllers/serviceFaciltyController')
 
-const { protect } = require('../Middleware/authMiddleware')
 
-
-router.post('/add', protect, addFacility)
+router.post('/add', addFacility)
 
 module.exports = router
