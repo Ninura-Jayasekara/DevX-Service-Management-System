@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import logo from "../assets/logo192.png";
+import logo from "../assets/Logo.png";
 import PersonIcon from "@mui/icons-material/Person";
 import ServiceIcon from "@mui/icons-material/MiscellaneousServices";
 import InventoryIcon from "@mui/icons-material/Inventory";
@@ -14,7 +14,6 @@ function Navbar() {
   return (
     <Nav>
       <Logo src={logo} />
-      <span>DEVX</span>
       <NavMenu>
         <a>
           <PersonIcon />
@@ -89,13 +88,7 @@ const Nav = styled.nav`
   align-items: center;
   padding: 0 16px;
   overflow-x: hidden;
-  z-index: 2;
-
-  span {
-    cursor: pointer;
-    padding: 0 8px;
-    font-size: 24px;
-  }
+  z-index: 5;
 `;
 
 const Logo = styled.img`

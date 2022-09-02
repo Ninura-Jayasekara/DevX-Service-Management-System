@@ -13,7 +13,7 @@ function Home() {
 export default Home;
 
 const Container = styled.main`
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh);
   padding: 60px calc(3.5vw + 5px) 0px;
   overflow-x: hidden;
 `;

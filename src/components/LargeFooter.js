@@ -9,6 +9,8 @@ import {
   TableHead,
 } from "@mui/material";
 
+import SmallFooter from "./SmallFooter";
+
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -21,7 +23,6 @@ import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import FaxIcon from "@mui/icons-material/Fax";
 
-import logo from "../assets/logo192.png";
 import InsafImg from "../assets/Insaf.jpg";
 import NinuraImg from "../assets/Ninura.png";
 import ManukaImg from "../assets/Manuka.png";
@@ -30,6 +31,7 @@ import MishanImg from "../assets/Mishan.png";
 function Footer() {
   return (
     <Container>
+      <SmallFooter />
       {/* Social Network */}
       <SocialNetwork>
         <div className="col-lg-8">Get connected with us on social network</div>
@@ -141,6 +143,7 @@ export default Footer;
 
 const Container = styled.footer`
   padding: 12px calc(3.5vw + 5px) 0;
+  background: black;
 
   .dev-head {
     padding: 12px 0;
