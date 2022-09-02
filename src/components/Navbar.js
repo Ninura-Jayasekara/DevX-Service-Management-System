@@ -81,12 +81,15 @@ function Navbar() {
 export default Navbar;
 
 const Nav = styled.nav`
+  position: fixed;
   height: 60px;
+  width: 100%;
   background: #090b13;
   display: flex;
   align-items: center;
   padding: 0 16px;
   overflow-x: hidden;
+  z-index: 2;
 
   span {
     cursor: pointer;
