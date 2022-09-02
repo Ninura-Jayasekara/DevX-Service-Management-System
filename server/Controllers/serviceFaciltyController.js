@@ -22,6 +22,16 @@ const addFacility = asyncHandler(async (req, res) => {
 
 })
 
+const viewFacilities = asyncHandler(async(req, res)=>{
+    Facility.find().then((facilities)=>{
+        res.json(facilities)
+    }).catch((err)=>{
+        console.log(err)
+    })
+  })
+
 module.exports = {
-    addFacility
+    addFacility,
+    viewFacilities
+
 }
