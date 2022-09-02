@@ -7,6 +7,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TableBody,
 } from "@mui/material";
 
 import SmallFooter from "./SmallFooter";
@@ -94,20 +95,22 @@ function Footer() {
         </div>
         <div className="table-container">
           <TableContainer>
-            <TableHead>Opening Hours</TableHead>
+            Opening Hours
             <Table>
-              <TableRow>
-                <TableCell>Mon-Fri</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>
-                  8.30a.m - 5.00p.m
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Sat-Sun</TableCell>
-                <TableCell sx={{ textAlign: "center" }}>
-                  10.00a.m - 4.00p.m
-                </TableCell>
-              </TableRow>
+              <TableBody>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Mon-Fri</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: "white" }}>
+                    8.30a.m - 5.00p.m
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Sat-Sun</TableCell>
+                  <TableCell sx={{ textAlign: "center", color: "white" }}>
+                    10.00a.m - 4.00p.m
+                  </TableCell>
+                </TableRow>
+              </TableBody>
             </Table>
           </TableContainer>
         </div>
