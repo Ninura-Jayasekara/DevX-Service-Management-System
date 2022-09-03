@@ -22,16 +22,41 @@ const addFacility = asyncHandler(async (req, res) => {
 
 })
 
-const viewFacilities = asyncHandler(async(req, res)=>{
+const viewFacilities = asyncHandler((req, res)=>{
     Facility.find().then((facilities)=>{
         res.json(facilities)
     }).catch((err)=>{
         console.log(err)
     })
-  })
+})
+
+const updateFacility = asyncHandler(async (req, res) => {
+
+    let fId = req.params.fid;
+    
+    const{facilityName,
+        facilityCost}=req.body;
+ 
+    const updateFacility = {
+        facilityName,
+        facilityCost
+    }
+ 
+    const update =  await Facility.findByIdAndUpdate(fId,updateFacility).then(()=>{
+        res.status(200).send({status: "Facility Cost Updated!"})
+
+    }).catch((err)=>{
+        console.log(err)
+        res.status(500).send({status: "Error with updating data...", error: err.message})
+    })
+
+
+})
+
 
 module.exports = {
     addFacility,
-    viewFacilities
+    viewFacilities,
+    updateFacility
 
 }
