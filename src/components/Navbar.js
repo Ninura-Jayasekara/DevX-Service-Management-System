@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Logo.png";
 import PersonIcon from "@mui/icons-material/Person";
@@ -15,22 +16,50 @@ function Navbar() {
     <Nav>
       <Logo src={logo} />
       <NavMenu>
-        <a>
-          <PersonIcon />
-          <span>Customer</span>
-        </a>
-        <a>
-          <ServiceIcon />
-          <span>Services</span>
-        </a>
-        <a>
-          <InventoryIcon />
-          <span>Services</span>
-        </a>
-        <a>
-          <PaymentIcon />
-          <span>Payment</span>
-        </a>
+        <Link
+          to="/customer"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
+          <a>
+            <PersonIcon />
+            <span>Customer</span>
+          </a>
+        </Link>
+        <Link
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
+          <a>
+            <ServiceIcon />
+            <span>Services</span>
+          </a>
+        </Link>
+        <Link
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
+          <a>
+            <InventoryIcon />
+            <span>Services</span>
+          </a>
+        </Link>
+        <Link
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
+          <a>
+            <PaymentIcon />
+            <span>Payment</span>
+          </a>
+        </Link>
       </NavMenu>
       <RightMenu>
         {burgerStatus ? (
@@ -107,6 +136,8 @@ const NavMenu = styled.div`
     justify-content: center;
     align-items: center;
     text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
 
     span {
       position: relative;
