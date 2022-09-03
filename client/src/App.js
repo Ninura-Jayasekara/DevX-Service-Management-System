@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 
 import Navbar from "./components/Navbar";
@@ -6,14 +7,30 @@ import LargeFooter from "./components/LargeFooter";
 import Home from "./components/Home";
 
 import background from "./assets/background.jpg";
+import CustomerDetails from "./components/CustomerCRUD/CustomerDetails";
+import CustomerAdd from "./components/CustomerCRUD/CustomerAdd";
+import CustomerEdit from "./components/CustomerCRUD/CustomerEdit";
+import CustomerDelete from "./components/CustomerCRUD/CustomerDelete";
+import CustomerReport from "./components/CustomerCRUD/CustomerReport";
+import CustomerChart from "./components/CustomerCRUD/CustomerChart";
 
 function App() {
   return (
-    <Container bgImage={background}>
-      <Navbar />
-      <Home />
-      <LargeFooter />
-    </Container>
+    <Router>
+      <Container bgImage={background}>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/customer" element={<CustomerDetails />}></Route>
+          <Route path="/customer/add" element={<CustomerAdd />}></Route>
+          <Route path="/customer/edit" element={<CustomerEdit />}></Route>
+          <Route path="/customer/delete" element={<CustomerDelete />}></Route>
+          <Route path="/customer/report" element={<CustomerReport />}></Route>
+          <Route path="/customer/chart" element={<CustomerChart />}></Route>
+        </Routes>
+        <LargeFooter />
+      </Container>
+    </Router>
   );
 }
 

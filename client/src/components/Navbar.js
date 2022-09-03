@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Logo.png";
 import PersonIcon from "@mui/icons-material/Person";
@@ -15,22 +16,42 @@ function Navbar() {
     <Nav>
       <Logo src={logo} />
       <NavMenu>
-        <a>
+        <Link
+          to="/customer"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
           <PersonIcon />
           <span>Customer</span>
-        </a>
-        <a>
+        </Link>
+        <Link
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
           <ServiceIcon />
           <span>Services</span>
-        </a>
-        <a>
+        </Link>
+        <Link
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
           <InventoryIcon />
           <span>Services</span>
-        </a>
-        <a>
+        </Link>
+        <Link
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
           <PaymentIcon />
           <span>Payment</span>
-        </a>
+        </Link>
       </NavMenu>
       <RightMenu>
         {burgerStatus ? (
@@ -45,28 +66,48 @@ function Navbar() {
       </Button>
       <BurgerNav show={burgerStatus}>
         <li>
-          <a>
+          <Link
+            to="/customer"
+            style={({ isActive }) => ({
+              color: isActive ? "greenyellow" : "inherit",
+            })}
+          >
             <PersonIcon />
             <span>Customer</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a>
+          <Link
+            to="/"
+            style={({ isActive }) => ({
+              color: isActive ? "greenyellow" : "inherit",
+            })}
+          >
             <ServiceIcon />
             <span>Services</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a>
+          <Link
+            to="/"
+            style={({ isActive }) => ({
+              color: isActive ? "greenyellow" : "inherit",
+            })}
+          >
             <InventoryIcon />
             <span>Services</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a>
+          <Link
+            to="/"
+            style={({ isActive }) => ({
+              color: isActive ? "greenyellow" : "inherit",
+            })}
+          >
             <PaymentIcon />
             <span>Payment</span>
-          </a>
+          </Link>
         </li>
         <BurgerNavButton>
           <span>Login</span>
