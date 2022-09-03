@@ -22,19 +22,19 @@ function ImageSlider() {
   return (
     <Carousel {...settings}>
       <Wrap>
-        <img src={Car1} />
+        <img src={Car1} alt="Pressure Checking" />
       </Wrap>
       <Wrap>
-        <img src={Car2} />
+        <img src={Car2} alt="Wheel Alignment" />
       </Wrap>
       <Wrap>
-        <img src={Car3} />
+        <img src={Car3} alt="Manual Car Washing" />
       </Wrap>
       <Wrap>
-        <img src={Car4} />
+        <img src={Car4} alt="Automatic Car Washing" />
       </Wrap>
       <Wrap>
-        <img src={Car5} />
+        <img src={Car5} alt="Group Photo" />
       </Wrap>
     </Carousel>
   );

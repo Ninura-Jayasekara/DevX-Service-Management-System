@@ -11,6 +11,8 @@ import CustomerDetails from "./components/CustomerCRUD/CustomerDetails";
 import CustomerAdd from "./components/CustomerCRUD/CustomerAdd";
 import CustomerEdit from "./components/CustomerCRUD/CustomerEdit";
 import CustomerDelete from "./components/CustomerCRUD/CustomerDelete";
+import CustomerReport from "./components/CustomerCRUD/CustomerReport";
+import CustomerChart from "./components/CustomerCRUD/CustomerChart";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/customer/add" element={<CustomerAdd />}></Route>
           <Route path="/customer/edit" element={<CustomerEdit />}></Route>
           <Route path="/customer/delete" element={<CustomerDelete />}></Route>
+          <Route path="/customer/report" element={<CustomerReport />}></Route>
+          <Route path="/customer/chart" element={<CustomerChart />}></Route>
         </Routes>
         <LargeFooter />
       </Container>

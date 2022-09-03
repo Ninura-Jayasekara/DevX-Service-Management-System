@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import {
   TableContainer,
   Table,
@@ -11,9 +11,9 @@ import {
   Paper,
 } from "@mui/material";
 
-import SearchIcon from "@mui/icons-material/Search";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
-function CustomerDetails() {
+function CustomerReport() {
   const createData = (name, calories, fat, carbs, protein) => {
     return { name, calories, fat, carbs, protein };
   };
@@ -25,15 +25,15 @@ function CustomerDetails() {
     createData("Cupcake", 305, 3.7, 67, 4.3),
     createData("Gingerbread", 356, 16.0, 49, 3.9),
   ];
-
   return (
     <Container>
       <Wrap>
         <InputComponent>
-          <div className="table-head">Customer Details</div>
+          <div className="table-head">Customer Report</div>
           <InputGroup>
-            <SearchIcon />
-            <input type="text" placeholder="Search" />
+            <Link to="/customer">
+              <KeyboardReturnIcon style={{ color: "white" }} />
+            </Link>
           </InputGroup>
         </InputComponent>
         <TableContainer component={Paper}>
@@ -43,9 +43,9 @@ function CustomerDetails() {
                 <TableCell>NIC</TableCell>
                 <TableCell align="right">Name</TableCell>
                 <TableCell align="right">Email</TableCell>
-                <TableCell align="right">Phone&nbsp;Number</TableCell>
                 <TableCell align="right">Address</TableCell>
-                <TableCell align="right">Date</TableCell>
+                <TableCell align="right">Last&nbsp;Visit</TableCell>
+                <TableCell align="right">No&nbsp;of&nbsp;Visit</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -61,24 +61,21 @@ function CustomerDetails() {
                   <TableCell align="right">{row.fat}</TableCell>
                   <TableCell align="right">{row.carbs}</TableCell>
                   <TableCell align="right">{row.protein}</TableCell>
-                  <TableCell align="right">2012</TableCell>
+                  <TableCell align="right">2</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
         <ButtonGroup>
-          <Link to="add">
-            <button>Add</button>
+          <Link to="#">
+            <button>Sort</button>
           </Link>
-          <Link to="edit">
-            <button>Edit</button>
+          <Link to="#">
+            <button>Print</button>
           </Link>
-          <Link to="delete">
-            <button>Delete</button>
-          </Link>
-          <Link to="report">
-            <button>Report</button>
+          <Link to="/customer/chart">
+            <button>Chart</button>
           </Link>
         </ButtonGroup>
       </Wrap>
@@ -86,7 +83,7 @@ function CustomerDetails() {
   );
 }
 
-export default CustomerDetails;
+export default CustomerReport;
 
 const Container = styled.main`
   min-height: calc(100vh);
@@ -104,7 +101,6 @@ const Wrap = styled.div`
   width: 100%;
   min-height: 50vh;
 `;
-
 const InputComponent = styled.div`
   display: flex;
   padding: 10px 0;
@@ -155,7 +151,6 @@ const InputGroup = styled.div`
     }
   }
 `;
-
 const ButtonGroup = styled.div`
   padding: 6px 0 0;
   display: flex;

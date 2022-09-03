@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import Image from "../../assets/Customer.jpg";
+import Customer from "../../assets/Customer.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 function CustomerAdd() {
@@ -23,7 +23,7 @@ function CustomerAdd() {
         </InputComponent>
         <Form onSubmit={handleSubmit}>
           <Input>
-            <ImageWrapper src={Image} />
+            <ImageWrapper src={Customer} />
             <InputWrapper>
               <div>
                 <label htmlFor="NIC">NIC</label>
