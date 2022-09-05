@@ -1,14 +1,15 @@
 const asyncHandler = require("express-async-handler");
-
 const Customer = require("../Models/customerModel");
 
 const addCustomer = asyncHandler(async (req, res) => {
-  const facilityName = req.body.facilityName;
-  const facilityCost = Number(req.body.facilityCost);
+  // TODO: ADD Fields
+  const { supervisorId, name, description, members } = req.body;
 
   const newCustomer = new Customer({
-    facilityName,
-    facilityCost,
+    supervisorId,
+    name,
+    description,
+    members,
   });
 
   newCustomer
@@ -22,18 +23,46 @@ const addCustomer = asyncHandler(async (req, res) => {
 });
 
 const viewCustomer = asyncHandler((req, res) => {
-  Customer.find()
-    .then((customer) => {
-      res.json(customer);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  Customer.find((err, doc) => {
+    if (!err) res.send(doc);
+    else
+      console.log(
+        "Error in Retrieving Customer Details :" +
+          JSON.stringify(err, undefined, 2)
+      );
+  });
 });
 
-const deleteCustomer = asyncHandler((req, res) => {});
+const deleteCustomer = asyncHandler((req, res) => {
+  Customer.findByIdAndDelete(req.params.id, (err, doc) => {
+    if (!err) res.send(doc);
+    else
+      console.log(
+        "Error in Deleting Customer Details :" +
+          JSON.stringify(err, undefined, 2)
+      );
+  });
+});
 
-const updateCustomer = asyncHandler((req, res) => {});
+const updateCustomer = asyncHandler((req, res) => {
+  // TODO: ADD Fields
+  const app = {
+    isEvaluate: req.body.isEvaluate,
+  };
+  Customer.findByIdAndUpdate(
+    req.params.id,
+    { $set: app },
+    { new: true },
+    (err, doc) => {
+      if (!err) res.send(doc);
+      else
+        console.log(
+          "Error in Updating Customer Details :" +
+            JSON.stringify(err, undefined, 2)
+        );
+    }
+  );
+});
 
 module.exports = {
   addCustomer,
