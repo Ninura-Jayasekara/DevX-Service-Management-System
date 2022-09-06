@@ -14,8 +14,16 @@ function Navbar() {
   const [burgerStatus, setBurgerStatus] = useState(false);
   return (
     <Nav>
-      <Logo src={logo} />
+      <Link
+          to="/"
+          style={({ isActive }) => ({
+            color: isActive ? "greenyellow" : "inherit",
+          })}
+        >
+          <Logo src={logo} />
+        </Link>
       <NavMenu>
+      
         <Link
           to="/customer"
           style={({ isActive }) => ({
@@ -35,13 +43,13 @@ function Navbar() {
           <span>Services</span>
         </Link>
         <Link
-          to="/"
+          to="/stock"
           style={({ isActive }) => ({
             color: isActive ? "greenyellow" : "inherit",
           })}
         >
           <InventoryIcon />
-          <span>Services</span>
+          <span>Stocks</span>
         </Link>
         <Link
           to="/"

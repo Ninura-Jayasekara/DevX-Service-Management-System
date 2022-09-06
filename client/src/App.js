@@ -13,6 +13,7 @@ import CustomerEdit from "./components/CustomerCRUD/CustomerEdit";
 import CustomerDelete from "./components/CustomerCRUD/CustomerDelete";
 import CustomerReport from "./components/CustomerCRUD/CustomerReport";
 import CustomerChart from "./components/CustomerCRUD/CustomerChart";
+import SearchParts from "./components/StockComponents/searchParts";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/customer/delete" element={<CustomerDelete />}></Route>
           <Route path="/customer/report" element={<CustomerReport />}></Route>
           <Route path="/customer/chart" element={<CustomerChart />}></Route>
+
+          <Route path="/stock" element={<SearchParts />}></Route>
         </Routes>
         <LargeFooter />
       </Container>

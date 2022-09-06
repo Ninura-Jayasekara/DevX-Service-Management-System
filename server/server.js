@@ -24,7 +24,7 @@ app.use("/api/stock", stockRouter);
 app.use("/api/facility", facilityRouter);
 app.use("/api/customer", customerRouter);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 app.listen(port, (err) => {
   if (err) console.log("Error ocuured in starting the server:", err);
