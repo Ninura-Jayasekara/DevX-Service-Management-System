@@ -17,86 +17,30 @@ function Navbar() {
   return (
     <Nav>
       <Link
-          to="/"
-          style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
-          })}
-        >
-          <Logo src={logo} />
-        </Link>
+        to="/"
+        style={({ isActive }) => ({
+          color: isActive ? "greenyellow" : "inherit",
+        })}
+      >
+        <Logo src={logo} />
+      </Link>
       <NavMenu>
-      
-        <Link
-          to="/customer"
-          style={({ isActive }) => ({
-            margin: "10px 10px 0px",
-            borderTopLeftRadius: "10px",
-            borderTopRightRadius: "10px",
-            backgroundClip: "padding-box",
-            height: "50px",
-            color: isActive ? "black" : "inherit",
-            background: isActive
-              ? "linear-gradient(to top left, #7C9E62, #400E33)"
-              : "inherit",
-          })}
-        >
+        <NavContainer to="/customer">
           <PersonIcon />
           <span>Customer</span>
-        </Link>
-        <Link
-          to="/"
-          style={({ isActive }) => ({
-            padding: "5px",
-            margin: "10px 10px 0px",
-            borderTopLeftRadius: "10px",
-            borderTopRightRadius: "10px",
-            backgroundClip: "padding-box",
-            height: "50px",
-            color: isActive ? "black" : "inherit",
-            background: isActive
-              ? "linear-gradient(to top left, #7C9E62, #400E33)"
-              : "inherit",
-          })}
-        >
+        </NavContainer>
+        <NavContainer to="/">
           <ServiceIcon />
           <span>Services</span>
-        </Link>
-        <Link
-          to="/stock"
-          style={({ isActive }) => ({
-            padding: "5px",
-            margin: "10px 10px 0px",
-            borderTopLeftRadius: "10px",
-            borderTopRightRadius: "10px",
-            backgroundClip: "padding-box",
-            height: "50px",
-            color: isActive ? "black" : "inherit",
-            background: isActive
-              ? "linear-gradient(to top left, #7C9E62, #400E33)"
-              : "inherit",
-          })}
-        >
+        </NavContainer>
+        <NavContainer to="/stock">
           <InventoryIcon />
           <span>Stocks</span>
-        </Link>
-        <Link
-          to="/"
-          style={({ isActive }) => ({
-            padding: "5px",
-            margin: "10px 10px 0px",
-            borderTopLeftRadius: "10px",
-            borderTopRightRadius: "10px",
-            backgroundClip: "padding-box",
-            height: "50px",
-            color: isActive ? "black" : "inherit",
-            background: isActive
-              ? "linear-gradient(to top left, #7C9E62, #400E33)"
-              : "inherit",
-          })}
-        >
+        </NavContainer>
+        <NavContainer to="/">
           <PaymentIcon />
           <span>Payment</span>
-        </Link>
+        </NavContainer>
       </NavMenu>
       <RightMenu>
         {burgerStatus ? (
@@ -107,9 +51,9 @@ function Navbar() {
       </RightMenu>
       <Button onClick={() => navigate("/login")}>
         <span>Login</span>
-        <LoginIcon/>
+        <LoginIcon />
       </Button>
-      
+
       <BurgerNav show={burgerStatus}>
         <li>
           <Link
@@ -327,5 +271,44 @@ const BurgerNavButton = styled.div`
       rgba(80, 200, 120, 0.969625350140056) 35%,
       rgba(0, 212, 255, 1) 100%
     );
+  }
+`;
+
+const NavContainer = styled(Link)`
+  padding: 10px;
+  margin: 10px 10px 0px;
+  height: 50px;
+  position: relative;
+
+  &.active {
+    border-top: 1px solid white;
+    border-radius: 10px 10px 0 0;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+    display: flex;
+    flex: 1;
+
+    color: orange;
+    // background: linear-gradient(to top left, #7c9e62, #400e33);
+
+    &:after,
+    &:before {
+      content: "";
+      width: 40px;
+      height: 44px;
+      border: 1px solid white;
+      border-top: 0;
+      position: absolute;
+      bottom: -3px;
+    }
+    &:after {
+      right: -41px;
+      border-right: 0;
+      border-bottom-left-radius: 18px;
+    }
+    &:before {
+      left: -41px;
+      border-left: 0;
+      border-bottom-right-radius: 18px;
+    }
   }
 `;

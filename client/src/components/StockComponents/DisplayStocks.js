@@ -1,8 +1,8 @@
-import React,{ useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import {toast, ToastContainer} from 'react-toastify';
+import { toast, ToastContainer } from "react-toastify";
 import {
   TableContainer,
   Table,
@@ -13,34 +13,28 @@ import {
   Paper,
 } from "@mui/material";
 
-
 function DisplayStocks() {
-
-
-  const accessToken = sessionStorage.getItem('userToken');
+  const accessToken = sessionStorage.getItem("userToken");
   const [stocks, setStocks] = useState([]);
 
   const authAxios = axios.create({
-      
-      headers: {
-          Authorization: `Bearer ${accessToken}`
-      }
-  })
-      
-          authAxios.get('/api/stock/fetch-stock').then(res=>{
-          setStocks(res.data)
-          toast.success(" Stock Fetched",{
-              position: "top-center",
-              autoClose: 1000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-          })
-      })
-  
- 
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  authAxios.get("/api/stock/fetch-stock").then((res) => {
+    setStocks(res.data);
+    toast.success(" Stock Fetched", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+  });
 
   return (
     <Container>
@@ -72,7 +66,6 @@ function DisplayStocks() {
                   <TableCell align="right">{row.sparePart}</TableCell>
                   <TableCell align="right">{row.dealerName}</TableCell>
                   <TableCell align="right">{row.price}</TableCell>
-                  
                 </TableRow>
               ))}
             </TableBody>
