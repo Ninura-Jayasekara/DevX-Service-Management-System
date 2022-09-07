@@ -29,7 +29,7 @@ import SearchIcon from "@mui/icons-material/Search";
     
   
     const  loadStockDetails = async () => {
-      await axios.get(`http://localhost:3001/api/stock/search?q=${input}`).then((res) => {
+      await axios.get(`/api/stock/search?q=${input}`).then((res) => {
 
         
         setBrand(res.data.stocks.brand);
