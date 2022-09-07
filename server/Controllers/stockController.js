@@ -54,7 +54,17 @@ const fetchPart = asyncHandler(async(req, res)=>{
     })
   })
 
+  const fetchAllParts = asyncHandler(async(req, res)=>{
+
+        Stock.find().then((stocks)=>{
+            res.json(stocks)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    })
+
 module.exports = {
     addStock,
-    fetchPart
+    fetchPart,
+    fetchAllParts
 }
