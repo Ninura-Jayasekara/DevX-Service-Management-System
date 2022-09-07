@@ -20,7 +20,7 @@ const Login = () => {
 			const url = "http://localhost:3001/api/admin/login";
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("token", res.data);
-            navigate("https://unsplash.com/s/photos/dashboard-car?orientation=landscape");
+            navigate("/add-stocks");
 		} catch (error) {
 			if (
 				error.response &&
