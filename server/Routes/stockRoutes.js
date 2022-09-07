@@ -7,11 +7,12 @@ const {
     fetchAllParts
 } = require('../Controllers/stockController')
 
+const { protect } = require('../Middleware/authMiddleware')
 
 
-router.post('/', addStock)
+router.post('/', protect, addStock)
 router.get('/search', fetchPart)
-router.get('/fetch-stock', fetchAllParts)
+router.get('/fetch-stock', protect ,fetchAllParts)
 
 
 module.exports = router

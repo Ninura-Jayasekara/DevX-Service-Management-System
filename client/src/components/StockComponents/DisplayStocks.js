@@ -2,6 +2,7 @@ import React,{ useState, useEffect} from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import {toast, ToastContainer} from 'react-toastify';
 import {
   TableContainer,
   Table,
@@ -15,32 +16,31 @@ import {
 
 function DisplayStocks() {
 
-    const accessToken = localStorage.getItem('token');
-   
-    const authAxios = axios.create({
-        baseURL: 'http://localhost:3001',
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    })
-  
-    const [stocks, setStocks] = useState([]);
 
-    useEffect(() => {
-      function getData() {
-          authAxios.get("http://localhost:3001/api/stock/fetch-stock").then((res) => {
-              setStocks(res.data);
-              
-          }).catch((error) => {
-              alert(error.message);
-          })
+  const accessToken = sessionStorage.getItem('userToken');
+  const [stocks, setStocks] = useState([]);
+
+  const authAxios = axios.create({
+      
+      headers: {
+          Authorization: `Bearer ${accessToken}`
       }
-      getData();
+  })
+      
+          authAxios.get('/api/stock/fetch-stock').then(res=>{
+          setStocks(res.data)
+          toast.success(" Stock Fetched",{
+              position: "top-center",
+              autoClose: 1000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+          })
+      })
   
-  
-  }, [])
-
-
+ 
 
   return (
     <Container>
