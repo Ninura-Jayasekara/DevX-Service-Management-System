@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import picture from "../../assets/Logo_login.png";
-//import picture from "../../assets/5364424.png";
 
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import styled from "styled-components";
