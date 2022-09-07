@@ -73,7 +73,7 @@ const Wrap = styled.div`
     border: 2px solid transparent;
     border-radius: 2px;
     width: 100%;
-    max-height: 35vh;
+    max-height: 500px;
     object-fit: cover;
     z-index: 1;
     box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
