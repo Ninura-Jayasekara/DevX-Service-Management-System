@@ -16,6 +16,7 @@ import CustomerChart from "./components/CustomerCRUD/CustomerChart";
 import SearchParts from "./components/StockComponents/searchParts";
 import Login from "./components/Login/Login";
 import AddSpareParts from "./components/StockComponents/AddSpareParts";
+import DisplayStocks from "./components/StockComponents/DisplayStocks";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/stock" element={<SearchParts />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/add-stocks" element={<AddSpareParts />}></Route>
+          <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
         </Routes>
         <LargeFooter />
       </Container>

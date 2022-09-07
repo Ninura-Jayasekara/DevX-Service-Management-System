@@ -10,7 +10,7 @@ const {
 const { protect } = require('../Middleware/authMiddleware')
 
 
-router.post('/', addStock)
+router.post('/', protect, addStock)
 router.get('/search', fetchPart)
 router.get('/fetch-stock', fetchAllParts)
 
