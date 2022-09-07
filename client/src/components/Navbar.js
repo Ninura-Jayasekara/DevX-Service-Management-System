@@ -68,10 +68,11 @@ function Navbar() {
           <MenuIcon onClick={() => setBurgerStatus(true)} />
         )}
       </RightMenu>
-      <Button>
+      {/* <Button Link to="/login">
         <span>Login</span>
         <LoginIcon />
-      </Button>
+      </Button> */}
+      <Link to="/login" className="btn btn-primary">Login</Link>
       <BurgerNav show={burgerStatus}>
         <li>
           <Link
@@ -97,13 +98,13 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/"
+            to="/stock"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}
           >
             <InventoryIcon />
-            <span>Services</span>
+            <span>Stocks</span>
           </Link>
         </li>
         <li>
