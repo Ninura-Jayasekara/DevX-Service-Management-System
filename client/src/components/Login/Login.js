@@ -1,5 +1,7 @@
-import { useState } from "react";
-import axios from "axios";
+import React,{useState, useRef, useEffect} from 'react';
+import axios from 'axios';
+import {useParams} from "react-router-dom";
+import {LoginValidate} from '../Validate';
 import { Link, useNavigate } from "react-router-dom";
 import picture from "../../assets/Logo_login.png";
 
@@ -7,31 +9,50 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import styled from "styled-components";
 
 const Login = () => {
-	const [data, setData] = useState({ email: "", password: "" });
-	const [error, setError] = useState("");
-    const navigate = useNavigate();
+	
+  const navigate = useNavigate();
+    const params = useParams();
+    const [values,setValues]=useState({
+        email:'',
+        password:''
+    });
 
-	const handleChange = ({ currentTarget: input }) => {
-		setData({ ...data, [input.name]: input.value });
-	};
+    // Used to refer input fields
+    const inputUserEmail=useRef();
+    const inputPassword=useRef();
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		try {
-			const url = "http://localhost:3001/api/admin/login";
-			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", res.data);
-            navigate("/fetch-stocks");
-		} catch (error) {
-			if (
-				error.response &&
-				error.response.status >= 400 &&
-				error.response.status <= 500
-			) {
-				setError(error.response.data.message);
-			}
-		}
-	};
+    const handleChange=(event)=>{
+        setValues({...values,
+            [event.target.name]:event.target.value,
+        })
+    }
+
+    const [errors,setErrors]=useState({});
+
+    const handleSubmit= (event)=>{
+        event.preventDefault();
+        // Make Sure there is no spaces trailing and leading
+        Object.keys(values).map(k=>values[k]=values[k].trim());
+        // Validate input Fields
+        setErrors(LoginValidate(values));
+    }
+
+    useEffect(() => {
+        if(Object.keys(errors).length === 0  && values.email !=='' && values.password !==''){
+            axios.post('api/admin/login',values).then((res)=>{
+                let userToken = res.data.token;
+
+                if(userToken !== null) {
+                    sessionStorage.setItem('isAuth',"true");
+                    sessionStorage.setItem('userToken', userToken);
+                    navigate("/fetch-stocks");
+                }
+            }).catch(e => {
+                console.log('Error:', e.message)
+            }
+            );
+        }
+    }, [errors])
 
 	return (
         <Container>
@@ -50,11 +71,12 @@ const Login = () => {
               <InputWrapper>
                 <div>
                   <label htmlFor="Email">Email</label>
-                  <input type="email" name="email" placeholder="Email" onChange={handleChange} value={data.email} required />
+                  <input id='email' autocomplete="off" ref={inputUserEmail} type='text' name='email' placeholder='useremail' value={values.email} onChange={handleChange}/>
                 </div>
                 <div>
                   <label htmlFor="Password">Password</label>
-                  <input type="password" name="password" placeholder="Password" onChange={handleChange} value={data.password} required />
+                  <input id='password' ref={inputPassword} type='password' name='password' placeholder='Password'value={values.password}
+                        onChange={handleChange}/>
                 </div>
                 <ButtonGroup>
                   <input type="submit" value="Login" />
