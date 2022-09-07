@@ -51,8 +51,8 @@ import SearchIcon from "@mui/icons-material/Search";
         <InputComponent>
           <div className="table-head">Search Spare Parts And Price</div>
           <InputGroup>
-            <SearchIcon />
-            <input type="text" id="input" value={input}  onClick={loadStockDetails} placeholder="Search" 
+            <SearchIcon onClick={loadStockDetails} />
+            <input type="text" id="input" value={input}   placeholder="Search" 
             onChange={(e)=>{
 
                 setInput(e.target.value);
