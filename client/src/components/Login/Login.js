@@ -21,7 +21,7 @@ const Login = () => {
 			const url = "http://localhost:3001/api/admin/login";
 			const { data: res } = await axios.post(url, data);
 			localStorage.setItem("token", res.data);
-            navigate("/add-stocks");
+            navigate("/fetch-stocks");
 		} catch (error) {
 			if (
 				error.response &&

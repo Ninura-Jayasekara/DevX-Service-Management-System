@@ -6,7 +6,7 @@ import Stock from "../../assets/addparts.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export default function AddSpareParts(){
-    
+
     const accessToken = localStorage.getItem('token');
    
 
@@ -61,7 +61,7 @@ export default function AddSpareParts(){
           <InputComponent>
             <div className="table-head">Add Spare Part</div>
             <InputGroup>
-              <Link to="/login">
+              <Link to="/fetch-stocks">
                 <KeyboardReturnIcon style={{ color: "white" }} />
               </Link>
             </InputGroup>
