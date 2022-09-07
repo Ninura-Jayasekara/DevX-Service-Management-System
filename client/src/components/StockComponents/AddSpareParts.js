@@ -1,42 +1,28 @@
 import React,{ useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
+import {toast, ToastContainer} from 'react-toastify';
 import { Link } from "react-router-dom";
 import Stock from "../../assets/addparts.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export default function AddSpareParts(){
 
-  const optionList = [
-    { value: "Engine-Oil-001", label: "Honda Engine oil 4l" },
-    { value: "Engine-Oil-002", label: "Toyota Engine oil 4l" },
-    { value: "Engine-Oil-003", label: "Honda Engine oil 1l" },
-    { value: "Engine-Oil-004", label: "Toyota Engine oil 4l" },
-    { value: "Break-Pad-001", label: "Honda Break Pad" },
-    { value: "Break-Pad-002", label: "Toyota Break Pad" },
-    { value: "Break-Pad-003", label: "Kia Break Pad" },
-    { value: "Break-Oil-001", label: "Honda Break oil 1l" },
-    { value: "Break-Oil-002", label: "Toyota Break oil 1l" },
-  ];
+    const accessToken = sessionStorage.getItem('userToken');
 
-    const accessToken = localStorage.getItem('token');
-   
-
-    const authAxios = axios.create({
-        baseURL: 'http://localhost:3001',
-        headers: {
-            Authorization: `Bearer ${accessToken}`
-        }
-    })
-    
-    
     const [itemCode, setItemCode] = useState("");
     const [brand, setBrand] = useState("");
     const [country, setCountry] = useState("");
     const [dealerName, setDealerName] = useState("");
     const [sparePart, setSparePart] = useState("");
     const [price, setPrice] = useState("");
-
+   
+    const authAxios = axios.create({
+      
+      headers: {
+          Authorization: `Bearer ${accessToken}`
+      }
+  })
 
     function sendData(e){
         e.preventDefault();
@@ -51,7 +37,7 @@ export default function AddSpareParts(){
         }
 
         
-        authAxios.post("http://localhost:3001/api/stock/",newPart).then(()=>{
+        authAxios.post("/api/stock/",newPart).then(()=>{
             alert("Spare Part Added")
             setItemCode("");
             setBrand("");
@@ -94,7 +80,7 @@ export default function AddSpareParts(){
                         setItemCode(e.target.value);
 
                     }}  /> */}
-                    
+
                   <label htmlFor="itemCode">Item Code</label>
 
                   <select id="itemCode" defaultValue="Select Item Code" value={itemCode}
