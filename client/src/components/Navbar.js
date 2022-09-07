@@ -68,11 +68,11 @@ function Navbar() {
           <MenuIcon onClick={() => setBurgerStatus(true)} />
         )}
       </RightMenu>
-      {/* <Button Link to="/login">
+      <Button>
         <span>Login</span>
         <LoginIcon />
-      </Button> */}
-      <Link to="/login" className="btn btn-primary">Login</Link>
+      </Button>
+      
       <BurgerNav show={burgerStatus}>
         <li>
           <Link
