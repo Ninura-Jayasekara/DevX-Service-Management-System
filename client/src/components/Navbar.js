@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink as Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Logo.png";
 import PersonIcon from "@mui/icons-material/Person";
@@ -12,6 +13,7 @@ import LoginIcon from "@mui/icons-material/Login";
 
 function Navbar() {
   const [burgerStatus, setBurgerStatus] = useState(false);
+  const navigate = useNavigate();
   return (
     <Nav>
       <Link
@@ -68,9 +70,9 @@ function Navbar() {
           <MenuIcon onClick={() => setBurgerStatus(true)} />
         )}
       </RightMenu>
-      <Button>
+      <Button onClick={() => navigate("/login")}>
         <span>Login</span>
-        <LoginIcon />
+        <LoginIcon/>
       </Button>
       
       <BurgerNav show={burgerStatus}>

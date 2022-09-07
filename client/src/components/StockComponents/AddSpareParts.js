@@ -7,6 +7,18 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export default function AddSpareParts(){
 
+  const optionList = [
+    { value: "Engine-Oil-001", label: "Honda Engine oil 4l" },
+    { value: "Engine-Oil-002", label: "Toyota Engine oil 4l" },
+    { value: "Engine-Oil-003", label: "Honda Engine oil 1l" },
+    { value: "Engine-Oil-004", label: "Toyota Engine oil 4l" },
+    { value: "Break-Pad-001", label: "Honda Break Pad" },
+    { value: "Break-Pad-002", label: "Toyota Break Pad" },
+    { value: "Break-Pad-003", label: "Kia Break Pad" },
+    { value: "Break-Oil-001", label: "Honda Break oil 1l" },
+    { value: "Break-Oil-002", label: "Toyota Break oil 1l" },
+  ];
+
     const accessToken = localStorage.getItem('token');
    
 
@@ -71,7 +83,8 @@ export default function AddSpareParts(){
               <ImageWrapper src={Stock} />
               <InputWrapper>
                 <div>
-                  <label htmlFor="ItemCode">Item Code</label>
+
+                  {/* <label htmlFor="ItemCode">Item Code</label>
                   <input type="text" id="itemCode" 
                     placeholder="Enter Item Code" 
                     minLength={5} maxLength={20}  
@@ -80,7 +93,25 @@ export default function AddSpareParts(){
 
                         setItemCode(e.target.value);
 
-                    }}  />
+                    }}  /> */}
+                    
+                  <label htmlFor="itemCode">Item Code</label>
+
+                  <select id="itemCode" defaultValue="Select Item Code" value={itemCode}
+                          onChange={(e) => setItemCode(e.target.value)}>
+
+                             <option value= "Engine-Oil-001">Honda Engine oil 4l</option> 
+                            <option value = "Engine-Oil-002">Toyota Engine oil 4l </option>
+                            <option value = "Engine-Oil-003">Honda Engine oil 1l </option>
+                            <option value = "Engine-Oil-004">Toyota Engine oil 4l </option>
+                            <option value = "Break-Pad-001">Honda Break Pad </option>
+                            <option value = "Break-Pad-002">Toyota Break Pad </option>
+                            <option value = "Break-Pad-003">Kia Break Pad </option>
+                            <option value = "Break-Oil-001">Honda Break oil 1l </option>
+                            <option value = "Break-Oil-002">Toyota Break oil 1l </option>
+                   
+                  </select>
+                
                 </div>
                 <div>
                   <label htmlFor="Brand">Brand</label>
