@@ -19,7 +19,15 @@ function Navbar() {
         <Link
           to="/customer"
           style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
+            margin: "10px 10px 0px",
+            borderTopLeftRadius: "10px",
+            borderTopRightRadius: "10px",
+            backgroundClip: "padding-box",
+            height: "50px",
+            color: isActive ? "black" : "inherit",
+            background: isActive
+              ? "linear-gradient(to top left, #7C9E62, #400E33)"
+              : "inherit",
           })}
         >
           <PersonIcon />
@@ -28,7 +36,16 @@ function Navbar() {
         <Link
           to="/"
           style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
+            padding: "5px",
+            margin: "10px 10px 0px",
+            borderTopLeftRadius: "10px",
+            borderTopRightRadius: "10px",
+            backgroundClip: "padding-box",
+            height: "50px",
+            color: isActive ? "black" : "inherit",
+            background: isActive
+              ? "linear-gradient(to top left, #7C9E62, #400E33)"
+              : "inherit",
           })}
         >
           <ServiceIcon />
@@ -37,16 +54,34 @@ function Navbar() {
         <Link
           to="/"
           style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
+            padding: "5px",
+            margin: "10px 10px 0px",
+            borderTopLeftRadius: "10px",
+            borderTopRightRadius: "10px",
+            backgroundClip: "padding-box",
+            height: "50px",
+            color: isActive ? "black" : "inherit",
+            background: isActive
+              ? "linear-gradient(to top left, #7C9E62, #400E33)"
+              : "inherit",
           })}
         >
           <InventoryIcon />
-          <span>Services</span>
+          <span>Stocks</span>
         </Link>
         <Link
           to="/"
           style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
+            padding: "5px",
+            margin: "10px 10px 0px",
+            borderTopLeftRadius: "10px",
+            borderTopRightRadius: "10px",
+            backgroundClip: "padding-box",
+            height: "50px",
+            color: isActive ? "black" : "inherit",
+            background: isActive
+              ? "linear-gradient(to top left, #7C9E62, #400E33)"
+              : "inherit",
           })}
         >
           <PaymentIcon />
