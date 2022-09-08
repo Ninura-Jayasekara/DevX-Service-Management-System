@@ -29,7 +29,7 @@ function Navbar() {
           <PersonIcon />
           <span>Customer</span>
         </NavContainer>
-        <NavContainer to="/facilities">
+        <NavContainer to="/">
           <ServiceIcon />
           <span>Services</span>
         </NavContainer>
@@ -68,7 +68,7 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/facilities"
+            to="/"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}
