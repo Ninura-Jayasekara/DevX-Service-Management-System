@@ -152,7 +152,7 @@ export default function AddSpareParts(){
                 </div>
   
                 <div>
-                  <label htmlFor="price">Selling Price</label>
+                  <label htmlFor="price">Selling Price (Rs.)</label>
                   <input type="text" id="price" 
                     placeholder="Enter Selling Price" 
                     required 

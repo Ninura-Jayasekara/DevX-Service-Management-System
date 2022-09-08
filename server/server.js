@@ -10,6 +10,7 @@ const adminRouter = require("./Routes/adminRoutes");
 const stockRouter = require("./Routes/stockRoutes");
 const facilityRouter = require("./Routes/serviceFacilityRoutes");
 const customerRouter = require("./Routes/customerRoutes");
+const paymentRouter = require("./Routes/paymentRoutes");
 
 // database connection
 connection();
@@ -23,6 +24,7 @@ app.use("/api/admin", adminRouter);
 app.use("/api/stock", stockRouter);
 app.use("/api/facility", facilityRouter);
 app.use("/api/customer", customerRouter);
+app.use("/api/payment", paymentRouter);
 
 const port = process.env.PORT || 3001;
 

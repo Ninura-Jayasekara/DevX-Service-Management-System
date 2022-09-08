@@ -29,7 +29,7 @@ function Navbar() {
           <PersonIcon />
           <span>Customer</span>
         </NavContainer>
-        <NavContainer to="/">
+        <NavContainer to="/addfacilities">
           <ServiceIcon />
           <span>Services</span>
         </NavContainer>
@@ -37,7 +37,7 @@ function Navbar() {
           <InventoryIcon />
           <span>Stocks</span>
         </NavContainer>
-        <NavContainer to="/">
+        <NavContainer to="/add-card">
           <PaymentIcon />
           <span>Payment</span>
         </NavContainer>
@@ -68,7 +68,7 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/"
+            to="/addfacilities"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}
@@ -90,7 +90,7 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/"
+            to="/add-card"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}
