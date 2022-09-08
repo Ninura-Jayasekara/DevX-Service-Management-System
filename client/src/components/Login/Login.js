@@ -17,6 +17,8 @@ const Login = () => {
         password:''
     });
 
+    const [role, setRole] = useState("");
+
     // Used to refer input fields
     const inputUserEmail=useRef();
     const inputPassword=useRef();
@@ -45,7 +47,19 @@ const Login = () => {
                 if(userToken !== null) {
                     sessionStorage.setItem('isAuth',"true");
                     sessionStorage.setItem('userToken', userToken);
-                    navigate("/fetch-stocks");
+                    
+                    if(role=='customer'){
+                      navigate("/fetch-stocks");
+                    }
+                    else if(role=='service'){
+                      navigate("/fetch-stocks");
+                    }
+                    else if(role=='stock'){
+                      navigate("/fetch-stocks");
+                    }
+                    else if(role=='payment'){
+                      navigate("/viewpayment");
+                    }
                 }
             }).catch(e => {
                 console.log('Error:', e.message)
@@ -77,6 +91,32 @@ const Login = () => {
                   <label htmlFor="Password">Password</label>
                   <input id='password' ref={inputPassword} type='password' name='password' placeholder='Password'value={values.password}
                         onChange={handleChange}/>
+                </div>
+                <div>
+                  <br></br>
+                <ButtonGroup>
+                    <input type="radio" value="customer" name="role"  onChange={(e)=>{
+
+                            setRole(e.target.value);
+
+                    }} /> Customer
+                    <input type="radio" value="service" name="role" onChange={(e)=>{
+
+                    setRole(e.target.value);
+
+                    }}/> Services
+                    <input type="radio" value="stock" name="role" onChange={(e)=>{
+
+                    setRole(e.target.value);
+
+                    }}/> Stocks
+                    <input type="radio" value="payment" name="role" onChange={(e)=>{
+
+                    setRole(e.target.value);
+
+                    }}/> Payments
+                  </ButtonGroup>
+                    
                 </div>
                 <ButtonGroup>
                   <input type="submit" value="Login" />

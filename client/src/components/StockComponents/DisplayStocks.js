@@ -25,6 +25,7 @@ function DisplayStocks() {
 
   authAxios.get("/api/stock/fetch-stock").then((res) => {
     setStocks(res.data);
+    console.log(res.data)
     toast.success(" Stock Fetched", {
       position: "top-center",
       autoClose: 1000,
