@@ -32,7 +32,7 @@ const viewFacilities = asyncHandler((req, res) => {
 });
 
 const updateFacility = asyncHandler(async (req, res) => {
-  let fId = req.params.fid;
+  let fId = req.params.fId;
 
   const { facilityName, facilityCost } = req.body;
 
@@ -53,8 +53,21 @@ const updateFacility = asyncHandler(async (req, res) => {
     });
 });
 
+const deleteFacility = asyncHandler(async(req,res)=>{
+    let fId= req.params.fId;
+
+    await Facility.findByIdAndDelete(fId).then(()=>{
+        res.status(200).send({status: "Service Facility is deleted!"})
+
+    }).catch((err)=>{
+        console.log(err.message)
+        res.status(500).send({status: "Error with deleting Service Facility...", error: err.message})
+    })
+})
+
 module.exports = {
   addFacility,
   viewFacilities,
   updateFacility,
+  deleteFacility
 };
