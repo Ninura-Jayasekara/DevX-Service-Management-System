@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink as Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Logo.png";
 import PersonIcon from "@mui/icons-material/Person";
@@ -12,46 +13,34 @@ import LoginIcon from "@mui/icons-material/Login";
 
 function Navbar() {
   const [burgerStatus, setBurgerStatus] = useState(false);
+  const navigate = useNavigate();
   return (
     <Nav>
-      <Logo src={logo} />
+      <Link
+        to="/"
+        style={({ isActive }) => ({
+          color: isActive ? "greenyellow" : "inherit",
+        })}
+      >
+        <Logo src={logo} />
+      </Link>
       <NavMenu>
-        <Link
-          to="/customer"
-          style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
-          })}
-        >
+        <NavContainer to="/customer">
           <PersonIcon />
           <span>Customer</span>
-        </Link>
-        <Link
-          to="/"
-          style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
-          })}
-        >
+        </NavContainer>
+        <NavContainer to="/">
           <ServiceIcon />
           <span>Services</span>
-        </Link>
-        <Link
-          to="/"
-          style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
-          })}
-        >
+        </NavContainer>
+        <NavContainer to="/stock">
           <InventoryIcon />
-          <span>Services</span>
-        </Link>
-        <Link
-          to="/"
-          style={({ isActive }) => ({
-            color: isActive ? "greenyellow" : "inherit",
-          })}
-        >
+          <span>Stocks</span>
+        </NavContainer>
+        <NavContainer to="/">
           <PaymentIcon />
           <span>Payment</span>
-        </Link>
+        </NavContainer>
       </NavMenu>
       <RightMenu>
         {burgerStatus ? (
@@ -60,10 +49,11 @@ function Navbar() {
           <MenuIcon onClick={() => setBurgerStatus(true)} />
         )}
       </RightMenu>
-      <Button>
+      <Button onClick={() => navigate("/login")}>
         <span>Login</span>
         <LoginIcon />
       </Button>
+
       <BurgerNav show={burgerStatus}>
         <li>
           <Link
@@ -89,13 +79,13 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/"
+            to="/stock"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}
           >
             <InventoryIcon />
-            <span>Services</span>
+            <span>Stocks</span>
           </Link>
         </li>
         <li>
@@ -281,5 +271,44 @@ const BurgerNavButton = styled.div`
       rgba(80, 200, 120, 0.969625350140056) 35%,
       rgba(0, 212, 255, 1) 100%
     );
+  }
+`;
+
+const NavContainer = styled(Link)`
+  padding: 10px;
+  margin: 10px 10px 0px;
+  height: 50px;
+  position: relative;
+
+  &.active {
+    border-top: 1px solid white;
+    border-radius: 10px 10px 0 0;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+    display: flex;
+    flex: 1;
+
+    color: orange;
+    // background: linear-gradient(to top left, #7c9e62, #400e33);
+
+    &:after,
+    &:before {
+      content: "";
+      width: 40px;
+      height: 44px;
+      border: 1px solid white;
+      border-top: 0;
+      position: absolute;
+      bottom: -3px;
+    }
+    &:after {
+      right: -41px;
+      border-right: 0;
+      border-bottom-left-radius: 18px;
+    }
+    &:before {
+      left: -41px;
+      border-left: 0;
+      border-bottom-right-radius: 18px;
+    }
   }
 `;

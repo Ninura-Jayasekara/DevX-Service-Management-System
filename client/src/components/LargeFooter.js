@@ -61,15 +61,19 @@ function Footer() {
       <CompanyDetails>
         {/* Description */}
         <div className="col-lg-6">
-          <div>Company Name</div>
+          <div>DevX Service Center</div>
           <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor
-            inreprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-            in culpa qui officia deserunt mollit anim id est laborum.
+          DevX is Sri Lanka's largest automobile maintenance super Mart with a service capacity for over 100 vehicles at any given time. 
+          Our head office is located on in Colombo.
+          <br></br><br></br>
+          We are equipped with state of the art, computerized auto maintenance equipment imported from the US, UK, Japan and Italy. 
+          DevX has over 150 professionally qualified technicians in their respective fields. At DevX, we only use genuine spares for all 
+          our vehicles. Our dedicated staff is always aiming to ensure every customer is satisfied by DevX.
+          <br></br><br></br>
+          We cater to all makes of vehicles Japanese, European, American, Korean, etc.
+          <br></br><br></br>
+          Break downs won’t break you down anymore.
+
           </div>
         </div>
         {/* About */}
@@ -81,7 +85,7 @@ function Footer() {
           </IconGroup>
           <IconGroup>
             <EmailIcon />
-            <div>insafnilam.2000@gmail.com</div>
+            <div>devxservice@gmail.com</div>
           </IconGroup>
           <IconGroup>
             <PhoneIcon />

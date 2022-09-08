@@ -47,6 +47,19 @@ code {
   background-color: #708090;
 }
 
+@keyframes SwiftSlide {
+  100% {
+    margin-right: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes SwiftSlideToRight {
+  100% {
+    opacity: 0;
+    margin-right: -30px;
+  }
+}
 
 @media only screen and (max-width: 1210px){
   hr{
