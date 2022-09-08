@@ -36,7 +36,7 @@ export default function AddServiceFacilities(){
         <form className="Form" onSubmit={sendData} style={{  background: "#151e3d"}}>  
         <center>
         <h2 className="heading">ADD SERVICE FACILITY</h2>
-        </center>
+        </center><br></br>
             <div  id="addfac"className="mb-3">
                 <label className="falabel" id="snlabel" for="facilityName"><b>Service Name</b></label>
                 <input type="text" className="form-control" id="facilityName" placeholder="Type Service Facility Name" required 
