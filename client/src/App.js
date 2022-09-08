@@ -17,6 +17,7 @@ import SearchParts from "./components/StockComponents/searchParts";
 import Login from "./components/Login/Login";
 import AddSpareParts from "./components/StockComponents/AddSpareParts";
 import DisplayStocks from "./components/StockComponents/DisplayStocks";
+import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/add-stocks" element={<AddSpareParts />}></Route>
           <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
+
+          <Route path="/add-card" element={<AddCardDetails />}></Route>
         </Routes>
         <LargeFooter />
       </Container>
