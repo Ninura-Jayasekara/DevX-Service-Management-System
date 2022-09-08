@@ -13,9 +13,9 @@ import {
   Paper,
 } from "@mui/material";
 
-function DisplayStocks() {
+function ViewPayments() {
   const accessToken = sessionStorage.getItem("userToken");
-  const [stocks, setStocks] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   const authAxios = axios.create({
     headers: {
@@ -23,10 +23,9 @@ function DisplayStocks() {
     },
   });
 
-  authAxios.get("/api/stock/fetch-stock").then((res) => {
-    setStocks(res.data);
-    console.log(res.data)
-    toast.success(" Stock Fetched", {
+  authAxios.get("/api/payment/fetch-payments").then((res) => {
+    setPayments(res.data);
+    toast.success(" Details Fetched", {
       position: "top-center",
       autoClose: 1000,
       hideProgressBar: true,
@@ -41,39 +40,35 @@ function DisplayStocks() {
     <Container>
       <Wrap>
         <InputComponent>
-          <div className="table-head">Spare Part Details</div>
+          <div className="table-head">View Payment Details</div>
         </InputComponent>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ background: "#36454f" }}>
               <TableRow>
-                <TableCell align="right">Item Code</TableCell>
-                <TableCell align="right">Brand</TableCell>
-                <TableCell align="right">Country</TableCell>
-                <TableCell align="right">Spare Part</TableCell>
-                <TableCell align="right">Dealer</TableCell>
-                <TableCell align="right">Price (Rs.)</TableCell>
+                <TableCell align="right">Cutomer Name</TableCell>
+                <TableCell align="right">Vehicle Number</TableCell>
+                <TableCell align="right">Service Date</TableCell>
+                <TableCell align="right">Payment(Rs.)</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {stocks.map((row) => (
+              {payments.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <TableCell align="right">{row.itemCode}</TableCell>
-                  <TableCell align="right">{row.brand}</TableCell>
-                  <TableCell align="right">{row.country}</TableCell>
-                  <TableCell align="right">{row.sparePart}</TableCell>
-                  <TableCell align="right">{row.dealerName}</TableCell>
-                  <TableCell align="right">{row.price}</TableCell>
+                  <TableCell align="right">{row.customerName}</TableCell>
+                  <TableCell align="right">{row.vehicleNumber}</TableCell>
+                  <TableCell align="right">{row.serviceDate}</TableCell>
+                  <TableCell align="right">{row.amount}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
         <ButtonGroup>
-          <Link to="/add-stocks">
+          <Link to="/add-payment">
             <button>Add</button>
           </Link>
           <Link to="edit">
@@ -88,7 +83,7 @@ function DisplayStocks() {
   );
 }
 
-export default DisplayStocks;
+export default ViewPayments;
 
 const Container = styled.main`
   min-height: calc(100vh);
