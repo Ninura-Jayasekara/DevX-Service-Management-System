@@ -7,8 +7,8 @@ const {
     updateFacility
 } = require('../Controllers/serviceFaciltyController')
 
-router.post('/', viewFacilities)
+router.get('/', viewFacilities)
 router.post('/add', addFacility)
-router.post('/update/:fId', updateFacility)
+router.put('/update/:fId', updateFacility)
 
 module.exports = router
