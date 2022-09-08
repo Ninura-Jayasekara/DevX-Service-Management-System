@@ -3,42 +3,42 @@ import axios from "axios";
 import styled from "styled-components";
 import {toast, ToastContainer} from 'react-toastify';
 import { Link } from "react-router-dom";
-import Card from "../../assets/addcard.jpg";
+import Payment from "../../assets/addpayment.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { color } from "@mui/system";
-
-export default function AddCardDetails(){
 
 
-    const [userName, setUserName] = useState("");
-    const [cardNumber, setCardNumber] = useState("");
-    const [expDate, setExpDate] = useState("");
-    const [cvc, setCVC] = useState("");
-    const [cardType, setCardType] = useState("");
+export default function AddPaymentDetails(){
+
+    const accessToken = sessionStorage.getItem('userToken');
+
+    const [customerName, setCustomerName] = useState("");
+    const [vehicleNumber, setVehicleNumber] = useState("");
+    const [serviceDate, setServiceDate] = useState("");
     const [amount, setAmount] = useState("");
    
-    
+    const authAxios = axios.create({
+      
+      headers: {
+          Authorization: `Bearer ${accessToken}`
+      }
+  })
 
     function sendData(e){
         e.preventDefault();
     
-        const newCard={
-            userName,
-            cardNumber,
-            expDate,
-            cvc,
-            cardType,
+        const newPayment={
+            customerName,
+            vehicleNumber,
+            serviceDate,
             amount
         }
 
         
-        axios.post("/api/payment/add-card",newCard).then(()=>{
-            alert("Card Details Added")
-            setUserName("");
-            setCardNumber("");
-            setExpDate("");
-            setCVC("");
-            setCardType("");
+        authAxios.post("/api/payment/add-payment",newPayment).then(()=>{
+            alert("Payment Added")
+            setCustomerName("");
+            setVehicleNumber("");
+            setServiceDate("");
             setAmount("");
             window.location.reload(true);
 
@@ -52,7 +52,7 @@ export default function AddCardDetails(){
         <Container>
         <Wrap>
           <InputComponent>
-            <div className="table-head">Add Card Details</div>
+            <div className="table-head">Add Payment Details</div>
             <InputGroup>
               <Link to="/">
                 <KeyboardReturnIcon style={{ color: "white" }} />
@@ -61,78 +61,49 @@ export default function AddCardDetails(){
           </InputComponent>
           <Form onSubmit={sendData}>
             <Input>
-              <ImageWrapper src={Card} />
+              <ImageWrapper src={Payment} />
               <InputWrapper>
+                
                 <div>
-                <ButtonGroup>
-                    <input type="radio" value="Visa" name="cardType"  onChange={(e)=>{
-
-                            setCardType(e.target.value);
-
-                    }} /> Visa
-                    <input type="radio" value="Master" name="cardType" onChange={(e)=>{
-
-                    setCardType(e.target.value);
-
-                    }}/> Master
-                    </ButtonGroup>
-                    
-                </div>
-
-                <div>
-                  <label htmlFor="name">Name On Card</label>
-                  <input type="text" id="name" 
-                    placeholder="Enter Name"  
+                  <label htmlFor="cusname">Customer Name</label>
+                  <input type="text" id="cusName" 
+                    placeholder="Enter customer name"
                     required 
-                    value={userName} onChange={(e)=>{
+                    value={customerName} onChange={(e)=>{
 
-                        setUserName(e.target.value);
+                        setCustomerName(e.target.value);
 
                     }}  />
                 </div>
   
                 <div>
-                  <label htmlFor="cardNo">Card No</label>
-                  <input type="text" id="cardNo" 
-                    placeholder="1234-5678-9012-3456" 
-                    minLength={19} maxLength={19}  
+                  <label htmlFor="vehiNo">Vehicle Number</label>
+                  <input type="text" id="vehiNo" 
+                    placeholder="Enter Vehicle Number" 
                     required 
-                    value={cardNumber} onChange={(e)=>{
+                    value={vehicleNumber} onChange={(e)=>{
 
-                        setCardNumber(e.target.value);
+                        setVehicleNumber(e.target.value);
 
                     }}  />
                 </div>
   
                 <div>
-                  <label htmlFor="expDate">Expiry Date</label>
-                  <input type="text" id="expDate" 
-                    placeholder="MM/YYYY" 
+                  <label htmlFor="date">Service Date</label>
+                  <input type="date" id="date" 
+                    placeholder="Enter service Date" 
                     required 
-                    value={expDate} onChange={(e)=>{
+                    value={serviceDate} onChange={(e)=>{
 
-                        setExpDate(e.target.value);
+                        setServiceDate(e.target.value);
 
                     }}  />
                 </div>
   
                 <div>
-                  <label htmlFor="cvc">CVC</label>
-                  <input type="text" id="cvc" 
-                    placeholder="Enter cvc" 
-                    minLength={3} maxLength={3}  
-                    required 
-                    value={cvc} onChange={(e)=>{
-
-                        setCVC(e.target.value);
-
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="price">Amount (Rs.)</label>
+                  <label htmlFor="price">Payment (Rs.)</label>
                   <input type="text" id="price" 
-                    placeholder="Enter amount" 
+                    placeholder="Enter payment" 
                     required 
                     value={amount} onChange={(e)=>{
 
@@ -142,7 +113,8 @@ export default function AddCardDetails(){
                 </div>
                
                 <ButtonGroup>
-                  <input type="submit" value="Submit"  />
+                  <input type="reset" value="Reset" />
+                  <input type="submit" value="Submit" />
                 </ButtonGroup>
               </InputWrapper>
             </Input>

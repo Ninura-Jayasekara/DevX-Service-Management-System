@@ -18,6 +18,7 @@ import Login from "./components/Login/Login";
 import AddSpareParts from "./components/StockComponents/AddSpareParts";
 import DisplayStocks from "./components/StockComponents/DisplayStocks";
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
+import AddPaymentDetails from "./components/PaymentComponents/AddPaymentDetails";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
 
           <Route path="/add-card" element={<AddCardDetails />}></Route>
+          <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
         </Routes>
         <LargeFooter />
       </Container>
