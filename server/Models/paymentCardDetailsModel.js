@@ -14,7 +14,7 @@ const cardDetailSchema = new Schema({
     },
 
     expDate: {
-        type: Date,
+        type: String,
         required: [true, 'Expiry Date is required']
     },
 

@@ -11,7 +11,7 @@ const addCard = asyncHandler(async (req, res) => {
 
     const userName = req.body.userName;
     const cardNumber = req.body.cardNumber;
-    const expDate = Date(req.body.expDate);
+    const expDate = req.body.expDate;
     const cvc = req.body.cvc;
     const cardType = req.body.cardType;
     const amount = Number(req.body.amount);
@@ -39,7 +39,7 @@ const addPayment = asyncHandler(async (req, res) => {
 
     const customerName = req.body.customerName;
     const vehicleNumber = req.body.vehicleNumber;
-    const serviceDate = Date(req.body.serviceDate);
+    const serviceDate = req.body.serviceDate;
     const amount = Number(req.body.amount);
 
     const newPayment = new Payment({
@@ -50,7 +50,7 @@ const addPayment = asyncHandler(async (req, res) => {
        amount
     })
 
-    newCard.save().then(()=>{
+    newPayment.save().then(()=>{
         res.json("Payment Added successfully !")
     }).catch((err)=>{
         console.log(err);
