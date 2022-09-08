@@ -112,6 +112,7 @@ export default Navbar;
 
 const Nav = styled.nav`
   position: fixed;
+  overflow: hidden;
   height: 60px;
   width: 100%;
   background: #090b13;
@@ -279,26 +280,23 @@ const NavContainer = styled(Link)`
   margin: 10px 10px 0px;
   height: 50px;
   position: relative;
+  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 
   &.active {
     border-top: 1px solid white;
     border-radius: 10px 10px 0 0;
-    transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-    display: flex;
-    flex: 1;
-
     color: orange;
     // background: linear-gradient(to top left, #7c9e62, #400e33);
 
     &:after,
     &:before {
       content: "";
+      height: 41px;
       width: 40px;
-      height: 44px;
       border: 1px solid white;
       border-top: 0;
       position: absolute;
-      bottom: -3px;
+      bottom: 0;
     }
     &:after {
       right: -41px;

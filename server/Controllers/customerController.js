@@ -3,13 +3,15 @@ const Customer = require("../Models/customerModel");
 
 const addCustomer = asyncHandler(async (req, res) => {
   // TODO: ADD Fields
-  const { supervisorId, name, description, members } = req.body;
+  const { NIC, Name, DOB, Phone, Address, Email } = req.body;
 
   const newCustomer = new Customer({
-    supervisorId,
-    name,
-    description,
-    members,
+    NIC,
+    Name,
+    DOB,
+    Phone,
+    Address,
+    Email,
   });
 
   newCustomer
@@ -47,7 +49,12 @@ const deleteCustomer = asyncHandler((req, res) => {
 const updateCustomer = asyncHandler((req, res) => {
   // TODO: ADD Fields
   const app = {
-    isEvaluate: req.body.isEvaluate,
+    NIC: req.body.NIC,
+    Name: req.body.Name,
+    DOB: req.body.DOB,
+    Phone: req.body.Phone,
+    Address: req.body.Address,
+    Email: req.body.Email,
   };
   Customer.findByIdAndUpdate(
     req.params.id,

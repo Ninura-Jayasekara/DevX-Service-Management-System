@@ -5,6 +5,14 @@ import { Link } from "react-router-dom";
 import Image from "../../assets/Customer.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import SearchIcon from "@mui/icons-material/Search";
+import PersonIcon from "@mui/icons-material/Person";
+import ClearIcon from "@mui/icons-material/Clear";
+import TokenIcon from "@mui/icons-material/Token";
+import PhoneIcon from "@mui/icons-material/Phone";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import WcIcon from "@mui/icons-material/Wc";
+import HomeIcon from "@mui/icons-material/Home";
+import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerDelete() {
   const handleSubmit = (e) => {
@@ -31,35 +39,41 @@ function CustomerDelete() {
             <InputWrapper>
               <div>
                 <label htmlFor="NIC">NIC</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <div className="input-group">
+                  <TokenIcon className="left" />
+                  <input type="text" name="NIC" id="NIC" disabled />
+                </div>
               </div>
               <div>
-                <label htmlFor="NIC">Name</label>
-                <input type="text" name="NIC" id="NIC" disabled />
-              </div>
-
-              <div>
-                <label htmlFor="NIC">DOB</label>
-                <input type="text" name="NIC" id="NIC" disabled />
-              </div>
-
-              <div>
-                <label htmlFor="NIC">Phone</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <label htmlFor="Name">Name</label>
+                <div className="input-group">
+                  <PersonIcon className="left" />
+                  <input type="text" name="Name" id="Name" disabled />
+                </div>
               </div>
 
               <div>
-                <label htmlFor="NIC">Gender</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <label htmlFor="DOB">DOB</label>
+                <input type="text" name="DOB" id="DOB" disabled />
               </div>
 
               <div>
-                <label htmlFor="NIC">Address</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <label htmlFor="Phone">Phone</label>
+                <input type="text" name="Phone" id="Phone" disabled />
+              </div>
+
+              <div>
+                <label htmlFor="Gender">Gender</label>
+                <input type="text" name="Gender" id="Gender" disabled />
+              </div>
+
+              <div>
+                <label htmlFor="Address">Address</label>
+                <input type="text" name="Address" id="Address" disabled />
               </div>
               <div>
-                <label htmlFor="NIC">Email</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <label htmlFor="Email">Email</label>
+                <input type="text" name="Email" id="Email" disabled />
               </div>
               <ButtonGroup>
                 <input type="submit" value="Yes, Delete" />
@@ -166,9 +180,36 @@ const InputWrapper = styled.div`
     select {
       outline: none;
       border: none;
+      width: 100%;
       height: 30px;
       border-radius: 15px;
       padding: 3px 12px;
+      padding-left: 40px;
+    }
+    .input-group {
+      display: block;
+      position: relative;
+
+      .left {
+        position: absolute;
+        height: 100%;
+        margin-left: 5px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        color: black;
+        border-right: 1px solid black;
+      }
+      .right {
+        position: absolute;
+        height: 100%;
+        margin-right: 5px;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        color: black;
+        border-left: 1px solid black;
+      }
     }
   }
 `;
