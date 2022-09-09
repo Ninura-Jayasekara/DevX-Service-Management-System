@@ -1,10 +1,12 @@
 import React,{ useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 import Stock from "../../assets/addparts.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+
 
 export default function AddSpareParts(){
 
@@ -24,8 +26,19 @@ export default function AddSpareParts(){
       }
   })
 
+  const handleReset = () => {
+    setItemCode('');
+    setBrand('');
+    setCountry('');
+    setDealerName('');
+    setSparePart('');
+    setPrice('');
+  };
+ 
     function sendData(e){
         e.preventDefault();
+
+      
     
         const newPart={
             itemCode,
@@ -38,7 +51,7 @@ export default function AddSpareParts(){
 
         
         authAxios.post("/api/stock/",newPart).then(()=>{
-            alert("Spare Part Added")
+          alert("successful")
             setItemCode("");
             setBrand("");
             setCountry("");
@@ -86,7 +99,7 @@ export default function AddSpareParts(){
                   <select id="itemCode" defaultValue="Select Item Code" value={itemCode}
                           onChange={(e) => setItemCode(e.target.value)}>
 
-                             <option value= "Engine-Oil-001">Honda Engine oil 4l</option> 
+                            <option value= "Engine-Oil-001">Honda Engine oil 4l</option> 
                             <option value = "Engine-Oil-002">Toyota Engine oil 4l </option>
                             <option value = "Engine-Oil-003">Honda Engine oil 1l </option>
                             <option value = "Engine-Oil-004">Toyota Engine oil 4l </option>
@@ -129,7 +142,7 @@ export default function AddSpareParts(){
                   <label htmlFor="Dealer">Dealer</label>
                   <input type="text" id="dealer" 
                     placeholder="Enter Item Dealer" 
-                    minLength={5} maxLength={20}  
+                    minLength={5} maxLength={30}  
                     required 
                     value={dealerName} onChange={(e)=>{
 
@@ -142,7 +155,7 @@ export default function AddSpareParts(){
                   <label htmlFor="Part">Spare Part</label>
                   <input type="text" id="part" 
                     placeholder="Enter Spare Part" 
-                    minLength={10} maxLength={20}  
+                    minLength={8} maxLength={20}  
                     required 
                     value={sparePart} onChange={(e)=>{
 
@@ -164,7 +177,7 @@ export default function AddSpareParts(){
                 </div>
                
                 <ButtonGroup>
-                  <input type="reset" value="Reset" />
+                  <input type="reset" value="Reset" onClick={handleReset} />
                   <input type="submit" value="Submit" />
                 </ButtonGroup>
               </InputWrapper>

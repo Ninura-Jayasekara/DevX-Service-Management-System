@@ -32,16 +32,16 @@ const viewFacilities = asyncHandler((req, res) => {
 });
 
 const updateFacility = asyncHandler(async (req, res) => {
-  let fId = req.params.fId;
+  let fid = req.params.fId;
 
   const { facilityName, facilityCost } = req.body;
 
   const updateFacility = {
     facilityName,
     facilityCost,
-  };
+  }
 
-  const updateCustomer = await Facility.findByIdAndUpdate(fId, updateFacility)
+  const update = await Facility.findByIdAndUpdate(fid, updateFacility)
     .then(() => {
       res.status(200).send({ status: "Facility Cost Updated!" });
     })
@@ -52,6 +52,21 @@ const updateFacility = asyncHandler(async (req, res) => {
         .send({ status: "Error with updating data...", error: err.message });
     });
 });
+
+const getFacility = asyncHandler(async (req, res) =>{
+  let fid = req.params.fId;
+  const facility = await Facility.findById(fid)
+  .then((facility) => {
+    res.status(200).send({ status: "Facility fetched",facility});
+  })
+  .catch((err) => {
+    console.log(err);
+    res
+      .status(500)
+      .send({ status: "Error with updating data...", error: err.message });
+  });
+})
+
 
 const deleteFacility = asyncHandler(async(req,res)=>{
     let fId= req.params.fId;
@@ -69,5 +84,6 @@ module.exports = {
   addFacility,
   viewFacilities,
   updateFacility,
+  getFacility,
   deleteFacility
 };

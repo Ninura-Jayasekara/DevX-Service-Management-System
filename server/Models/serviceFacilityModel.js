@@ -10,6 +10,7 @@ const facilitySchema =  new Schema({
 
     facilityCost:{
         type:Number,
+        required:[true, 'Facility Cost is Required']
         
     }
 })
