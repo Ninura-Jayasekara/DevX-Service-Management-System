@@ -2,6 +2,7 @@ import React,{useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import '../../Form.css';
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export default function UpdateFacilities(){
 
@@ -18,24 +19,28 @@ export default function UpdateFacilities(){
     }, [] );
 
     const updateAPIData = () => {
-        axios.put(`api/facility/update/${fid}`, {
+        axios.put(`api/facility/update/${fId}`, {
             facilityName,
-            facilityCost,
+            facilityCost
         })
-        window.location="/facilities";
     }
+
+    
         
 
     return(
         <div>
         <div className="addFacilities">
-        <center>
-            <h2 className="text-white">SERVICE MANAGEMENT</h2>
-            </center><br/>
-            <form className="Form" style={{  background: "#BBDEFB"}}>
+            <form className="Form" style={{  background: "#151e3d"}}>
+            <center>
+                <h2 className="heading">UPDATE FACILITY COST</h2>
+            </center><br></br>
+            <Link to={"/facilities"}>
+              <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
+        </Link> 
 
                 <div  id="addfac"className="mb-3">
-                    <label className="falabel" for="facilityName"><b>Service Name</b></label>
+                    <label className="falabel" id="snlabel" for="facilityName"><b>Service Name</b></label>
                     <input type="text" className="form-control" id="facilityName" value={facilityName} readOnly
                     onChange={(e)=>{
                         setFacilityName(e.target.value);
@@ -43,13 +48,13 @@ export default function UpdateFacilities(){
                 </div>
 
                 <div id="addfac" className="mb-3">
-                    <label className="falabel" for="facilityCost"><b>Service Facility Cost (Rs)</b></label>
-                    <input type="number" className="form-control" id="facilityCost" value={facilityCost}
+                    <label className="falabel" id="sclabel" for="facilityCost"><b>Service Facility Cost (Rs)</b></label>
+                    <input type="Number" className="form-control" id="facilityCost" value={facilityCost}
                     onChange={(e)=>{
                         setFacilityCost(e.target.value);
                     }}/>
                 </div>
-                <Link to={"/facilities"}><button type="submit" id="btnsubmit" className="btn btn-primary" onClick={()=>{updateAPIData();}}><b>SUBMIT</b></button></Link>
+                <Link to={"/facilities"}><button type="submit" id="btnsubmit" className="btn btn-primary" onClick={()=>{updateAPIData();}}><b>UPDATE</b></button></Link>
 
             </form>
         </div>

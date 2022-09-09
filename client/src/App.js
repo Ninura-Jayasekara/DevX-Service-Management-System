@@ -17,8 +17,9 @@ import SearchParts from "./components/StockComponents/searchParts";
 import Login from "./components/Login/Login";
 import AddSpareParts from "./components/StockComponents/AddSpareParts";
 import DisplayStocks from "./components/StockComponents/DisplayStocks";
-import AddServiceFacilities from "./components/ServiceComponents/AddServiceFacilities";
-import ViewFacilities from "./components/ServiceComponents/ViewFacilities";
+import AddServiceFacilities from "./components/ServiceFacilityComponents/AddServiceFacilities";
+import ViewFacilities from "./components/ServiceFacilityComponents/ViewFacilities";
+import UpdateFacilities from "./components/ServiceFacilityComponents/UpdateFacilities";
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
 import AddPaymentDetails from "./components/PaymentComponents/AddPaymentDetails";
 import ViewPayments from "./components/PaymentComponents/ViewPaymentDetails";
@@ -44,6 +45,7 @@ function App() {
 
           <Route path="/addfacilities" element={<AddServiceFacilities />}></Route>
           <Route path="/facilities" element={<ViewFacilities />}></Route>
+          <Route path="/update/:fId" element={<UpdateFacilities />}></Route>
           
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
