@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 import Image from "../../assets/Customer.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
-import ClearIcon from "@mui/icons-material/Clear";
 import TokenIcon from "@mui/icons-material/Token";
+import ClearIcon from "@mui/icons-material/Clear";
 import PhoneIcon from "@mui/icons-material/Phone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import WcIcon from "@mui/icons-material/Wc";
@@ -15,22 +18,118 @@ import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerDelete() {
+  const [values, setValues] = useState([]);
+  const [formData, setFormData] = useState({});
+  const [filterData, setFilterData] = useState([]);
+
+  const inputSearch = useRef();
+
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
+  const handleFilter = (e) => {
+    const searchData = e.target.value;
+    const newFilter = values.filter((val) =>
+      val.NIC.toLowerCase().includes(searchData.toLowerCase())
+    );
+    if (searchData === "") {
+      setFilterData([]);
+    } else {
+      setFilterData(newFilter);
+    }
+  };
+
+  const clearInput = () => {
+    setFilterData([]);
+    inputSearch.current.value = "";
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    formData._id
+      ? authAxios
+          .delete(`/api/customer/delete/${formData._id}`)
+          .then((res) => {
+            toast.success("Delete Succesful", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
+            setValues(values.filter((val) => val._id !== formData._id));
+            setFormData({});
+            clearInput();
+          })
+          .catch((e) => {
+            toast.error("Delete Failed", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
+          })
+      : toast.error("Search Something", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
   };
+
+  useEffect(() => {
+    authAxios.get("/api/customer/view").then((req, res) => {
+      setValues(req.data);
+    });
+  }, []);
   return (
     <Container>
+      <ToastContainer />
       <Wrap>
         <InputComponent>
           <div className="table-head">Customer Registeration</div>
           <InputGroup>
-            <SearchIcon sx={{ marginRight: "5px" }} />
-            <input type="text" placeholder="Search" />
+            {filterData.length === 0 ? (
+              <SearchIcon sx={{ marginRight: "5px" }} />
+            ) : (
+              <ClearIcon sx={{ marginRight: "5px" }} onClick={clearInput} />
+            )}
+            <input
+              type="text"
+              placeholder="Search"
+              ref={inputSearch}
+              onChange={handleFilter}
+            />
             <Link to="/customer">
               <KeyboardReturnIcon
                 style={{ color: "white", marginLeft: "5px" }}
               />
             </Link>
+            {filterData.length !== 0 && (
+              <DataList>
+                {filterData.map((val) => (
+                  <DataResult
+                    onClick={() => {
+                      setFormData(val);
+                      clearInput();
+                    }}
+                  >
+                    {val.NIC}
+                  </DataResult>
+                ))}
+              </DataList>
+            )}
           </InputGroup>
         </InputComponent>
         <Form onSubmit={handleSubmit}>
@@ -41,39 +140,92 @@ function CustomerDelete() {
                 <label htmlFor="NIC">NIC</label>
                 <div className="input-group">
                   <TokenIcon className="left" />
-                  <input type="text" name="NIC" id="NIC" disabled />
+                  <input
+                    type="text"
+                    name="NIC"
+                    value={formData.NIC ? formData.NIC : ""}
+                    id="NIC"
+                    disabled
+                  />
                 </div>
               </div>
               <div>
                 <label htmlFor="Name">Name</label>
                 <div className="input-group">
                   <PersonIcon className="left" />
-                  <input type="text" name="Name" id="Name" disabled />
+                  <input
+                    type="text"
+                    name="Name"
+                    value={formData.Name ? formData.Name : ""}
+                    id="Name"
+                    disabled
+                  />
                 </div>
               </div>
-
               <div>
                 <label htmlFor="DOB">DOB</label>
-                <input type="text" name="DOB" id="DOB" disabled />
+                <div className="input-group">
+                  <CalendarMonthIcon className="left" />
+                  <input
+                    type="text"
+                    name="DOB"
+                    value={formData.DOB ? formData.DOB.split("T")[0] : ""}
+                    id="DOB"
+                    disabled
+                  />
+                </div>
               </div>
-
               <div>
                 <label htmlFor="Phone">Phone</label>
-                <input type="text" name="Phone" id="Phone" disabled />
+                <div className="input-group">
+                  <PhoneIcon className="left" />
+                  <input
+                    type="text"
+                    name="Phone"
+                    value={formData.Phone ? formData.Phone : ""}
+                    id="Phone"
+                    disabled
+                  />
+                </div>
               </div>
-
               <div>
                 <label htmlFor="Gender">Gender</label>
-                <input type="text" name="Gender" id="Gender" disabled />
+                <div className="input-group">
+                  <WcIcon className="left" />
+                  <input
+                    type="text"
+                    name="Gender"
+                    value={formData.Gender ? formData.Gender : ""}
+                    id="Gender"
+                    disabled
+                  />
+                </div>
               </div>
-
               <div>
                 <label htmlFor="Address">Address</label>
-                <input type="text" name="Address" id="Address" disabled />
+                <div className="input-group">
+                  <HomeIcon className="left" />
+                  <input
+                    type="text"
+                    name="Address"
+                    value={formData.Address ? formData.Address : ""}
+                    id="Address"
+                    disabled
+                  />
+                </div>
               </div>
               <div>
                 <label htmlFor="Email">Email</label>
-                <input type="text" name="Email" id="Email" disabled />
+                <div className="input-group">
+                  <EmailIcon className="left" />
+                  <input
+                    type="text"
+                    name="Email"
+                    value={formData.Email ? formData.Email : ""}
+                    id="Email"
+                    disabled
+                  />
+                </div>
               </div>
               <ButtonGroup>
                 <input type="submit" value="Yes, Delete" />
@@ -95,6 +247,7 @@ const Container = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 `;
 
 const Wrap = styled.div`
@@ -137,6 +290,7 @@ const InputComponent = styled.div`
   }
 `;
 const InputGroup = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -182,6 +336,7 @@ const InputWrapper = styled.div`
       border: none;
       width: 100%;
       height: 30px;
+      color: white;
       border-radius: 15px;
       padding: 3px 12px;
       padding-left: 40px;
@@ -236,4 +391,27 @@ const ButtonGroup = styled.span`
   input:first-child {
     background: red;
   }
+`;
+
+const DataList = styled.div`
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: -30px;
+  width: 300px;
+  height: 200px;
+  background: white;
+  overflow: hidden;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+`;
+
+const DataResult = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background: black;
 `;

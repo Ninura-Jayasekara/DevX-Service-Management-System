@@ -1,27 +1,32 @@
 const asyncHandler = require("express-async-handler");
+const { isValidObjectId } = require("mongoose");
 const Customer = require("../Models/customerModel");
 
 const addCustomer = asyncHandler(async (req, res) => {
   // TODO: ADD Fields
-  const { NIC, Name, DOB, Phone, Address, Email } = req.body;
+  const { NIC, Name, DOB, Phone, Address, Email, Gender } = req.body;
 
-  const newCustomer = new Customer({
-    NIC,
-    Name,
-    DOB,
-    Phone,
-    Address,
-    Email,
-  });
-
-  newCustomer
-    .save()
-    .then(() => {
-      res.json("The Customer is added to the system successfully!");
-    })
-    .catch((err) => {
-      console.log(err);
+  await Customer.findOne({ NIC }).then((customer) => {
+    if (customer) return res.status(400).json("Customer already exists");
+    const newCustomer = new Customer({
+      NIC,
+      Name,
+      DOB,
+      Gender,
+      Phone,
+      Address,
+      Email,
     });
+
+    newCustomer
+      .save()
+      .then(() => {
+        res.json({ msg: "The Customer is added to the system successfully!" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 });
 
 const viewCustomer = asyncHandler((req, res) => {
@@ -36,6 +41,8 @@ const viewCustomer = asyncHandler((req, res) => {
 });
 
 const deleteCustomer = asyncHandler((req, res) => {
+  if (!isValidObjectId(req.params.id))
+    return res.status(400).send(`No Record with given id : $(req.params.id)`);
   Customer.findByIdAndDelete(req.params.id, (err, doc) => {
     if (!err) res.send(doc);
     else
@@ -46,18 +53,16 @@ const deleteCustomer = asyncHandler((req, res) => {
   });
 });
 
-const updateCustomer = asyncHandler((req, res) => {
+const updateCustomer = async (req, res) => {
+  console.log(req.body);
   // TODO: ADD Fields
-  const app = {
-    NIC: req.body.NIC,
-    Name: req.body.Name,
-    DOB: req.body.DOB,
-    Phone: req.body.Phone,
-    Address: req.body.Address,
-    Email: req.body.Email,
-  };
-  Customer.findByIdAndUpdate(
-    req.params.id,
+  if (!isValidObjectId(req.params.id))
+    return res.status(400).send(`No Record with given id : $(req.params.id)`);
+
+  const app = await req.body;
+
+  let doc = await Customer.findByIdAndUpdate(
+    { _id: req.params.id },
     { $set: app },
     { new: true },
     (err, doc) => {
@@ -69,7 +74,8 @@ const updateCustomer = asyncHandler((req, res) => {
         );
     }
   );
-});
+  console.log(doc);
+};
 
 module.exports = {
   addCustomer,

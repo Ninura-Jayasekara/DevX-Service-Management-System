@@ -15,6 +15,10 @@ const customerSchema = new Schema({
     type: Date,
     required: [true, "Customer DOB is required"],
   },
+  Gender: {
+    type: String,
+    required: [true, "Customer Gender is required"],
+  },
   Phone: {
     type: String,
     required: [true, "Customer Phone is required"],

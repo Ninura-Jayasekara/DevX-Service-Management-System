@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
@@ -16,6 +17,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerAdd() {
+  const accessToken = sessionStorage.getItem("userToken");
+
   const [values, setValues] = useState({
     NIC: "",
     Name: "",
@@ -24,6 +27,13 @@ function CustomerAdd() {
     Gender: "Male",
     Address: "",
     Email: "",
+  });
+
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
   });
 
   const inputNIC = useRef();
@@ -38,17 +48,52 @@ function CustomerAdd() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  const resetValue = () => {
+    inputAddress.current.value = "";
+    values.Address = "";
+    inputEmail.current.value = "";
+    values.Email = "";
+    inputNIC.current.value = "";
+    values.NIC = "";
+    inputPhone.current.value = "";
+    values.Phone = "";
+    inputName.current.value = "";
+    values.Name = "";
+    inputGender.current.value = "Male";
+    values.Gender = "Male";
+    inputDOB.current.value = new Date().toLocaleDateString("en-CA");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast.info(values.DOB, {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-    });
+    console.log(values);
+
+    authAxios
+      .post("/api/customer/add", values)
+      .then((res) => {
+        toast.success(res.data.msg, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
+        resetValue();
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.warning(e.response.data, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
+      });
   };
   return (
     <Container>
@@ -76,6 +121,7 @@ function CustomerAdd() {
                     id="NIC"
                     ref={inputNIC}
                     value={values.NIC}
+                    required
                     onChange={handleChange}
                   />
                   <ClearIcon
@@ -96,6 +142,7 @@ function CustomerAdd() {
                     type="text"
                     name="Name"
                     id="Name"
+                    required
                     ref={inputName}
                     value={values.Name}
                     onChange={handleChange}
@@ -119,6 +166,7 @@ function CustomerAdd() {
                     type="date"
                     name="DOB"
                     id="DOB"
+                    required
                     ref={inputDOB}
                     defaultValue={values.DOB}
                     onChange={handleChange}
@@ -134,6 +182,7 @@ function CustomerAdd() {
                     type="text"
                     name="Phone"
                     id="Phone"
+                    required
                     ref={inputPhone}
                     value={values.Phone}
                     onChange={handleChange}
@@ -174,6 +223,7 @@ function CustomerAdd() {
                     type="text"
                     name="Address"
                     id="Address"
+                    required
                     ref={inputAddress}
                     value={values.Address}
                     onChange={handleChange}
@@ -196,6 +246,7 @@ function CustomerAdd() {
                     type="text"
                     name="Email"
                     id="Email"
+                    required
                     ref={inputEmail}
                     value={values.Email}
                     onChange={handleChange}
@@ -215,22 +266,7 @@ function CustomerAdd() {
                   type="button"
                   value="Reset"
                   onClick={() => {
-                    inputAddress.current.value = "";
-                    values.Address = "";
-                    inputEmail.current.value = "";
-                    values.Email = "";
-                    inputNIC.current.value = "";
-                    values.NIC = "";
-                    inputPhone.current.value = "";
-                    values.Phone = "";
-                    inputName.current.value = "";
-                    values.Name = "";
-                    inputGender.current.value = "Male";
-                    values.Gender = "Male";
-                    inputDOB.current.value = new Date().toLocaleDateString(
-                      "en-CA"
-                    );
-                    values.DOB = new Date().toLocaleDateString("en-CA");
+                    resetValue();
                   }}
                 />
                 <input type="submit" value="Submit" />

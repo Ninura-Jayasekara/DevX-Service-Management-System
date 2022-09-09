@@ -17,13 +17,10 @@ import SearchParts from "./components/StockComponents/searchParts";
 import Login from "./components/Login/Login";
 import AddSpareParts from "./components/StockComponents/AddSpareParts";
 import DisplayStocks from "./components/StockComponents/DisplayStocks";
-<<<<<<< HEAD
-import AddServiceFacilities from "./components/ServiceComponents/AddServiceFacilities" ;
-=======
+import AddServiceFacilities from "./components/ServiceComponents/AddServiceFacilities";
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
 import AddPaymentDetails from "./components/PaymentComponents/AddPaymentDetails";
 import ViewPayments from "./components/PaymentComponents/ViewPaymentDetails";
->>>>>>> c7d6b1e5685359cb1ccd243c3b1dd39cd251e4b1
 
 function App() {
   return (
@@ -44,13 +41,13 @@ function App() {
           <Route path="/add-stocks" element={<AddSpareParts />}></Route>
           <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
 
-<<<<<<< HEAD
-          <Route path="/addfacilities" element={<AddServiceFacilities />}></Route>
-=======
+          <Route
+            path="/addfacilities"
+            element={<AddServiceFacilities />}
+          ></Route>
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
           <Route path="/viewpayment" element={<ViewPayments />}></Route>
->>>>>>> c7d6b1e5685359cb1ccd243c3b1dd39cd251e4b1
         </Routes>
         <LargeFooter />
       </Container>

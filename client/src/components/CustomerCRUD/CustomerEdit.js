@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
@@ -9,6 +10,7 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
+import ClearIcon from "@mui/icons-material/Clear";
 import TokenIcon from "@mui/icons-material/Token";
 import PhoneIcon from "@mui/icons-material/Phone";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -17,28 +19,104 @@ import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerEdit() {
-  const [values, setValues] = useState({
+  const [values, setValues] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [isDOBEdit, setIsDOBEdit] = useState(false);
+  const [formData, setFormData] = useState({
     NIC: "",
     Name: "",
-    Date: "",
+    DOB: "",
     Phone: "",
-    Gender: "Male",
+    Gender: "none",
     Address: "",
     Email: "",
   });
 
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+  const [ID, setID] = useState("");
+
+  const inputSearch = useRef();
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
+  const handleFilter = (e) => {
+    const searchData = e.target.value;
+    const newFilter = values.filter((val) =>
+      val.NIC.toLowerCase().includes(searchData.toLowerCase())
+    );
+    if (searchData === "") {
+      setFilterData([]);
+    } else {
+      setFilterData(newFilter);
+    }
   };
+
+  const clearInput = () => {
+    setFilterData([]);
+    inputSearch.current.value = "";
+  };
+
+  // const handleChange = (event) => {
+  //   setFormData({ ...values, [event.target.name]: event.target.value });
+  // };
+
   const inputNIC = useRef();
   const inputName = useRef();
   const inputPhone = useRef();
   const inputAddress = useRef();
   const inputEmail = useRef();
+  const inputDOB = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    ID !== ""
+      ? authAxios
+          .put(`/api/customer/update/${ID}`, formData)
+          .then((res) => {
+            toast.success("Update Succesful", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
+            setValues(
+              values.map((val, i) =>
+                val._id === ID ? (val[i] = formData) : val
+              )
+            );
+          })
+          .catch((e) => {
+            toast.error(e.response, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
+          })
+      : toast.error("Search Something", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
   };
+
+  useEffect(() => {
+    authAxios.get("/api/customer/view").then((req, res) => {
+      setValues(req.data);
+    });
+  }, []);
   return (
     <Container>
       <ToastContainer />
@@ -46,13 +124,46 @@ function CustomerEdit() {
         <InputComponent>
           <div className="table-head">Customer Registeration</div>
           <InputGroup>
-            <SearchIcon sx={{ marginRight: "5px" }} />
-            <input type="text" placeholder="Search" />
+            {filterData.length === 0 ? (
+              <SearchIcon sx={{ marginRight: "5px" }} />
+            ) : (
+              <ClearIcon sx={{ marginRight: "5px" }} onClick={clearInput} />
+            )}
+            <input
+              type="text"
+              placeholder="Search"
+              ref={inputSearch}
+              onChange={handleFilter}
+            />
             <Link to="/customer">
               <KeyboardReturnIcon
                 style={{ color: "white", marginLeft: "5px" }}
               />
             </Link>
+            {filterData.length !== 0 && (
+              <DataList>
+                {filterData.map((val) => (
+                  <DataResult
+                    key={val._id}
+                    onClick={() => {
+                      setID(val._id);
+                      setFormData({
+                        NIC: val.NIC,
+                        Name: val.Name,
+                        DOB: val.DOB.split("T")[0],
+                        Phone: val.Phone,
+                        Gender: val.Gender,
+                        Address: val.Address,
+                        Email: val.Email,
+                      });
+                      clearInput();
+                    }}
+                  >
+                    {val.NIC}
+                  </DataResult>
+                ))}
+              </DataList>
+            )}
           </InputGroup>
         </InputComponent>
         <Form onSubmit={handleSubmit}>
@@ -69,7 +180,8 @@ function CustomerEdit() {
                     id="NIC"
                     disabled
                     ref={inputNIC}
-                    onChange={handleChange}
+                    value={formData.NIC}
+                    onChange={(e) => setFormData({ NIC: e.target.value })}
                   />
                   <EditIcon
                     className="right"
@@ -90,7 +202,9 @@ function CustomerEdit() {
                     name="Name"
                     id="Name"
                     disabled
+                    value={formData.Name}
                     ref={inputName}
+                    onChange={(e) => setFormData({ Name: e.target.value })}
                   />
                   <EditIcon
                     className="right"
@@ -106,7 +220,26 @@ function CustomerEdit() {
                 <label htmlFor="DOB">DOB</label>
                 <div className="input-group">
                   <CalendarMonthIcon className="left" />
-                  <input type="date" name="DOB" id="DOB" />
+                  <input
+                    type="date"
+                    name="DOB"
+                    disabled
+                    ref={inputDOB}
+                    value={formData.DOB}
+                    id="DOB"
+                    onChange={(e) => setFormData({ DOB: e.target.value })}
+                  />
+                  {!isDOBEdit && (
+                    <EditIcon
+                      className="right"
+                      onClick={() => {
+                        setIsDOBEdit(true);
+                        inputDOB.current.getAttribute("disabled") === null
+                          ? inputDOB.current.setAttribute("disabled", "")
+                          : inputDOB.current.removeAttribute("disabled");
+                      }}
+                    />
+                  )}
                 </div>
               </div>
               <div>
@@ -118,7 +251,9 @@ function CustomerEdit() {
                     name="Phone"
                     id="Phone"
                     disabled
+                    value={formData.Phone}
                     ref={inputPhone}
+                    onChange={(e) => setFormData({ Phone: e.target.value })}
                   />
                   <EditIcon
                     className="right"
@@ -134,7 +269,16 @@ function CustomerEdit() {
                 <label htmlFor="Gender">Gender</label>
                 <div className="input-group">
                   <WcIcon className="left" />
-                  <select name="Gender" id="Gender">
+                  <select
+                    name="Gender"
+                    id="Gender"
+                    onChange={(e) => setFormData({ Gender: e.target.value })}
+                    value={formData.Gender}
+                    disabled
+                  >
+                    <option value="none" selected disabled hidden>
+                      Search Customer By ID
+                    </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
@@ -150,7 +294,9 @@ function CustomerEdit() {
                     name="Address"
                     id="Address"
                     disabled
+                    value={formData.Address}
                     ref={inputAddress}
+                    onChange={(e) => setFormData({ Address: e.target.value })}
                   />
                   <EditIcon
                     className="right"
@@ -171,7 +317,9 @@ function CustomerEdit() {
                     name="Email"
                     id="Email"
                     disabled
+                    value={formData.Email}
                     ref={inputEmail}
+                    onChange={(e) => setFormData({ Email: e.target.value })}
                   />
                   <EditIcon
                     className="right"
@@ -197,6 +345,7 @@ function CustomerEdit() {
 export default CustomerEdit;
 
 const Container = styled.main`
+  z-index: 1;
   min-height: calc(100vh);
   padding: 60px calc(3vw) 0px;
   overflow-x: hidden;
@@ -245,6 +394,7 @@ const InputComponent = styled.div`
   }
 `;
 const InputGroup = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -292,6 +442,7 @@ const InputWrapper = styled.div`
       border-radius: 15px;
       padding: 3px 12px;
       padding-left: 40px;
+      color: blue;
     }
     .input-group {
       display: block;
@@ -338,4 +489,27 @@ const ButtonGroup = styled.span`
     border-radius: 15px;
     background: #3cb043;
   }
+`;
+
+const DataList = styled.div`
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: -30px;
+  width: 300px;
+  height: 200px;
+  background: white;
+  overflow: hidden;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+`;
+
+const DataResult = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background: black;
 `;
