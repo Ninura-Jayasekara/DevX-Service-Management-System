@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import {
@@ -14,17 +15,23 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 
 function CustomerDetails() {
-  const createData = (name, calories, fat, carbs, protein) => {
-    return { name, calories, fat, carbs, protein };
-  };
+  const accessToken = sessionStorage.getItem("userToken");
 
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
+  const [values, setValues] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
+
+  useEffect(() => {
+    authAxios.get("/api/customer/view").then((res) => {
+      setValues(res.data);
+    });
+  }, []);
 
   return (
     <Container>
@@ -33,7 +40,14 @@ function CustomerDetails() {
           <div className="table-head">Customer Details</div>
           <InputGroup>
             <SearchIcon />
-            <input type="text" placeholder="Search" />
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            />
           </InputGroup>
         </InputComponent>
         <TableContainer component={Paper}>
@@ -41,29 +55,38 @@ function CustomerDetails() {
             <TableHead sx={{ background: "#36454f" }}>
               <TableRow>
                 <TableCell>NIC</TableCell>
-                <TableCell align="right">Name</TableCell>
-                <TableCell align="right">Email</TableCell>
-                <TableCell align="right">Phone&nbsp;Number</TableCell>
-                <TableCell align="right">Address</TableCell>
-                <TableCell align="right">Date</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone&nbsp;Number</TableCell>
+                <TableCell>Address</TableCell>
+                <TableCell>Date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
-                  <TableCell align="right">2012</TableCell>
-                </TableRow>
-              ))}
+              {values
+                ? values
+                    .filter((value) => {
+                      if (searchTerm === "") return value;
+                      else if (value.NIC.includes(searchTerm)) return value;
+                    })
+                    .map((value) => (
+                      <TableRow
+                        key={value.NIC}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {value.NIC}
+                        </TableCell>
+                        <TableCell>{value.Name}</TableCell>
+                        <TableCell>{value.Email}</TableCell>
+                        <TableCell>{value.Phone}</TableCell>
+                        <TableCell>{value.Address}</TableCell>
+                        <TableCell>{value.DOB.split("T")[0]}</TableCell>
+                      </TableRow>
+                    ))
+                : null}
             </TableBody>
           </Table>
         </TableContainer>

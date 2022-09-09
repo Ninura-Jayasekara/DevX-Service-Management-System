@@ -1,16 +1,39 @@
 const express = require("express");
+const { isValidObjectId } = require("mongoose");
+const Customer = require("../Models/customerModel");
+
+const { protect } = require("../Middleware/authMiddleware");
 
 const router = express.Router();
+
 const {
   addCustomer,
   viewCustomer,
   deleteCustomer,
-  updateCustomer,
 } = require("../Controllers/customerController");
 
 router.post("/add", addCustomer);
 router.get("/view", viewCustomer);
 router.delete("/delete/:id", deleteCustomer);
-router.put("/update/:id", updateCustomer);
+
+// Update Route
+router.put("/update/:id", (req, res) => {
+  if (!isValidObjectId(req.params.id))
+    return res.status(400).send(`No Record with given id : $(req.params.id)`);
+
+  Customer.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $set: req.body },
+    { new: true },
+    (err, doc) => {
+      if (!err) res.send(doc);
+      else
+        console.log(
+          "Error in Updating Customer Details :" +
+            JSON.stringify(err, undefined, 2)
+        );
+    }
+  );
+});
 
 module.exports = router;

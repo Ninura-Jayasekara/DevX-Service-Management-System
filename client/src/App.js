@@ -43,10 +43,17 @@ function App() {
           <Route path="/add-stocks" element={<AddSpareParts />}></Route>
           <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
 
-          <Route path="/addfacilities" element={<AddServiceFacilities />}></Route>
+          <Route
+            path="/addfacilities"
+            element={<AddServiceFacilities />}
+          ></Route>
+          <Route
+            path="/addfacilities"
+            element={<AddServiceFacilities />}
+          ></Route>
           <Route path="/facilities" element={<ViewFacilities />}></Route>
           <Route path="/update/:fId" element={<UpdateFacilities />}></Route>
-          
+
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
           <Route path="/viewpayment" element={<ViewPayments />}></Route>
