@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import '../../Form.css';
 
 export default function UpdateFacilities(){
@@ -8,6 +8,8 @@ export default function UpdateFacilities(){
     const [facilityName, setFacilityName]= useState(null);
     const [facilityCost, setFacilityCost]= useState("");
     const [fId, setFId]= useState(null);
+
+    const navigate = useNavigate();
 
     useEffect(() =>{
         
@@ -38,7 +40,7 @@ export default function UpdateFacilities(){
                 .put(`/api/facility/update/${fId}`, newFacility)
                 .then(() => {
                   alert("Facility updated Successfully");
-                  window.location.reload(true);
+                  navigate("/facilities");
                 })
                 .catch((err) => {
                   alert(err);
@@ -70,7 +72,7 @@ export default function UpdateFacilities(){
                         setFacilityCost(e.target.value);
                     }}/>
                 </div>
-                <Link to={"/facilities"}><button type="submit" id="btnsubmit" className="btn btn-primary" onClick={onSubmit}><b>SUBMIT</b></button></Link>
+                <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={onSubmit}><b>SUBMIT</b></button>
 
             </form>
         </div>
