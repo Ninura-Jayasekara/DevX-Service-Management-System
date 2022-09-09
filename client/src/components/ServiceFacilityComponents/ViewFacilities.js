@@ -86,6 +86,9 @@ export default function ViewFacilities() {
                         }
                     </tbody>
                 </table>
+                <Link to={"/addfacilities"}><button type="submit" id="btnadd" className="btn btn-primary"><b>ADD SERVICE FACILITY</b></button></Link>
+                <button type="submit" id="btnview" className="btn btn-primary"><b>VIEW RESERVATIONS</b></button>
+                <button type="submit" id="btnreport" className="btn btn-primary"><b>GENERATE SERVICE REPORT</b></button>
             </div>
         </div>
         </div>
