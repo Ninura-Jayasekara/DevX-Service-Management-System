@@ -1,17 +1,101 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Customer from "../../assets/Customer.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import PersonIcon from "@mui/icons-material/Person";
+import ClearIcon from "@mui/icons-material/Clear";
+import TokenIcon from "@mui/icons-material/Token";
+import PhoneIcon from "@mui/icons-material/Phone";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import WcIcon from "@mui/icons-material/Wc";
+import HomeIcon from "@mui/icons-material/Home";
+import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerAdd() {
+  const accessToken = sessionStorage.getItem("userToken");
+
+  const [values, setValues] = useState({
+    NIC: "",
+    Name: "",
+    DOB: new Date().toLocaleDateString("en-CA"),
+    Phone: "",
+    Gender: "Male",
+    Address: "",
+    Email: "",
+  });
+
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
+
+  const inputNIC = useRef();
+  const inputName = useRef();
+  const inputPhone = useRef();
+  const inputAddress = useRef();
+  const inputEmail = useRef();
+  const inputDOB = useRef();
+  const inputGender = useRef();
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
+  const resetValue = () => {
+    inputAddress.current.value = "";
+    values.Address = "";
+    inputEmail.current.value = "";
+    values.Email = "";
+    inputNIC.current.value = "";
+    values.NIC = "";
+    inputPhone.current.value = "";
+    values.Phone = "";
+    inputName.current.value = "";
+    values.Name = "";
+    inputGender.current.value = "Male";
+    values.Gender = "Male";
+    inputDOB.current.value = new Date().toLocaleDateString("en-CA");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello");
+    authAxios
+      .post("/api/customer/add", values)
+      .then((res) => {
+        toast.success(res.data.msg, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
+        resetValue();
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.warning(e.response.data, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
+      });
   };
   return (
     <Container>
+      <ToastContainer />
       <Wrap>
         <InputComponent>
           <div className="table-head">Customer Registeration</div>
@@ -21,52 +105,173 @@ function CustomerAdd() {
             </Link>
           </InputGroup>
         </InputComponent>
-        <Form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <Input>
             <ImageWrapper src={Customer} />
             <InputWrapper>
               <div>
                 <label htmlFor="NIC">NIC</label>
-                <input type="text" name="NIC" id="NIC" />
+                <div className="input-group">
+                  <TokenIcon className="left" />
+                  <input
+                    type="text"
+                    name="NIC"
+                    id="NIC"
+                    ref={inputNIC}
+                    value={values.NIC}
+                    required
+                    onChange={handleChange}
+                  />
+                  <ClearIcon
+                    className="right"
+                    onClick={() => {
+                      inputNIC.current.focus();
+                      inputNIC.current.value = "";
+                      values.NIC = "";
+                    }}
+                  />
+                </div>
               </div>
               <div>
-                <label htmlFor="NIC">Name</label>
-                <input type="text" name="NIC" id="NIC" />
+                <label htmlFor="Name">Name</label>
+                <div className="input-group">
+                  <PersonIcon className="left" />
+                  <input
+                    type="text"
+                    name="Name"
+                    id="Name"
+                    required
+                    ref={inputName}
+                    value={values.Name}
+                    onChange={handleChange}
+                  />
+                  <ClearIcon
+                    className="right"
+                    onClick={() => {
+                      inputName.current.focus();
+                      inputName.current.value = "";
+                      values.Name = "";
+                    }}
+                  />
+                </div>
               </div>
 
               <div>
-                <label htmlFor="NIC">DOB</label>
-                <input type="text" name="NIC" id="NIC" />
+                <label htmlFor="DOB">DOB</label>
+                <div className="input-group">
+                  <CalendarMonthIcon className="left" />
+                  <input
+                    type="date"
+                    name="DOB"
+                    id="DOB"
+                    required
+                    ref={inputDOB}
+                    defaultValue={values.DOB}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
 
               <div>
-                <label htmlFor="NIC">Phone</label>
-                <input type="text" name="NIC" id="NIC" />
+                <label htmlFor="Phone">Phone</label>
+                <div className="input-group">
+                  <PhoneIcon className="left" />
+                  <input
+                    type="text"
+                    name="Phone"
+                    id="Phone"
+                    required
+                    ref={inputPhone}
+                    value={values.Phone}
+                    onChange={handleChange}
+                  />
+                  <ClearIcon
+                    className="right"
+                    onClick={() => {
+                      inputPhone.current.focus();
+                      inputPhone.current.value = "";
+                      values.Phone = "";
+                    }}
+                  />
+                </div>
               </div>
 
               <div>
-                <label htmlFor="NIC">Gender</label>
-                <select>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
+                <label htmlFor="Gender">Gender</label>
+                <div className="input-group">
+                  <WcIcon className="left" />
+                  <select
+                    name="Gender"
+                    id="Gender"
+                    ref={inputGender}
+                    value={values.Gender}
+                    onChange={handleChange}
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
               </div>
 
               <div>
-                <label htmlFor="NIC">Address</label>
-                <input type="text" name="NIC" id="NIC" />
+                <label htmlFor="Address">Address</label>
+                <div className="input-group">
+                  <HomeIcon className="left" />
+                  <input
+                    type="text"
+                    name="Address"
+                    id="Address"
+                    required
+                    ref={inputAddress}
+                    value={values.Address}
+                    onChange={handleChange}
+                  />
+                  <ClearIcon
+                    className="right"
+                    onClick={() => {
+                      inputAddress.current.focus();
+                      inputAddress.current.value = "";
+                      values.Address = "";
+                    }}
+                  />
+                </div>
               </div>
               <div>
-                <label htmlFor="NIC">Email</label>
-                <input type="text" name="NIC" id="NIC" />
+                <label htmlFor="Email">Email</label>
+                <div className="input-group">
+                  <EmailIcon className="left" />
+                  <input
+                    type="text"
+                    name="Email"
+                    id="Email"
+                    required
+                    ref={inputEmail}
+                    value={values.Email}
+                    onChange={handleChange}
+                  />
+                  <ClearIcon
+                    className="right"
+                    onClick={() => {
+                      inputEmail.current.focus();
+                      inputEmail.current.value = "";
+                      values.Email = "";
+                    }}
+                  />
+                </div>
               </div>
               <ButtonGroup>
-                <input type="reset" value="Reset" />
+                <input
+                  type="button"
+                  value="Reset"
+                  onClick={() => {
+                    resetValue();
+                  }}
+                />
                 <input type="submit" value="Submit" />
               </ButtonGroup>
             </InputWrapper>
           </Input>
-        </Form>
+        </form>
       </Wrap>
     </Container>
   );
@@ -142,8 +347,6 @@ const InputGroup = styled.div`
   }
 `;
 
-const Form = styled.form``;
-
 const Input = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -166,9 +369,36 @@ const InputWrapper = styled.div`
     select {
       outline: none;
       border: none;
+      width: 100%;
       height: 30px;
       border-radius: 15px;
       padding: 3px 12px;
+      padding-left: 40px;
+    }
+    .input-group {
+      display: block;
+      position: relative;
+
+      .left {
+        position: absolute;
+        height: 100%;
+        margin-left: 5px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        color: black;
+        border-right: 1px solid black;
+      }
+      .right {
+        position: absolute;
+        height: 100%;
+        margin-right: 5px;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        color: black;
+        border-left: 1px solid black;
+      }
     }
   }
 `;

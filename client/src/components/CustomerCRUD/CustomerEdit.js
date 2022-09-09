@@ -1,28 +1,172 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import Image from "../../assets/Customer.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import SearchIcon from "@mui/icons-material/Search";
+import PersonIcon from "@mui/icons-material/Person";
+import EditIcon from "@mui/icons-material/Edit";
+import ClearIcon from "@mui/icons-material/Clear";
+import TokenIcon from "@mui/icons-material/Token";
+import PhoneIcon from "@mui/icons-material/Phone";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import WcIcon from "@mui/icons-material/Wc";
+import HomeIcon from "@mui/icons-material/Home";
+import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerEdit() {
+  const [values, setValues] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [isDOBEdit, setIsDOBEdit] = useState(false);
+  const [formData, setFormData] = useState({
+    NIC: "",
+    Name: "",
+    DOB: "",
+    Phone: "",
+    Gender: "none",
+    Address: "",
+    Email: "",
+  });
+
+  const [ID, setID] = useState("");
+
+  const inputSearch = useRef();
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
+  const handleFilter = (e) => {
+    const searchData = e.target.value;
+    const newFilter = values.filter((val) =>
+      val.NIC.toLowerCase().includes(searchData.toLowerCase())
+    );
+    if (searchData === "") {
+      setFilterData([]);
+    } else {
+      setFilterData(newFilter);
+    }
+  };
+
+  const clearInput = () => {
+    setFilterData([]);
+    inputSearch.current.value = "";
+  };
+
+  const handleChange = (event) => {
+    setFormData((data) => ({
+      ...data,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const inputNIC = useRef();
+  const inputName = useRef();
+  const inputPhone = useRef();
+  const inputAddress = useRef();
+  const inputEmail = useRef();
+  const inputDOB = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    ID !== ""
+      ? authAxios
+          .put(`/api/customer/update/${ID}`, formData)
+          .then((res) => {
+            toast.success("Update Succesful", {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
+            setValues(
+              values.map((val, i) =>
+                val._id === ID ? (val[i] = formData) : val
+              )
+            );
+          })
+          .catch((e) => {
+            toast.error(e.response, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+            });
+          })
+      : toast.error("Search Something", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+        });
   };
+
+  useEffect(() => {
+    authAxios.get("/api/customer/view").then((req, res) => {
+      setValues(req.data);
+    });
+  }, []);
   return (
     <Container>
+      <ToastContainer />
       <Wrap>
         <InputComponent>
           <div className="table-head">Customer Registeration</div>
           <InputGroup>
-            <SearchIcon sx={{ marginRight: "5px" }} />
-            <input type="text" placeholder="Search" />
+            {filterData.length === 0 ? (
+              <SearchIcon sx={{ marginRight: "5px" }} />
+            ) : (
+              <ClearIcon sx={{ marginRight: "5px" }} onClick={clearInput} />
+            )}
+            <input
+              type="text"
+              placeholder="Search"
+              ref={inputSearch}
+              onChange={handleFilter}
+            />
             <Link to="/customer">
               <KeyboardReturnIcon
                 style={{ color: "white", marginLeft: "5px" }}
               />
             </Link>
+            {filterData.length !== 0 && (
+              <DataList>
+                {filterData.map((val) => (
+                  <DataResult
+                    key={val._id}
+                    onClick={() => {
+                      setID(val._id);
+                      setFormData({
+                        NIC: val.NIC,
+                        Name: val.Name,
+                        DOB: val.DOB.split("T")[0],
+                        Phone: val.Phone,
+                        Gender: val.Gender,
+                        Address: val.Address,
+                        Email: val.Email,
+                      });
+                      clearInput();
+                    }}
+                  >
+                    {val.NIC}
+                  </DataResult>
+                ))}
+              </DataList>
+            )}
           </InputGroup>
         </InputComponent>
         <Form onSubmit={handleSubmit}>
@@ -31,35 +175,155 @@ function CustomerEdit() {
             <InputWrapper>
               <div>
                 <label htmlFor="NIC">NIC</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <div className="input-group">
+                  <TokenIcon className="left" />
+                  <input
+                    type="text"
+                    name="NIC"
+                    id="NIC"
+                    disabled
+                    ref={inputNIC}
+                    value={formData.NIC}
+                  />
+                </div>
               </div>
               <div>
-                <label htmlFor="NIC">Name</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <label htmlFor="Name">Name</label>
+                <div className="input-group">
+                  <PersonIcon className="left" />
+                  <input
+                    type="text"
+                    name="Name"
+                    id="Name"
+                    disabled
+                    value={formData.Name}
+                    ref={inputName}
+                    onChange={handleChange}
+                  />
+                  <EditIcon
+                    className="right"
+                    onClick={() => {
+                      inputName.current.getAttribute("disabled") == null
+                        ? inputName.current.setAttribute("disabled", "")
+                        : inputName.current.removeAttribute("disabled");
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="DOB">DOB</label>
+                <div className="input-group">
+                  <CalendarMonthIcon className="left" />
+                  <input
+                    type="date"
+                    name="DOB"
+                    disabled
+                    ref={inputDOB}
+                    value={formData.DOB}
+                    id="DOB"
+                    onChange={handleChange}
+                  />
+                  {!isDOBEdit && (
+                    <EditIcon
+                      className="right"
+                      onClick={() => {
+                        setIsDOBEdit(true);
+                        inputDOB.current.getAttribute("disabled") === null
+                          ? inputDOB.current.setAttribute("disabled", "")
+                          : inputDOB.current.removeAttribute("disabled");
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+              <div>
+                <label htmlFor="Phone">Phone</label>
+                <div className="input-group">
+                  <PhoneIcon className="left" />
+                  <input
+                    type="text"
+                    name="Phone"
+                    id="Phone"
+                    disabled
+                    value={formData.Phone}
+                    ref={inputPhone}
+                    onChange={handleChange}
+                  />
+                  <EditIcon
+                    className="right"
+                    onClick={() => {
+                      inputPhone.current.getAttribute("disabled") == null
+                        ? inputPhone.current.setAttribute("disabled", "")
+                        : inputPhone.current.removeAttribute("disabled");
+                    }}
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="Gender">Gender</label>
+                <div className="input-group">
+                  <WcIcon className="left" />
+                  <select
+                    name="Gender"
+                    id="Gender"
+                    onChange={handleChange}
+                    value={formData.Gender}
+                    disabled
+                  >
+                    <option value="none" selected disabled hidden>
+                      Search Customer By ID
+                    </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
               </div>
 
               <div>
-                <label htmlFor="NIC">DOB</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <label htmlFor="Address">Address</label>
+                <div className="input-group">
+                  <HomeIcon className="left" />
+                  <input
+                    type="text"
+                    name="Address"
+                    id="Address"
+                    disabled
+                    value={formData.Address}
+                    ref={inputAddress}
+                    onChange={handleChange}
+                  />
+                  <EditIcon
+                    className="right"
+                    onClick={() => {
+                      inputAddress.current.getAttribute("disabled") == null
+                        ? inputAddress.current.setAttribute("disabled", "")
+                        : inputAddress.current.removeAttribute("disabled");
+                    }}
+                  />
+                </div>
               </div>
-
               <div>
-                <label htmlFor="NIC">Phone</label>
-                <input type="text" name="NIC" id="NIC" disabled />
-              </div>
-
-              <div>
-                <label htmlFor="NIC">Gender</label>
-                <input type="text" name="NIC" id="NIC" disabled />
-              </div>
-
-              <div>
-                <label htmlFor="NIC">Address</label>
-                <input type="text" name="NIC" id="NIC" disabled />
-              </div>
-              <div>
-                <label htmlFor="NIC">Email</label>
-                <input type="text" name="NIC" id="NIC" disabled />
+                <label htmlFor="Email">Email</label>
+                <div className="input-group">
+                  <EmailIcon className="left" />
+                  <input
+                    type="text"
+                    name="Email"
+                    id="Email"
+                    disabled
+                    value={formData.Email}
+                    ref={inputEmail}
+                    onChange={handleChange}
+                  />
+                  <EditIcon
+                    className="right"
+                    onClick={() => {
+                      inputEmail.current.getAttribute("disabled") == null
+                        ? inputEmail.current.setAttribute("disabled", "")
+                        : inputEmail.current.removeAttribute("disabled");
+                    }}
+                  />
+                </div>
               </div>
               <ButtonGroup>
                 <input type="submit" value="Yes, Update" />
@@ -75,6 +339,7 @@ function CustomerEdit() {
 export default CustomerEdit;
 
 const Container = styled.main`
+  z-index: 1;
   min-height: calc(100vh);
   padding: 60px calc(3vw) 0px;
   overflow-x: hidden;
@@ -123,6 +388,7 @@ const InputComponent = styled.div`
   }
 `;
 const InputGroup = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,9 +431,37 @@ const InputWrapper = styled.div`
     select {
       outline: none;
       border: none;
+      width: 100%;
       height: 30px;
       border-radius: 15px;
       padding: 3px 12px;
+      padding-left: 40px;
+      color: blue;
+    }
+    .input-group {
+      display: block;
+      position: relative;
+
+      .left {
+        position: absolute;
+        height: 100%;
+        margin-left: 5px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        color: black;
+        border-right: 1px solid black;
+      }
+      .right {
+        position: absolute;
+        height: 100%;
+        margin-right: 5px;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        color: black;
+        border-left: 1px solid black;
+      }
     }
   }
 `;
@@ -187,11 +481,29 @@ const ButtonGroup = styled.span`
     width: 100px;
     height: 30px;
     border-radius: 15px;
-  }
-  input:last-child {
     background: #3cb043;
   }
-  input:first-child {
-    background: red;
-  }
+`;
+
+const DataList = styled.div`
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: -30px;
+  width: 300px;
+  height: 200px;
+  background: white;
+  overflow: hidden;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+`;
+
+const DataResult = styled.div`
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  color: white;
+  background: black;
 `;
