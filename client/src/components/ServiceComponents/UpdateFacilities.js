@@ -17,14 +17,35 @@ export default function UpdateFacilities(){
 
     }, [] );
 
-    const updateAPIData = () => {
-        axios.put(`api/facility/update/${fid}`, {
+    // const updateAPIData = () => {
+    //     axios.put(`api/facility/update/${fid}`, {
+    //         facilityName,
+    //         facilityCost,
+    //     })
+    //     window.location="/facilities";
+    
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+    
+        const newFacility = {
             facilityName,
             facilityCost,
-        })
-        window.location="/facilities";
-    }
-        
+        };
+        console.log(newFacility)
+    
+              await axios
+                .put(`/api/facility/update/${fId}`, newFacility)
+                .then(() => {
+                  alert("Facility updated Successfully");
+                  window.location.reload(true);
+                })
+                .catch((err) => {
+                  alert(err);
+                });
+            };
+
+
 
     return(
         <div>
@@ -49,7 +70,7 @@ export default function UpdateFacilities(){
                         setFacilityCost(e.target.value);
                     }}/>
                 </div>
-                <Link to={"/facilities"}><button type="submit" id="btnsubmit" className="btn btn-primary" onClick={()=>{updateAPIData();}}><b>SUBMIT</b></button></Link>
+                <Link to={"/facilities"}><button type="submit" id="btnsubmit" className="btn btn-primary" onClick={onSubmit}><b>SUBMIT</b></button></Link>
 
             </form>
         </div>
