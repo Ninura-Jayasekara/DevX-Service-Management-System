@@ -58,9 +58,12 @@ function CustomerEdit() {
     inputSearch.current.value = "";
   };
 
-  // const handleChange = (event) => {
-  //   setFormData({ ...values, [event.target.name]: event.target.value });
-  // };
+  const handleChange = (event) => {
+    setFormData((data) => ({
+      ...data,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
   const inputNIC = useRef();
   const inputName = useRef();
@@ -181,15 +184,6 @@ function CustomerEdit() {
                     disabled
                     ref={inputNIC}
                     value={formData.NIC}
-                    onChange={(e) => setFormData({ NIC: e.target.value })}
-                  />
-                  <EditIcon
-                    className="right"
-                    onClick={() => {
-                      inputNIC.current.getAttribute("disabled") == null
-                        ? inputNIC.current.setAttribute("disabled", "")
-                        : inputNIC.current.removeAttribute("disabled");
-                    }}
                   />
                 </div>
               </div>
@@ -204,7 +198,7 @@ function CustomerEdit() {
                     disabled
                     value={formData.Name}
                     ref={inputName}
-                    onChange={(e) => setFormData({ Name: e.target.value })}
+                    onChange={handleChange}
                   />
                   <EditIcon
                     className="right"
@@ -227,7 +221,7 @@ function CustomerEdit() {
                     ref={inputDOB}
                     value={formData.DOB}
                     id="DOB"
-                    onChange={(e) => setFormData({ DOB: e.target.value })}
+                    onChange={handleChange}
                   />
                   {!isDOBEdit && (
                     <EditIcon
@@ -253,7 +247,7 @@ function CustomerEdit() {
                     disabled
                     value={formData.Phone}
                     ref={inputPhone}
-                    onChange={(e) => setFormData({ Phone: e.target.value })}
+                    onChange={handleChange}
                   />
                   <EditIcon
                     className="right"
@@ -272,7 +266,7 @@ function CustomerEdit() {
                   <select
                     name="Gender"
                     id="Gender"
-                    onChange={(e) => setFormData({ Gender: e.target.value })}
+                    onChange={handleChange}
                     value={formData.Gender}
                     disabled
                   >
@@ -296,7 +290,7 @@ function CustomerEdit() {
                     disabled
                     value={formData.Address}
                     ref={inputAddress}
-                    onChange={(e) => setFormData({ Address: e.target.value })}
+                    onChange={handleChange}
                   />
                   <EditIcon
                     className="right"
@@ -319,7 +313,7 @@ function CustomerEdit() {
                     disabled
                     value={formData.Email}
                     ref={inputEmail}
-                    onChange={(e) => setFormData({ Email: e.target.value })}
+                    onChange={handleChange}
                   />
                   <EditIcon
                     className="right"
