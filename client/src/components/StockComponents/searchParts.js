@@ -60,6 +60,7 @@ import SearchIcon from "@mui/icons-material/Search";
               }}/>
           </InputGroup>
         </InputComponent>
+        <br></br><br></br>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ background: "#36454f" }}>

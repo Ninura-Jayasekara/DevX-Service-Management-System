@@ -12,12 +12,14 @@ const Login = () => {
 	
   const navigate = useNavigate();
     const params = useParams();
+    
     const [values,setValues]=useState({
         email:'',
         password:''
     });
 
     const [role, setRole] = useState("");
+    
 
     // Used to refer input fields
     const inputUserEmail=useRef();
@@ -85,11 +87,11 @@ const Login = () => {
               <InputWrapper>
                 <div>
                   <label htmlFor="Email">Email</label>
-                  <input id='email' autocomplete="off" ref={inputUserEmail} type='text' name='email' placeholder='useremail' value={values.email} onChange={handleChange}/>
+                  <input id='email' autocomplete="off" ref={inputUserEmail} type='text' name='email' placeholder='useremail' value={values.email} required onChange={handleChange}/>
                 </div>
                 <div>
                   <label htmlFor="Password">Password</label>
-                  <input id='password' ref={inputPassword} type='password' name='password' placeholder='Password'value={values.password}
+                  <input id='password' ref={inputPassword} type='password' name='password' required placeholder='Password'value={values.password}
                         onChange={handleChange}/>
                 </div>
                 <div>
