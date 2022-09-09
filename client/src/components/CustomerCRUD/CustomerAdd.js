@@ -66,47 +66,6 @@ function CustomerAdd() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    values.NIC !== "" &&
-    values.Name !== "" &&
-    values.DOB !== "" &&
-    values.Address !== "" &&
-    values.Phone !== "" &&
-    values.Email !== ""
-      ? authAxios
-          .post("/api/customer/add", values)
-          .then((res) => {
-            toast.success(res.data.msg, {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-            });
-            resetValue();
-          })
-          .catch((e) => {
-            console.log(e);
-            toast.error(e.response.data, {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-            });
-          })
-      : toast.error("Please Fill Out the Form", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-        });
     authAxios
       .post("/api/customer/add", values)
       .then((res) => {
