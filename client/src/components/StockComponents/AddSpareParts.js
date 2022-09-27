@@ -103,11 +103,11 @@ export default function AddSpareParts(){
                             <option value = "Engine-Oil-002">Toyota Engine oil 4l </option>
                             <option value = "Engine-Oil-003">Honda Engine oil 1l </option>
                             <option value = "Engine-Oil-004">Toyota Engine oil 4l </option>
-                            <option value = "Break-Pad-001">Honda Break Pad </option>
-                            <option value = "Break-Pad-002">Toyota Break Pad </option>
-                            <option value = "Break-Pad-003">Kia Break Pad </option>
-                            <option value = "Break-Oil-001">Honda Break oil 1l </option>
-                            <option value = "Break-Oil-002">Toyota Break oil 1l </option>
+                            <option value = "Brake-Pad-001">Honda Brake Pad </option>
+                            <option value = "Brake-Pad-002">Toyota Brake Pad </option>
+                            <option value = "Brake-Pad-003">Kia Brake Pad </option>
+                            <option value = "Brake-Oil-001">Honda Brake oil 1l </option>
+                            <option value = "Brake-Oil-002">Toyota Brake oil 1l </option>
                    
                   </select>
                 
