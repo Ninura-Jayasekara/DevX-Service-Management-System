@@ -76,7 +76,7 @@ function DisplayStocks() {
           <Link to="/add-stocks">
             <button>Add</button>
           </Link>
-          <Link to="edit">
+          <Link to="/update-delete">
             <button>Edit</button>
           </Link>
           <Link to="report">
