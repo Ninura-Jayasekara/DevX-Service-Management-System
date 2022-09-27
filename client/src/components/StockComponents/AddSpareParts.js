@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import Stock from "../../assets/addparts.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
@@ -11,6 +11,7 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 export default function AddSpareParts(){
 
     const accessToken = sessionStorage.getItem('userToken');
+    const navigate = useNavigate();
 
     const [itemCode, setItemCode] = useState("");
     const [brand, setBrand] = useState("");
@@ -58,7 +59,7 @@ export default function AddSpareParts(){
             setDealerName("");
             setSparePart("");
             setPrice("");
-            window.location.reload(true);
+            navigate("/fetch-stocks");
 
         }).catch((err)=>{
             alert(err)

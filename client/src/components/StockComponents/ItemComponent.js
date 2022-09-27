@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import {Row,Col} from "reactstrap";
+import {useNavigate} from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -14,6 +14,9 @@ import {
 
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import UpdateIcon from '@mui/icons-material/Update';
 
 
   
@@ -29,6 +32,7 @@ import EditIcon from "@mui/icons-material/Edit";
     const [price, setPrice] = useState('');
 
     const [isEdit, setIsEdit] = useState(false);
+    const navigate = useNavigate();
     
     const [input, setInput] = useState('');
     const accessToken = sessionStorage.getItem("userToken");
@@ -72,6 +76,7 @@ import EditIcon from "@mui/icons-material/Edit";
                 .put(`/api/stock/update/${itemCode}`, newprice)
                 .then(() => {
                   alert("Price updated Successfully");
+                  navigate("/fetch-stocks");
                   window.location.reload(true);
                 })
                 .catch((err) => {
@@ -89,6 +94,7 @@ import EditIcon from "@mui/icons-material/Edit";
                 .then(() => {
                   window.alert('Do you want to delete the selected item?')
                   alert("Item Deleted Successfully");
+                  navigate("/fetch-stocks");
                   window.location.reload(true);
                 })
                 .catch((err) => {
@@ -164,8 +170,14 @@ import EditIcon from "@mui/icons-material/Edit";
           </Table>
         </TableContainer>
         <ButtonGroup>
-                <input type="submit" value="Update" onClick={onSubmit}/>
-                <input type="submit" value="Delete" onClick={onDelete}/>
+            
+                 <Button variant="outlined" color="success" onClick={onSubmit } startIcon={<UpdateIcon />}>
+                     Update
+                </Button>
+                 <Button variant="outlined" color="error" onClick={onDelete} startIcon={<DeleteIcon />}>
+                     Delete
+                </Button>
+                 
         </ButtonGroup>
       </Wrap>
     </Container>
