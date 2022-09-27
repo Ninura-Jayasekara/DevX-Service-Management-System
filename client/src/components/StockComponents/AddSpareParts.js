@@ -3,7 +3,7 @@ import axios from "axios";
 import styled from "styled-components";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from "react-router-dom";
+import { Link ,useNavigate } from "react-router-dom";
 import Stock from "../../assets/addparts.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
@@ -11,6 +11,7 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 export default function AddSpareParts(){
 
     const accessToken = sessionStorage.getItem('userToken');
+    const navigate = useNavigate();
 
     const [itemCode, setItemCode] = useState("");
     const [brand, setBrand] = useState("");
@@ -58,7 +59,7 @@ export default function AddSpareParts(){
             setDealerName("");
             setSparePart("");
             setPrice("");
-            window.location.reload(true);
+            navigate("/fetch-stocks");
 
         }).catch((err)=>{
             alert(err)
@@ -103,11 +104,11 @@ export default function AddSpareParts(){
                             <option value = "Engine-Oil-002">Toyota Engine oil 4l </option>
                             <option value = "Engine-Oil-003">Honda Engine oil 1l </option>
                             <option value = "Engine-Oil-004">Toyota Engine oil 4l </option>
-                            <option value = "Break-Pad-001">Honda Break Pad </option>
-                            <option value = "Break-Pad-002">Toyota Break Pad </option>
-                            <option value = "Break-Pad-003">Kia Break Pad </option>
-                            <option value = "Break-Oil-001">Honda Break oil 1l </option>
-                            <option value = "Break-Oil-002">Toyota Break oil 1l </option>
+                            <option value = "Brake-Pad-001">Honda Brake Pad </option>
+                            <option value = "Brake-Pad-002">Toyota Brake Pad </option>
+                            <option value = "Brake-Pad-003">Kia Brake Pad </option>
+                            <option value = "Brake-Oil-001">Honda Brake oil 1l </option>
+                            <option value = "Brake-Oil-002">Toyota Brake oil 1l </option>
                    
                   </select>
                 

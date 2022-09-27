@@ -23,6 +23,7 @@ import UpdateFacilities from "./components/ServiceFacilityComponents/UpdateFacil
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
 import AddPaymentDetails from "./components/PaymentComponents/AddPaymentDetails";
 import ViewPayments from "./components/PaymentComponents/ViewPaymentDetails";
+import UpdateAndDelete from "./components/StockComponents/ItemComponent";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/add-stocks" element={<AddSpareParts />}></Route>
           <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
+          <Route path="/update-delete" element={<UpdateAndDelete />}></Route>
 
           <Route
             path="/addfacilities"

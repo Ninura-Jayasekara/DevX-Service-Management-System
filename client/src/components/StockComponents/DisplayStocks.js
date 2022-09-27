@@ -76,7 +76,7 @@ function DisplayStocks() {
           <Link to="/add-stocks">
             <button>Add</button>
           </Link>
-          <Link to="edit">
+          <Link to="/update-delete">
             <button>Edit</button>
           </Link>
           <Link to="report">
@@ -159,14 +159,14 @@ const InputGroup = styled.div`
 `;
 
 const ButtonGroup = styled.div`
-  padding: 6px 0 0;
+  padding: 20px 0 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 
   button {
     cursor: pointer;
-    padding: 5px;
+    padding: 10px;
     margin: 0 3px;
     background: #404040;
     border: none;
