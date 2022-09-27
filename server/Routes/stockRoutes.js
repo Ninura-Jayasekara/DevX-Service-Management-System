@@ -15,7 +15,7 @@ const { protect } = require('../Middleware/authMiddleware')
 router.post('/', protect, addStock)
 router.get('/search', fetchPart)
 router.get('/fetch-stock', protect ,fetchAllParts)
-router.put('/update/:itemCode',updatePrice)
-router.delete('/delete/:itemCode',deletePart)
+router.put('/update/:itemCode', protect,updatePrice)
+router.delete('/delete/:itemCode', protect,deletePart)
 
 module.exports = router
