@@ -16,7 +16,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 
 
-  //creting a function for search students
+  
   export default function UpdateAndDelete() {
     
   //brand country dealer price
@@ -31,11 +31,19 @@ import EditIcon from "@mui/icons-material/Edit";
     const [isEdit, setIsEdit] = useState(false);
     
     const [input, setInput] = useState('');
+    const accessToken = sessionStorage.getItem("userToken");
+
+
+  const authAxios = axios.create({
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    }
+});
   
     
   
     const  loadStockDetails = async () => {
-      await axios.get(`/api/stock/search?q=${input}`).then((res) => {
+      await authAxios.get(`/api/stock/search?q=${input}`).then((res) => {
 
         setItemCode(res.data.stocks.itemCode);
         setBrand(res.data.stocks.brand);
@@ -60,7 +68,7 @@ import EditIcon from "@mui/icons-material/Edit";
         };
         console.log(newprice)
     
-              await axios
+              await authAxios
                 .put(`/api/stock/update/${itemCode}`, newprice)
                 .then(() => {
                   alert("Price updated Successfully");
@@ -76,7 +84,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
       const  onDelete = async () => {
       
-              await axios
+              await authAxios
                 .delete(`/api/stock/delete/${itemCode}`)
                 .then(() => {
                   window.alert('Do you want to delete the selected item?')
