@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
@@ -7,6 +8,19 @@ import styled from "styled-components";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 function CustomerChart() {
+  const date = new Date();
+  const [values, setValues] = useState([]);
+  const [noMale, setNoMale] = useState(0);
+  const [noFemale, setNoFemale] = useState(0);
+  const [activeMale, setActiveMale] = useState(0);
+  const [activeFemale, setActiveFemale] = useState(0);
+
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
   const state = {
     labels: ["Male", "Female"],
 
@@ -17,10 +31,34 @@ function CustomerChart() {
         hoverBackgroundColor: ["#501800", "#4B5000"],
         // noFeeds: isConsulted{true}
         // noApp: isConsulted{false}
-        data: [12, 5],
+        data: [noMale, noFemale],
       },
     ],
   };
+
+  const customerData = (val) => {
+    const male = val.filter((val) => val.Gender === "Male");
+    setNoMale(male.length);
+
+    male.filter((val) => {
+      // date.getMonth()
+      // dateVisit = val.DateOfVisit.split("T")[0].split("-")[1] - 1;
+      // if(dateV)
+      // (val.DateOfVisit.split("T")[0].split("-")[1] - 1) - date.getMonth();
+    });
+
+    const female = val.filter((val) => val.Gender === "Female");
+    setNoFemale(female.length);
+
+    // console.log(val.DateOfVisit);
+  };
+
+  useEffect(() => {
+    authAxios.get("/api/customer/view").then((res) => {
+      setValues(res.data);
+      customerData(res.data);
+    });
+  }, []);
 
   return (
     <Container>
@@ -87,16 +125,16 @@ function CustomerChart() {
               options={{
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                  yAxes: [
-                    {
-                      ticks: {
-                        // The y-axis value will start from zero
-                        beginAtZero: true,
-                      },
-                    },
-                  ],
-                },
+                // scales: {
+                //   yAxes: [
+                //     {
+                //       ticks: {
+                //         // The y-axis value will start from zero
+                //         beginAtZero: true,
+                //       },
+                //     },
+                //   ],
+                // },
                 plugins: {
                   title: {
                     display: true,
