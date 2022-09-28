@@ -23,6 +23,7 @@ function CustomerEdit() {
   const [filterData, setFilterData] = useState([]);
   const [isDOBEdit, setIsDOBEdit] = useState(false);
   const [formData, setFormData] = useState({
+    _id: "",
     NIC: "",
     Name: "",
     DOB: "",
@@ -30,10 +31,9 @@ function CustomerEdit() {
     Gender: "none",
     Address: "",
     Email: "",
+    noOfVisit: "",
+    DateOfVisit: new Date().toLocaleDateString("en-CA"),
   });
-
-  const [ID, setID] = useState("");
-
   const inputSearch = useRef();
   const authAxios = axios.create({
     baseURL: "http://localhost:3001",
@@ -44,7 +44,7 @@ function CustomerEdit() {
   const handleFilter = (e) => {
     const searchData = e.target.value;
     const newFilter = values.filter((val) =>
-      val.NIC.toLowerCase().includes(searchData.toLowerCase())
+      val.NIC.slice(0, searchData.length).includes(searchData)
     );
     if (searchData === "") {
       setFilterData([]);
@@ -74,45 +74,48 @@ function CustomerEdit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    ID !== ""
-      ? authAxios
-          .put(`/api/customer/update/${ID}`, formData)
-          .then((res) => {
-            toast.success("Update Succesful", {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-            });
-            setValues(
-              values.map((val, i) =>
-                val._id === ID ? (val[i] = formData) : val
-              )
-            );
-          })
-          .catch((e) => {
-            toast.error(e.response, {
-              position: "top-center",
-              autoClose: 2000,
-              hideProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: false,
-              progress: undefined,
-            });
-          })
-      : toast.error("Search Something", {
-          position: "top-center",
-          autoClose: 2000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
+    if (formData._id !== "") {
+      formData.noOfVisit = String(Number(formData.noOfVisit) + 1);
+      authAxios
+        .put(`/api/customer/update/${formData._id}`, formData)
+        .then((res) => {
+          toast.success("Update Succesful", {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
+          setValues(
+            values.map((val, i) =>
+              val._id === formData._id ? (val[i] = formData) : val
+            )
+          );
+        })
+        .catch((e) => {
+          toast.error(e.response, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
         });
+    } else {
+      toast.error("Search Something", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
+    }
   };
 
   useEffect(() => {
@@ -149,20 +152,31 @@ function CustomerEdit() {
                   <DataResult
                     key={val._id}
                     onClick={() => {
-                      setID(val._id);
                       setFormData({
+                        _id: val._id,
                         NIC: val.NIC,
                         Name: val.Name,
                         DOB: val.DOB.split("T")[0],
+                        Email: val.Email,
+                        Address: val.Address,
                         Phone: val.Phone,
                         Gender: val.Gender,
-                        Address: val.Address,
-                        Email: val.Email,
+                        noOfVisit: val.noOfVisit,
+                        DateOfVisit: new Date().toLocaleDateString("en-CA"),
                       });
                       clearInput();
                     }}
                   >
-                    {val.NIC}
+                    <div>
+                      <PersonIcon
+                        sx={{
+                          height: "40px",
+                          width: "40px",
+                        }}
+                      />
+                    </div>
+                    <div>{val.NIC}</div>
+                    <div>{val.Name}</div>
                   </DataResult>
                 ))}
               </DataList>
@@ -263,19 +277,13 @@ function CustomerEdit() {
                 <label htmlFor="Gender">Gender</label>
                 <div className="input-group">
                   <WcIcon className="left" />
-                  <select
+                  <input
+                    type="text"
                     name="Gender"
-                    id="Gender"
-                    onChange={handleChange}
-                    value={formData.Gender}
                     disabled
-                  >
-                    <option value="none" selected disabled hidden>
-                      Search Customer By ID
-                    </option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                  </select>
+                    value={formData.Gender}
+                    id="Gender"
+                  />
                 </div>
               </div>
 
@@ -441,6 +449,8 @@ const InputWrapper = styled.div`
     .input-group {
       display: block;
       position: relative;
+      border-radius: 15px;
+      overflow: hidden;
 
       .left {
         position: absolute;
@@ -500,10 +510,26 @@ const DataList = styled.div`
 `;
 
 const DataResult = styled.div`
+  cursor: pointer;
   width: 100%;
   height: 50px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: center;
   color: white;
   background: black;
+  div:first-child {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row: 1 / span 3;
+  }
+  div:nth-child(2) {
+    grid-column: 2 / span 4;
+  }
+  div:last-child {
+    grid-column: 2 / span 4;
+  }
 `;

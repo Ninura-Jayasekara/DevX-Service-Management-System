@@ -4,7 +4,17 @@ const Customer = require("../Models/customerModel");
 
 const addCustomer = asyncHandler(async (req, res) => {
   // TODO: ADD Fields
-  const { NIC, Name, DOB, Phone, Address, Email, Gender } = req.body;
+  const {
+    NIC,
+    Name,
+    DOB,
+    Phone,
+    Address,
+    Email,
+    Gender,
+    noOfVisit,
+    DateOfVisit,
+  } = req.body;
 
   await Customer.findOne({ NIC }).then((customer) => {
     if (customer) return res.status(400).json("Customer already exists");
@@ -16,6 +26,8 @@ const addCustomer = asyncHandler(async (req, res) => {
       Phone,
       Address,
       Email,
+      noOfVisit,
+      DateOfVisit,
     });
 
     newCustomer

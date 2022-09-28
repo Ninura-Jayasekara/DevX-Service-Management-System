@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import {useNavigate , Link} from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -17,6 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import UpdateIcon from '@mui/icons-material/Update';
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 
   
@@ -31,7 +32,7 @@ import UpdateIcon from '@mui/icons-material/Update';
     const [sparePart, setSparePart] = useState('');
     const [price, setPrice] = useState('');
 
-    const [isEdit, setIsEdit] = useState(false);
+    const [readOnly, setreadOnly] = useState(true);
     const navigate = useNavigate();
     
     const [input, setInput] = useState('');
@@ -61,6 +62,11 @@ import UpdateIcon from '@mui/icons-material/Update';
         alert(err.message)
       })
     };
+
+    //creting a method for set readonly
+    const activate=()=>{
+      setreadOnly(false)
+  }
 
     //creting a method for update selling price
 
@@ -111,7 +117,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 <Container>
       <Wrap>
         <InputComponent>
-          <div className="table-head">Search Spare Parts And Price</div>
+          <div className="table-head">Update And Delete Spare Parts</div>
           <InputGroup>
             <SearchIcon onClick={loadStockDetails} />
             <input type="text" id="input" value={input}   placeholder="Search" 
@@ -121,6 +127,11 @@ import UpdateIcon from '@mui/icons-material/Update';
 
               }}/>
           </InputGroup>
+          <InputGroup>
+              <Link to="/fetch-stocks">
+                <KeyboardReturnIcon style={{ color: "white" }} />
+              </Link>
+            </InputGroup>
         </InputComponent>
         <br></br><br></br>
         <TableContainer component={Paper}>
@@ -151,6 +162,7 @@ import UpdateIcon from '@mui/icons-material/Update';
                             name="part"
                             id="part"
                             value={price}
+                            readOnly={readOnly}
                             onChange={(e) => {
                                 setPrice(e.target.value);
                                 }}
@@ -159,9 +171,9 @@ import UpdateIcon from '@mui/icons-material/Update';
                         <EditIcon
                             className="right"
                         
-                            onClick={() => {
-                                setIsEdit(true);
-                            }}
+                            onClick={
+                                activate
+                            }
                         />
                         
                     </TableCell>

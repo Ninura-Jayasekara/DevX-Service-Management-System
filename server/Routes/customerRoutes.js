@@ -17,7 +17,7 @@ router.get("/view", viewCustomer);
 router.delete("/delete/:id", deleteCustomer);
 
 // Update Route
-router.put("/update/:id", (req, res) => {
+router.put("/update/:id", async (req, res) => {
   if (!isValidObjectId(req.params.id))
     return res.status(400).send(`No Record with given id : $(req.params.id)`);
 

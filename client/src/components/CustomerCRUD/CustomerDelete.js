@@ -33,7 +33,7 @@ function CustomerDelete() {
   const handleFilter = (e) => {
     const searchData = e.target.value;
     const newFilter = values.filter((val) =>
-      val.NIC.toLowerCase().includes(searchData.toLowerCase())
+      val.NIC.slice(0, searchData.length).includes(searchData)
     );
     if (searchData === "") {
       setFilterData([]);
@@ -337,13 +337,14 @@ const InputWrapper = styled.div`
       width: 100%;
       height: 30px;
       color: white;
-      border-radius: 15px;
       padding: 3px 12px;
       padding-left: 40px;
     }
     .input-group {
       display: block;
       position: relative;
+      border-radius: 15px;
+      overflow: hidden;
 
       .left {
         position: absolute;
