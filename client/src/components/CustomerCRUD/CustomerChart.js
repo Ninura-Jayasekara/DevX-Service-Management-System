@@ -21,6 +21,7 @@ function CustomerChart() {
       },
     ],
   };
+
   return (
     <Container>
       <Wrap>
@@ -36,14 +37,16 @@ function CustomerChart() {
           <div>
             <Pie
               options={{
-                title: {
-                  display: true,
-                  text: "Customer",
-                  fontSize: 20,
-                },
-                legend: {
-                  display: true,
-                  position: "right",
+                responsive: true,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Customer",
+                    fontSize: 20,
+                  },
+                  legend: {
+                    position: "top",
+                  },
                 },
               }}
               data={state}
@@ -53,24 +56,36 @@ function CustomerChart() {
             <Bar
               data={{
                 // Name of the variables on x-axies for each bar
-                labels: ["Active", "Non-Active", "Active", "Non-Active"],
+                labels: ["Active", "Non-Active"],
                 datasets: [
                   {
                     // Label for bars
-                    label: "Customers",
+                    label: "Male",
                     // Data or value of your each variable
-                    data: [8, 4, 3, 2],
+                    data: [8, 4],
                     // Color of each bar
-                    backgroundColor: ["red", "red", "yellow", "yellow"],
+                    backgroundColor: "red",
                     // Border color of each bar
-                    borderColor: ["red", "red", "yellow", "yellow"],
+                    borderColor: "red",
+                    borderWidth: 0.5,
+                  },
+                  {
+                    // Label for bars
+                    label: "Female",
+                    // Data or value of your each variable
+                    data: [3, 2],
+                    // Color of each bar
+                    backgroundColor: "yellow",
+                    // Border color of each bar
+                    borderColor: "yellow",
                     borderWidth: 0.5,
                   },
                 ],
               }}
               // Height of graph
-              height={400}
+              // height={400}
               options={{
+                responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                   yAxes: [
@@ -82,9 +97,16 @@ function CustomerChart() {
                     },
                   ],
                 },
-                legend: {
-                  labels: {
-                    fontSize: 15,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Customer",
+                    fontSize: 20,
+                  },
+                  legend: {
+                    labels: {
+                      fontSize: 15,
+                    },
                   },
                 },
               }}

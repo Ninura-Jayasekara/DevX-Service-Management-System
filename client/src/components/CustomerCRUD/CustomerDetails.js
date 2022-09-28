@@ -18,7 +18,7 @@ function CustomerDetails() {
   const accessToken = sessionStorage.getItem("userToken");
 
   const [values, setValues] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [filterData, setFilterData] = useState([]);
 
   const authAxios = axios.create({
     baseURL: "http://localhost:3001",
@@ -27,9 +27,19 @@ function CustomerDetails() {
     // },
   });
 
+  const handleFilter = (e) => {
+    const searchData = e.target.value;
+    const newFilter = values.filter((val) =>
+      val.NIC.slice(0, searchData.length).includes(searchData)
+    );
+
+    setFilterData(newFilter);
+  };
+
   useEffect(() => {
     authAxios.get("/api/customer/view").then((res) => {
       setValues(res.data);
+      setFilterData(res.data);
     });
   }, []);
 
@@ -40,14 +50,7 @@ function CustomerDetails() {
           <div className="table-head">Customer Details</div>
           <InputGroup>
             <SearchIcon />
-            <input
-              type="text"
-              placeholder="Search"
-              value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-              }}
-            />
+            <input type="text" placeholder="Search" onChange={handleFilter} />
           </InputGroup>
         </InputComponent>
         <TableContainer component={Paper}>
@@ -63,29 +66,24 @@ function CustomerDetails() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {values
-                ? values
-                    .filter((value) => {
-                      if (searchTerm === "") return value;
-                      else if (value.NIC.includes(searchTerm)) return value;
-                    })
-                    .map((value) => (
-                      <TableRow
-                        key={value.NIC}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell component="th" scope="row">
-                          {value.NIC}
-                        </TableCell>
-                        <TableCell>{value.Name}</TableCell>
-                        <TableCell>{value.Email}</TableCell>
-                        <TableCell>{value.Phone}</TableCell>
-                        <TableCell>{value.Address}</TableCell>
-                        <TableCell>{value.DOB.split("T")[0]}</TableCell>
-                      </TableRow>
-                    ))
+              {filterData
+                ? filterData.map((value) => (
+                    <TableRow
+                      key={value.NIC}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {value.NIC}
+                      </TableCell>
+                      <TableCell>{value.Name}</TableCell>
+                      <TableCell>{value.Email}</TableCell>
+                      <TableCell>{value.Phone}</TableCell>
+                      <TableCell>{value.Address}</TableCell>
+                      <TableCell>{value.DOB.split("T")[0]}</TableCell>
+                    </TableRow>
+                  ))
                 : null}
             </TableBody>
           </Table>

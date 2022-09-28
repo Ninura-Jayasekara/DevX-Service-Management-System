@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -14,6 +15,14 @@ import {
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 function CustomerReport() {
+  const [values, setValues] = useState([]);
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
+
   const createData = (name, calories, fat, carbs, protein) => {
     return { name, calories, fat, carbs, protein };
   };
@@ -25,6 +34,12 @@ function CustomerReport() {
     createData("Cupcake", 305, 3.7, 67, 4.3),
     createData("Gingerbread", 356, 16.0, 49, 3.9),
   ];
+
+  useEffect(() => {
+    authAxios.get("/api/customer/view").then((res) => {
+      setValues(res.data);
+    });
+  }, []);
   return (
     <Container>
       <Wrap>
@@ -49,19 +64,21 @@ function CustomerReport() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {values.map((val) => (
                 <TableRow
-                  key={row.name}
+                  key={val._id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {val.NIC}
                   </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
-                  <TableCell align="right">2</TableCell>
+                  <TableCell align="right">{val.Name}</TableCell>
+                  <TableCell align="right">{val.Email}</TableCell>
+                  <TableCell align="right">{val.Address}</TableCell>
+                  <TableCell align="right">
+                    {val.DateOfVisit.split("T")[0]}
+                  </TableCell>
+                  <TableCell align="right">{val.noOfVisit}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
