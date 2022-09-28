@@ -100,10 +100,11 @@ export default function AddSpareParts(){
                   <select id="itemCode" defaultValue="Select Item Code" value={itemCode}
                           onChange={(e) => setItemCode(e.target.value)}>
 
+                            <option value= "Add">Choose Spare Part Name for the Item Code</option>
                             <option value= "Engine-Oil-001">Honda Engine oil 4l</option> 
                             <option value = "Engine-Oil-002">Toyota Engine oil 4l </option>
                             <option value = "Engine-Oil-003">Honda Engine oil 1l </option>
-                            <option value = "Engine-Oil-004">Toyota Engine oil 4l </option>
+                            <option value = "Engine-Oil-004">Toyota Engine oil 1l </option>
                             <option value = "Brake-Pad-001">Honda Brake Pad </option>
                             <option value = "Brake-Pad-002">Toyota Brake Pad </option>
                             <option value = "Brake-Pad-003">Kia Brake Pad </option>
