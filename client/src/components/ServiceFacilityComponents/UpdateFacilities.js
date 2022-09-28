@@ -1,6 +1,8 @@
 import React,{useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
+import { Link } from "react-router-dom";
 import '../../Form.css';
 
 export default function UpdateFacilities(){
@@ -39,7 +41,7 @@ export default function UpdateFacilities(){
               await axios
                 .put(`/api/facility/update/${fId}`, newFacility)
                 .then(() => {
-                  alert("Facility updated Successfully");
+                  alert("Service Facility Cost Updated Successfully");
                   navigate("/facilities");
                 })
                 .catch((err) => {
@@ -52,13 +54,15 @@ export default function UpdateFacilities(){
     return(
         <div>
         <div className="addFacilities">
-        <center>
-            <h2 className="text-white">SERVICE MANAGEMENT</h2>
+            <form className="Form" style={{  background: "#151e3d"}}>
+            <center>
+            <h2 className="heading">UPDATE FACILITY COST</h2>
             </center><br/>
-            <form className="Form" style={{  background: "#BBDEFB"}}>
-
+            <Link to={"/facilities"}>
+              <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
+            </Link> 
                 <div  id="addfac"className="mb-3">
-                    <label className="falabel" for="facilityName"><b>Service Name</b></label>
+                    <label className="falabel" id="snlabel" for="facilityName"><b>Service Name</b></label>
                     <input type="text" className="form-control" id="facilityName" value={facilityName} readOnly
                     onChange={(e)=>{
                         setFacilityName(e.target.value);
@@ -66,7 +70,7 @@ export default function UpdateFacilities(){
                 </div>
 
                 <div id="addfac" className="mb-3">
-                    <label className="falabel" for="facilityCost"><b>Service Facility Cost (Rs)</b></label>
+                    <label className="falabel" id="sclabel" for="facilityCost"><b>Service Facility Cost (Rs)</b></label>
                     <input type="number" className="form-control" id="facilityCost" value={facilityCost}
                     onChange={(e)=>{
                         setFacilityCost(e.target.value);
