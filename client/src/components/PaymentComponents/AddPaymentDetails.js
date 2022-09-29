@@ -2,7 +2,7 @@ import React,{ useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
 import {toast, ToastContainer} from 'react-toastify';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Payment from "../../assets/addpayment.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
@@ -10,6 +10,8 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 export default function AddPaymentDetails(){
 
     const accessToken = sessionStorage.getItem('userToken');
+    const navigate = useNavigate();
+
 
     const [customerName, setCustomerName] = useState("");
     const [vehicleNumber, setVehicleNumber] = useState("");
@@ -40,7 +42,7 @@ export default function AddPaymentDetails(){
             setVehicleNumber("");
             setServiceDate("");
             setAmount("");
-            window.location.reload(true);
+            navigate("/viewpayment");
 
         }).catch((err)=>{
             alert(err)
@@ -54,7 +56,7 @@ export default function AddPaymentDetails(){
           <InputComponent>
             <div className="table-head">Add Payment Details</div>
             <InputGroup>
-              <Link to="/">
+              <Link to="/viewpayment">
                 <KeyboardReturnIcon style={{ color: "white" }} />
               </Link>
             </InputGroup>
