@@ -14,13 +14,17 @@ import LoginIcon from "@mui/icons-material/Login";
 function Navbar() {
   const accessToken = sessionStorage.getItem("userToken");
   const [burgerStatus, setBurgerStatus] = useState(false);
-  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    window.location.pathname = "/login";
+  };
   return (
     <Nav>
       <Link
         to="/"
         style={({ isActive }) => ({
-          color: isActive ? "greenyellow" : "inherit",
+          filter: isActive ? "drop-shadow(0 0 0.3rem greenyellow)" : "none",
         })}
       >
         <Logo src={logo} />
@@ -30,7 +34,7 @@ function Navbar() {
           <PersonIcon />
           <span>Customer</span>
         </NavContainer>
-        <NavContainer to="">
+        <NavContainer to="/facilities">
           <ServiceIcon />
           <span>Services</span>
         </NavContainer>
@@ -50,12 +54,7 @@ function Navbar() {
           <MenuIcon onClick={() => setBurgerStatus(true)} />
         )}
       </RightMenu>
-      <Button
-        onClick={() => {
-          sessionStorage.clear();
-          navigate("/login");
-        }}
-      >
+      <Button onClick={handleLogout}>
         {accessToken === null ? <span>Login</span> : <span>Logout</span>}
         <LoginIcon />
       </Button>
@@ -106,8 +105,10 @@ function Navbar() {
           </Link>
         </li>
         <BurgerNavButton>
-          <span>Login</span>
-          <LoginIcon />
+          <Button onClick={handleLogout}>
+            {accessToken === null ? <span>Login</span> : <span>Logout</span>}
+            <LoginIcon />
+          </Button>
         </BurgerNavButton>
       </BurgerNav>
     </Nav>

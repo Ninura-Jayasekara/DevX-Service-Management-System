@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import { LoginValidate } from "../Validate";
 import { Link, useNavigate } from "react-router-dom";
 import picture from "../../assets/Logo_login.png";
@@ -10,7 +9,6 @@ import styled from "styled-components";
 
 const Login = () => {
   const navigate = useNavigate();
-  const params = useParams();
 
   const [values, setValues] = useState({
     email: "",
@@ -53,11 +51,11 @@ const Login = () => {
             sessionStorage.setItem("userToken", userToken);
 
             if (role == "customer") {
-              navigate("/customer");
+              window.location.pathname = "/customer";
             } else if (role == "service") {
-              navigate("/facilities");
+              window.location.pathname = "/facilities";
             } else if (role == "stock") {
-              navigate("/fetch-stocks");
+              window.location.pathname = "/fetch-stocks";
             } else if (role == "payment") {
               navigate("/viewpayment");
             }
