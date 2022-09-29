@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
@@ -7,6 +8,19 @@ import styled from "styled-components";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 function CustomerChart() {
+  const date = new Date();
+  const [values, setValues] = useState([]);
+  const [noMale, setNoMale] = useState(0);
+  const [noFemale, setNoFemale] = useState(0);
+  const [activeMale, setActiveMale] = useState(0);
+  const [activeFemale, setActiveFemale] = useState(0);
+
+  const authAxios = axios.create({
+    baseURL: "http://localhost:3001",
+    // headers: {
+    //   Authorization: `Bearer ${accessToken}`,
+    // },
+  });
   const state = {
     labels: ["Male", "Female"],
 
@@ -17,10 +31,35 @@ function CustomerChart() {
         hoverBackgroundColor: ["#501800", "#4B5000"],
         // noFeeds: isConsulted{true}
         // noApp: isConsulted{false}
-        data: [12, 5],
+        data: [noMale, noFemale],
       },
     ],
   };
+
+  const customerData = (val) => {
+    const male = val.filter((val) => val.Gender === "Male");
+    setNoMale(male.length);
+
+    male.filter((val) => {
+      // date.getMonth()
+      // dateVisit = val.DateOfVisit.split("T")[0].split("-")[1] - 1;
+      // if(dateV)
+      // (val.DateOfVisit.split("T")[0].split("-")[1] - 1) - date.getMonth();
+    });
+
+    const female = val.filter((val) => val.Gender === "Female");
+    setNoFemale(female.length);
+
+    // console.log(val.DateOfVisit);
+  };
+
+  useEffect(() => {
+    authAxios.get("/api/customer/view").then((res) => {
+      setValues(res.data);
+      customerData(res.data);
+    });
+  }, []);
+
   return (
     <Container>
       <Wrap>
@@ -36,14 +75,16 @@ function CustomerChart() {
           <div>
             <Pie
               options={{
-                title: {
-                  display: true,
-                  text: "Customer",
-                  fontSize: 20,
-                },
-                legend: {
-                  display: true,
-                  position: "right",
+                responsive: true,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Customer",
+                    fontSize: 20,
+                  },
+                  legend: {
+                    position: "top",
+                  },
                 },
               }}
               data={state}
@@ -53,38 +94,57 @@ function CustomerChart() {
             <Bar
               data={{
                 // Name of the variables on x-axies for each bar
-                labels: ["Active", "Non-Active", "Active", "Non-Active"],
+                labels: ["Active", "Non-Active"],
                 datasets: [
                   {
                     // Label for bars
-                    label: "Customers",
+                    label: "Male",
                     // Data or value of your each variable
-                    data: [8, 4, 3, 2],
+                    data: [8, 4],
                     // Color of each bar
-                    backgroundColor: ["red", "red", "yellow", "yellow"],
+                    backgroundColor: "red",
                     // Border color of each bar
-                    borderColor: ["red", "red", "yellow", "yellow"],
+                    borderColor: "red",
+                    borderWidth: 0.5,
+                  },
+                  {
+                    // Label for bars
+                    label: "Female",
+                    // Data or value of your each variable
+                    data: [3, 2],
+                    // Color of each bar
+                    backgroundColor: "yellow",
+                    // Border color of each bar
+                    borderColor: "yellow",
                     borderWidth: 0.5,
                   },
                 ],
               }}
               // Height of graph
-              height={400}
+              // height={400}
               options={{
+                responsive: true,
                 maintainAspectRatio: false,
-                scales: {
-                  yAxes: [
-                    {
-                      ticks: {
-                        // The y-axis value will start from zero
-                        beginAtZero: true,
-                      },
+                // scales: {
+                //   yAxes: [
+                //     {
+                //       ticks: {
+                //         // The y-axis value will start from zero
+                //         beginAtZero: true,
+                //       },
+                //     },
+                //   ],
+                // },
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Customer",
+                    fontSize: 20,
+                  },
+                  legend: {
+                    labels: {
+                      fontSize: 15,
                     },
-                  ],
-                },
-                legend: {
-                  labels: {
-                    fontSize: 15,
                   },
                 },
               }}

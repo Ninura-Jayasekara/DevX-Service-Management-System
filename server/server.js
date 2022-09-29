@@ -10,6 +10,7 @@ const connection = require("./DB");
 const adminRouter = require("./Routes/adminRoutes");
 const stockRouter = require("./Routes/stockRoutes");
 const facilityRouter = require("./Routes/serviceFacilityRoutes");
+const serviceRouter = require("./Routes/serviceRoutes");
 const customerRouter = require("./Routes/customerRoutes");
 const paymentRouter = require("./Routes/paymentRoutes");
 
@@ -28,6 +29,7 @@ app.use(cors());
 app.use("/api/admin", adminRouter);
 app.use("/api/stock", stockRouter);
 app.use("/api/facility", facilityRouter);
+app.use("/api/service", serviceRouter);
 app.use("/api/customer", customerRouter);
 app.use("/api/payment", paymentRouter);
 

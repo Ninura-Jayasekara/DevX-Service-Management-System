@@ -63,8 +63,42 @@ const fetchPart = asyncHandler(async(req, res)=>{
         })
     })
 
+
+    const updatePrice = asyncHandler(async(req, res)=>{
+
+        let itemCode = req.params.itemCode;
+        const {price} = req.body;
+    
+            const updatePrice = {
+                price
+            }
+    
+        const update = await Stock.findOneAndUpdate({itemCode}, updatePrice)
+        .then(()=>{
+        res.status(200).send({status: "Price updated !"});
+        }).catch((err)=>{
+            console.log(err);
+            res.status(500).send({status: "Error with updating price", error: err.message});
+        })
+    })
+    
+    const deletePart = asyncHandler(async(req,res)=>{
+    
+        let itemCode = req.params.itemCode;
+    
+       const Delete = await Stock.findOneAndDelete({itemCode})
+        .then(()=>{
+            res.status(200).send({status: "Spare Part Deleted!"});
+        }).catch((err)=>{
+            console.log(err.message);
+            res.status(500).send({status: "Error with delete spare part!",error: err.message});
+        })
+    })
+
 module.exports = {
     addStock,
     fetchPart,
-    fetchAllParts
+    fetchAllParts,
+    updatePrice,
+    deletePart
 }

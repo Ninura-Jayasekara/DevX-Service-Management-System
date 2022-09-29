@@ -67,6 +67,7 @@ const fetchAllPayments = asyncHandler(async(req, res)=>{
     })
  })
 
+
 module.exports = {
     addCard,
     addPayment,
