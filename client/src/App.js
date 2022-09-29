@@ -25,7 +25,10 @@ import AddPaymentDetails from "./components/PaymentComponents/AddPaymentDetails"
 import ViewPayments from "./components/PaymentComponents/ViewPaymentDetails";
 import UpdateAndDelete from "./components/StockComponents/ItemComponent";
 
+import PageNotFound from "./components/PageNotFound";
+
 function App() {
+  const accessToken = sessionStorage.getItem("userToken");
   return (
     <Router>
       <Container bgImage={background}>
@@ -59,8 +62,10 @@ function App() {
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
           <Route path="/viewpayment" element={<ViewPayments />}></Route>
+
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
-        <LargeFooter />
+        {/* <LargeFooter /> */}
       </Container>
     </Router>
   );

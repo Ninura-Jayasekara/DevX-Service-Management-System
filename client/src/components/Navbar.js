@@ -12,6 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LoginIcon from "@mui/icons-material/Login";
 
 function Navbar() {
+  const accessToken = sessionStorage.getItem("userToken");
   const [burgerStatus, setBurgerStatus] = useState(false);
   const navigate = useNavigate();
   return (
@@ -49,8 +50,13 @@ function Navbar() {
           <MenuIcon onClick={() => setBurgerStatus(true)} />
         )}
       </RightMenu>
-      <Button onClick={() => navigate("/login")}>
-        <span>Login</span>
+      <Button
+        onClick={() => {
+          sessionStorage.clear();
+          navigate("/login");
+        }}
+      >
+        {accessToken === null ? <span>Login</span> : <span>Logout</span>}
         <LoginIcon />
       </Button>
 

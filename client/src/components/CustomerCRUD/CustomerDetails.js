@@ -21,10 +21,9 @@ function CustomerDetails() {
   const [filterData, setFilterData] = useState([]);
 
   const authAxios = axios.create({
-    baseURL: "http://localhost:3001",
-    // headers: {
-    //   Authorization: `Bearer ${accessToken}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   const handleFilter = (e) => {

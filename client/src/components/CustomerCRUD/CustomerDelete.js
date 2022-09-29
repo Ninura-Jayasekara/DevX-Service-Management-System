@@ -18,6 +18,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerDelete() {
+  const accessToken = sessionStorage.getItem("userToken");
   const [values, setValues] = useState([]);
   const [formData, setFormData] = useState({});
   const [filterData, setFilterData] = useState([]);
@@ -25,10 +26,9 @@ function CustomerDelete() {
   const inputSearch = useRef();
 
   const authAxios = axios.create({
-    baseURL: "http://localhost:3001",
-    // headers: {
-    //   Authorization: `Bearer ${accessToken}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
   const handleFilter = (e) => {
     const searchData = e.target.value;
