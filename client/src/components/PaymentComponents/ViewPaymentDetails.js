@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   TableContainer,
   Table,
@@ -130,25 +130,6 @@ const InputComponent = styled.div`
       &:after {
         display: none;
       }
-    }
-  }
-`;
-const InputGroup = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  input {
-    border-radius: 5px;
-    color: #f5f5f5;
-    font-size: 16px;
-    padding: 6px;
-    outline: none;
-    border: none;
-    background: #404040;
-    transition: all 0.3s ease 0s;
-
-    &:focus {
-      box-shadow: 0 0 0 2px #909090;
     }
   }
 `;

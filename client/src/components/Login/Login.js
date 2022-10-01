@@ -1,6 +1,5 @@
 import React,{useState, useRef, useEffect} from 'react';
 import axios from 'axios';
-import {useParams} from "react-router-dom";
 import {LoginValidate} from '../Validate';
 import { Link, useNavigate } from "react-router-dom";
 import picture from "../../assets/Logo_login.png";
@@ -11,7 +10,6 @@ import styled from "styled-components";
 const Login = () => {
 	
   const navigate = useNavigate();
-    const params = useParams();
     
     const [values,setValues]=useState({
         email:'',
@@ -50,16 +48,16 @@ const Login = () => {
                     sessionStorage.setItem('isAuth',"true");
                     sessionStorage.setItem('userToken', userToken);
                     
-                    if(role=='customer'){
+                    if(role==='customer'){
                       navigate("/fetch-stocks");
                     }
-                    else if(role=='service'){
+                    else if(role==='service'){
                       navigate("/facilities");
                     }
-                    else if(role=='stock'){
+                    else if(role==='stock'){
                       navigate("/fetch-stocks");
                     }
-                    else if(role=='payment'){
+                    else if(role==='payment'){
                       navigate("/viewpayment");
                     }
                 }

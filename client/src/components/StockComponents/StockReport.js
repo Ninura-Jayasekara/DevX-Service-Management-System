@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MaterialTable from "material-table";
+import {Link} from "react-router-dom";
+import {
+  TableContainer,
+  Table,
+  Paper,
+} from "@mui/material";
+import styled from "styled-components";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 
 export default function StockReport() {
+
+  const accessToken = sessionStorage.getItem('userToken');
+
   const [stock, setStock] = useState([]);
+
+  const authAxios = axios.create({
+      
+    headers: {
+        Authorization: `Bearer ${accessToken}`
+    }
+})
   
 
 //function to get data
   useEffect(() => {
     function getData() {
-        axios.get("/api/stock/fetch-stock").then((res) => {
+        authAxios.get("/api/stock/fetch-stock").then((res) => {
+          console.log(res.data)
             setStock(res.data);
             
         }).catch((error) => {
@@ -23,86 +42,130 @@ export default function StockReport() {
     }, [])
 
   return (
-
-    <div>
-
-    
-
   
-      <div className="view" >
-        <center>
-        <h1 className="text-white">INVENTORY MANAGEMENT</h1>
-        </center>
-        <br></br><br></br>
-        <center>
-          <h5 className="text-white">STOCK DETAILS REPORT</h5>
-        </center>
-      <br></br>
-      <div class="component-body">
+<Container>
+      <Wrap>
+        <InputComponent>
+          <div className="table-head">Stock Report</div>
+          <InputGroup>
+              <Link to="/fetch-stocks">
+                <KeyboardReturnIcon style={{ color: "white" }} />
+              </Link>
+            </InputGroup>
+        </InputComponent>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
         
-      <div className="container-fluid">
-        <div class = "d-flex justify-content-center px-auto">
-          <MaterialTable style={{background:"#BBDEFB"}}
-            title="Details of Inventory"
-          
+          <MaterialTable title="Details of Stocks"
               columns={[
                 {
-                  title: "Item No",
-                  field: "itemNo",
+                  title: "Item Code",
+                  field: "itemCode",
                   type: "string",
-                },
-                { title: "Stock No", 
-                  field: "stockNo", 
-                  type: "string" 
-                },
-                { title: "Category",
-                  field: "category", 
-                  type: "string" 
-                },
-                { title: "Name", 
-                  field: "name", 
-                  type: "string" 
                 },
                 { title: "Brand", 
                   field: "brand", 
                   type: "string" 
                 },
-                { title: "Date", 
-                  field: "date", 
+                { title: "Country",
+                  field: "country", 
                   type: "string" 
                 },
-                { title: "Volume", 
-                  field: "volume", 
+                { title: "Dealer", 
+                  field: "dealerName", 
                   type: "string" 
                 },
-                { title: "Quantity", 
-                  field: "quantity", 
-                  type: "number" 
-                },      
-                {
-                  title: "Supplier Name",
-                  field: "supplierName",
-                  type: "string",
+                { title: "Spare Part", 
+                  field: "sparePart", 
+                  type: "string" 
                 },
-                { title: "Buying Price", 
-                  field: "buyingPrice", 
-                  type: "number" },
-                
-              
-          
+                { title: "Price", 
+                  field: "price", 
+                  type: "string" 
+                }
           ]}
-          data={inventory}
+          data={stock}
           options={{
             sorting: true,
             actionsColumnIndex: -1,
             exportButton: true,
           }}
         />
-          </div>
-      </div>
-      </div>
-    </div>
-  </div>
-  );
-  
+        </Table>
+          </TableContainer>
+  </Wrap>
+  </Container>
+  ); 
 }
+
+const Container = styled.main`
+  min-height: calc(100vh);
+  padding: 60px calc(3vw) 0px;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Wrap = styled.div`
+  padding: 10px calc(0.5vw + 5px);
+  background: #151e3d;
+  border-radius: 12px;
+  width: 100%;
+  min-height: 50vh;
+`;
+
+const InputComponent = styled.div`
+  display: flex;
+  padding: 10px 0;
+  div.table-head {
+    flex: 1;
+    text-transform: uppercase;
+    font-size: 20px;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      content: "";
+      bottom: 0px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: #733635;
+    }
+  }
+
+  @media (max-width: 570px) {
+    flex-direction: column;
+    div.table-head {
+      margin: 0 auto 10px;
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+`;
+const InputGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    border-radius: 5px;
+    color: #f5f5f5;
+    font-size: 16px;
+    padding: 6px;
+    outline: none;
+    border: none;
+    background: #404040;
+    transition: all 0.3s ease 0s;
+
+    &:focus {
+      box-shadow: 0 0 0 2px #909090;
+    }
+  }
+`;
+
+
+
+

@@ -157,25 +157,6 @@ const InputGroup = styled.div`
   }
 `;
 
-const ButtonGroup = styled.div`
-  padding: 6px 0 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 
-  button {
-    cursor: pointer;
-    padding: 5px;
-    margin: 0 3px;
-    background: #404040;
-    border: none;
-    border-radius: 5px;
-    transition: all 0.3s ease 0s;
-
-    &:hover {
-      box-shadow: 0 0 0 2px #909090;
-    }
-  }
-`;
 
 

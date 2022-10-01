@@ -1,11 +1,9 @@
 import React,{ useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
-import {toast, ToastContainer} from 'react-toastify';
 import { Link } from "react-router-dom";
 import Card from "../../assets/addcard.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { color } from "@mui/system";
 
 export default function AddCardDetails(){
 
