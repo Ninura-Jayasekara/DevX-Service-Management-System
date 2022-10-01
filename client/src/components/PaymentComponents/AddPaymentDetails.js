@@ -1,12 +1,7 @@
 import React,{ useState} from "react";
 import axios from "axios";
 import styled from "styled-components";
-<<<<<<< HEAD
-import { Link } from "react-router-dom";
-=======
-import {toast, ToastContainer} from 'react-toastify';
 import { Link,useNavigate } from "react-router-dom";
->>>>>>> 0ebe5c23ef77ccdcdf69f50629c3d3759b6739ab
 import Payment from "../../assets/addpayment.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 

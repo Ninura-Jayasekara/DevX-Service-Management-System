@@ -48,7 +48,7 @@ export default function StockReport() {
         <InputComponent>
           <div className="table-head">Stock Report</div>
           <InputGroup>
-              <Link to="/fetch-stocks">
+              <Link to="/stock">
                 <KeyboardReturnIcon style={{ color: "white" }} />
               </Link>
             </InputGroup>

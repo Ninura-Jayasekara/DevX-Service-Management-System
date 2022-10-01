@@ -16,25 +16,27 @@ import CustomerDelete from "./components/CustomerCRUD/CustomerDelete";
 import CustomerReport from "./components/CustomerCRUD/CustomerReport";
 import CustomerChart from "./components/CustomerCRUD/CustomerChart";
 
+// IT20175498 - N.S. Jayasekara
 import SearchParts from "./components/StockComponents/searchParts";
 import Login from "./components/Login/Login";
 import AddSpareParts from "./components/StockComponents/AddSpareParts";
 import DisplayStocks from "./components/StockComponents/DisplayStocks";
+import StockReport from "./components/StockComponents/StockReport";
+import UpdateAndDelete from "./components/StockComponents/ItemComponent";
 
+// IT20167882 - W.A.M.K. Perera
 import CustomerFacility from "./components/ServiceFacilityComponents/CustomerFacility";
 import AddServiceFacilities from "./components/ServiceFacilityComponents/AddServiceFacilities";
 import ViewFacilities from "./components/ServiceFacilityComponents/ViewFacilities";
 import UpdateFacilities from "./components/ServiceFacilityComponents/UpdateFacilities";
-<<<<<<< HEAD
 import AddService from "./components/ServiceComponents/AddService";
-=======
 
->>>>>>> d63e96031dbe073fcd07e1ed255a48119bb37cd0
+// IT20173722 - M.U. Dahanayake
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
 import AddPaymentDetails from "./components/PaymentComponents/AddPaymentDetails";
 import ViewPayments from "./components/PaymentComponents/ViewPaymentDetails";
-import UpdateAndDelete from "./components/StockComponents/ItemComponent";
-import StockReport from "./components/StockComponents/StockReport";
+
+
 
 import PageNotFound from "./components/PageNotFound";
 
@@ -50,7 +52,7 @@ function App() {
             <>
               <Route path="/customer" element={<Customer />}></Route>
               <Route path="/facilities" element={<CustomerFacility />}></Route>
-              <Route path="/stock" element={<SearchParts />}></Route>
+              <Route path="/search-stock" element={<SearchParts />}></Route>
             </>
           ) : (
             <>
@@ -67,7 +69,7 @@ function App() {
               ></Route>
               <Route path="/customer/chart" element={<CustomerChart />}></Route>
               {/* Mishan */}
-              <Route path="/facilities" element={<ViewFacilities />}></Route>
+              <Route path="/viewservicefacilities" element={<ViewFacilities />}></Route>
               <Route
                 path="/facilities/add"
                 element={<AddServiceFacilities />}
@@ -81,32 +83,22 @@ function App() {
                 path="/stock/update-delete"
                 element={<UpdateAndDelete />}
               ></Route>
+              <Route path="/stock-report" element={<StockReport />}></Route>
             </>
           )}
 
           <Route path="/login" element={<Login />}></Route>
-<<<<<<< HEAD
-          <Route path="/add-stocks" element={<AddSpareParts />}></Route>
-          <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
-          <Route path="/update-delete" element={<UpdateAndDelete />}></Route>
-          <Route path="/stock-report" element={<StockReport />}></Route>
-=======
->>>>>>> 0ebe5c23ef77ccdcdf69f50629c3d3759b6739ab
 
-<<<<<<< HEAD
+          <Route path="/stock/add" element={<AddSpareParts />}></Route>
+          <Route path="/stock" element={<DisplayStocks />}></Route>
+          <Route path="/stock/update-delete" element={<UpdateAndDelete />}></Route>
+          <Route path="/stock-report" element={<StockReport />}></Route>
+          
+
           <Route path="/addfacilities" element={<AddServiceFacilities />}></Route>
-          <Route path="/facilities" element={<ViewFacilities />}></Route>
+          <Route path="/viewservicefacilities" element={<ViewFacilities />}></Route>
           <Route path="/update/:fId" element={<UpdateFacilities />}></Route>
           <Route path="/addservice" element={<AddService />}></Route>
-=======
-          {/* <Route path="/stock" element={<SearchParts />}></Route>
-          <Route path="/stock/add" element={<AddSpareParts />}></Route>
-          <Route path="/stock/view" element={<DisplayStocks />}></Route>
-          <Route
-            path="/stock/update-delete"
-            element={<UpdateAndDelete />}
-          ></Route> */}
->>>>>>> d63e96031dbe073fcd07e1ed255a48119bb37cd0
 
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>

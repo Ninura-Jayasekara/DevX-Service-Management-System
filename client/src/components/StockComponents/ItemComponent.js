@@ -20,7 +20,6 @@ import UpdateIcon from "@mui/icons-material/Update";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export default function UpdateAndDelete() {
-  //brand country dealer price
 
   const [itemCode, setItemCode] = useState("");
   const [brand, setBrand] = useState("");
@@ -76,7 +75,7 @@ export default function UpdateAndDelete() {
       .put(`/api/stock/update/${itemCode}`, newprice)
       .then(() => {
         alert("Price updated Successfully");
-        navigate("/fetch-stocks");
+        navigate("/stock");
         window.location.reload(true);
       })
       .catch((err) => {
@@ -92,7 +91,7 @@ export default function UpdateAndDelete() {
       .then(() => {
         window.alert("Do you want to delete the selected item?");
         alert("Item Deleted Successfully");
-        navigate("/fetch-stocks");
+        navigate("/stock");
         window.location.reload(true);
       })
       .catch((err) => {

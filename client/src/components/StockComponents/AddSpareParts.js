@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-<<<<<<< HEAD
 import 'react-toastify/dist/ReactToastify.css';
 import { Link ,useNavigate } from "react-router-dom";
-=======
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
->>>>>>> 0ebe5c23ef77ccdcdf69f50629c3d3759b6739ab
+
 import Stock from "../../assets/addparts.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
@@ -60,7 +55,7 @@ export default function AddSpareParts() {
         setDealerName("");
         setSparePart("");
         setPrice("");
-        navigate("/fetch-stocks");
+        navigate("/stock");
       })
       .catch((err) => {
         alert(err);

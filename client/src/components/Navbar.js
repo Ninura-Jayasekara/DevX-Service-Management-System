@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { NavLink as Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Logo.png";
 import PersonIcon from "@mui/icons-material/Person";
@@ -34,15 +33,11 @@ function Navbar() {
           <PersonIcon />
           <span>Customer</span>
         </NavContainer>
-<<<<<<< HEAD
         <NavContainer to="/addservice">
-=======
-        <NavContainer to="/facilities">
->>>>>>> d63e96031dbe073fcd07e1ed255a48119bb37cd0
           <ServiceIcon />
           <span>Services</span>
         </NavContainer>
-        <NavContainer to="/stock">
+        <NavContainer to="/search-stock">
           <InventoryIcon />
           <span>Stocks</span>
         </NavContainer>
@@ -77,7 +72,7 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to=""
+            to="/addservice"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}
@@ -88,7 +83,7 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/addservice"
+            to="/search-stock"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}

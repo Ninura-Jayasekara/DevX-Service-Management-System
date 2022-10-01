@@ -73,10 +73,10 @@ function DisplayStocks() {
           </Table>
         </TableContainer>
         <ButtonGroup>
-          <Link to="add">
+          <Link to="/stock/add">
             <button>Add</button>
           </Link>
-          <Link to="update-delete">
+          <Link to="/stock/update-delete">
             <button>Edit</button>
           </Link>
           <Link to="/stock-report">
