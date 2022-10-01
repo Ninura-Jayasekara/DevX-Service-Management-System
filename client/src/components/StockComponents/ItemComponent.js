@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import {useNavigate , Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -14,126 +14,117 @@ import {
 
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '@mui/material/Button';
-import UpdateIcon from '@mui/icons-material/Update';
+import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "@mui/material/Button";
+import UpdateIcon from "@mui/icons-material/Update";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
-
-  
-  export default function UpdateAndDelete() {
-    
+export default function UpdateAndDelete() {
   //brand country dealer price
 
-    const [itemCode, setItemCode] = useState('');
-    const [brand, setBrand] = useState('');
-    const [country, setCountry] = useState('');
-    const [dealer, setDealer] = useState('');
-    const [sparePart, setSparePart] = useState('');
-    const [price, setPrice] = useState('');
+  const [itemCode, setItemCode] = useState("");
+  const [brand, setBrand] = useState("");
+  const [country, setCountry] = useState("");
+  const [dealer, setDealer] = useState("");
+  const [sparePart, setSparePart] = useState("");
+  const [price, setPrice] = useState("");
 
-    const [readOnly, setreadOnly] = useState(true);
-    const navigate = useNavigate();
-    
-    const [input, setInput] = useState('');
-    const accessToken = sessionStorage.getItem("userToken");
+  const [readOnly, setreadOnly] = useState(true);
+  const navigate = useNavigate();
 
+  const [input, setInput] = useState("");
+  const accessToken = sessionStorage.getItem("userToken");
 
   const authAxios = axios.create({
     headers: {
       Authorization: `Bearer ${accessToken}`,
-    }
-});
-  
-    
-  
-    const  loadStockDetails = async () => {
-      await authAxios.get(`/api/stock/search?q=${input}`).then((res) => {
+    },
+  });
 
+  const loadStockDetails = async () => {
+    await authAxios
+      .get(`/api/stock/search?q=${input}`)
+      .then((res) => {
         setItemCode(res.data.stocks.itemCode);
         setBrand(res.data.stocks.brand);
         setCountry(res.data.stocks.country);
         setDealer(res.data.stocks.dealerName);
         setSparePart(res.data.stocks.sparePart);
         setPrice(res.data.stocks.price);
-        
-        
-      }).catch((err) => {
-        alert(err.message)
       })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+  //creting a method for set readonly
+  const activate = () => {
+    setreadOnly(false);
+  };
+
+  //creting a method for update selling price
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const newprice = {
+      price,
     };
+    console.log(newprice);
 
-    //creting a method for set readonly
-    const activate=()=>{
-      setreadOnly(false)
-  }
+    await authAxios
+      .put(`/api/stock/update/${itemCode}`, newprice)
+      .then(() => {
+        alert("Price updated Successfully");
+        navigate("/fetch-stocks");
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
-    //creting a method for update selling price
+  //creting a method for delete items
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-    
-        const newprice = {
-            price
-        };
-        console.log(newprice)
-    
-              await authAxios
-                .put(`/api/stock/update/${itemCode}`, newprice)
-                .then(() => {
-                  alert("Price updated Successfully");
-                  navigate("/fetch-stocks");
-                  window.location.reload(true);
-                })
-                .catch((err) => {
-                  alert(err);
-                });
-            };
-
-
-//creting a method for delete items
-
-      const  onDelete = async () => {
-      
-              await authAxios
-                .delete(`/api/stock/delete/${itemCode}`)
-                .then(() => {
-                  window.alert('Do you want to delete the selected item?')
-                  alert("Item Deleted Successfully");
-                  navigate("/fetch-stocks");
-                  window.location.reload(true);
-                })
-                .catch((err) => {
-                  alert(err);
-                });
-            };
-
-
-    
-  
+  const onDelete = async () => {
+    await authAxios
+      .delete(`/api/stock/delete/${itemCode}`)
+      .then(() => {
+        window.alert("Do you want to delete the selected item?");
+        alert("Item Deleted Successfully");
+        navigate("/fetch-stocks");
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
   return (
-
-<Container>
+    <Container>
       <Wrap>
         <InputComponent>
           <div className="table-head">Update And Delete Spare Parts</div>
           <InputGroup>
             <SearchIcon onClick={loadStockDetails} />
-            <input type="text" id="input" value={input}   placeholder="Search" 
-            onChange={(e)=>{
-
+            <input
+              type="text"
+              id="input"
+              value={input}
+              placeholder="Search"
+              onChange={(e) => {
                 setInput(e.target.value);
-
-              }}/>
+              }}
+            />
           </InputGroup>
           <InputGroup>
-              <Link to="/fetch-stocks">
-                <KeyboardReturnIcon style={{ color: "white" }} />
-              </Link>
-            </InputGroup>
+            <Link to="/stock">
+              <KeyboardReturnIcon style={{ color: "white" }} />
+            </Link>
+          </InputGroup>
         </InputComponent>
-        <br></br><br></br>
+        <br></br>
+        <br></br>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ background: "#36454f" }}>
@@ -147,49 +138,49 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
               </TableRow>
             </TableHead>
             <TableBody>
-              
-                <TableRow
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                    <TableCell align="right">{itemCode}</TableCell>
-                  <TableCell align="right">{brand}</TableCell>
-                  <TableCell align="right">{country}</TableCell>
-                  <TableCell align="right">{dealer}</TableCell>
-                  <TableCell align="right">{sparePart}</TableCell>
-                  <TableCell align="right">
-                            <input
-                            type="text"
-                            name="part"
-                            id="part"
-                            value={price}
-                            readOnly={readOnly}
-                            onChange={(e) => {
-                                setPrice(e.target.value);
-                                }}
-                        />
-                        
-                        <EditIcon
-                            className="right"
-                        
-                            onClick={
-                                activate
-                            }
-                        />
-                        
-                    </TableCell>
-                </TableRow>
+              <TableRow
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell align="right">{itemCode}</TableCell>
+                <TableCell align="right">{brand}</TableCell>
+                <TableCell align="right">{country}</TableCell>
+                <TableCell align="right">{dealer}</TableCell>
+                <TableCell align="right">{sparePart}</TableCell>
+                <TableCell align="right">
+                  <input
+                    type="text"
+                    name="part"
+                    id="part"
+                    value={price}
+                    readOnly={readOnly}
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
+                  />
+
+                  <EditIcon className="right" onClick={activate} />
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
         <ButtonGroup>
-            
-                 <Button variant="outlined" color="success" onClick={onSubmit } startIcon={<UpdateIcon />}>
-                     Update
-                </Button>
-                 <Button variant="outlined" color="error" onClick={onDelete} startIcon={<DeleteIcon />}>
-                     Delete
-                </Button>
-                 
+          <Button
+            variant="outlined"
+            color="success"
+            onClick={onSubmit}
+            startIcon={<UpdateIcon />}
+          >
+            Update
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={onDelete}
+            startIcon={<DeleteIcon />}
+          >
+            Delete
+          </Button>
         </ButtonGroup>
       </Wrap>
     </Container>
@@ -284,5 +275,3 @@ const ButtonGroup = styled.div`
     }
   }
 `;
-
-

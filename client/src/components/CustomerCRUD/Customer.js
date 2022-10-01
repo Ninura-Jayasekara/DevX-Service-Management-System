@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -14,17 +13,10 @@ import {
 
 import SearchIcon from "@mui/icons-material/Search";
 
-function CustomerDetails() {
-  const accessToken = sessionStorage.getItem("userToken");
-
+function Customer() {
   const [values, setValues] = useState([]);
   const [filterData, setFilterData] = useState([]);
-
-  const authAxios = axios.create({
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const authAxios = axios.create({});
 
   const handleFilter = (e) => {
     const searchData = e.target.value;
@@ -41,7 +33,6 @@ function CustomerDetails() {
       setFilterData(res.data);
     });
   }, []);
-
   return (
     <Container>
       <Wrap>
@@ -56,61 +47,41 @@ function CustomerDetails() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ background: "#36454f" }}>
               <TableRow>
-                <TableCell>NIC</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Phone&nbsp;Number</TableCell>
-                <TableCell>Address</TableCell>
-                <TableCell>Date</TableCell>
+                <TableCell>DOB</TableCell>
+                <TableCell>No&nbsp;of&nbsp;Visit</TableCell>
+                <TableCell>Last Visit</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filterData
                 ? filterData.map((value) => (
                     <TableRow
-                      key={value.NIC}
+                      key={value._id}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {value.NIC}
+                        {value.Name}
                       </TableCell>
-                      <TableCell>{value.Name}</TableCell>
-                      <TableCell>{value.Email}</TableCell>
-                      <TableCell>{value.Phone}</TableCell>
-                      <TableCell>{value.Address}</TableCell>
                       <TableCell>{value.DOB.split("T")[0]}</TableCell>
+                      <TableCell>{value.noOfVisit}</TableCell>
+                      <TableCell>{value.DateOfVisit.split("T")[0]}</TableCell>
                     </TableRow>
                   ))
                 : null}
             </TableBody>
           </Table>
         </TableContainer>
-        <ButtonGroup>
-          <Link to="add">
-            <button>Add</button>
-          </Link>
-          <Link to="edit">
-            <button>Edit</button>
-          </Link>
-          <Link to="delete">
-            <button>Delete</button>
-          </Link>
-          <Link to="report">
-            <button>Report</button>
-          </Link>
-        </ButtonGroup>
       </Wrap>
     </Container>
   );
 }
 
-export default CustomerDetails;
-
 const Container = styled.main`
   min-height: calc(100vh);
-  padding: 60px calc(3vw) 0px;
+  padding: 60px calc(3.5vw + 5px) 0px;
   overflow-x: hidden;
   display: flex;
   align-items: center;
@@ -144,7 +115,6 @@ const InputComponent = styled.div`
       background: #733635;
     }
   }
-
   @media (max-width: 570px) {
     flex-direction: column;
     div.table-head {
@@ -156,6 +126,7 @@ const InputComponent = styled.div`
     }
   }
 `;
+
 const InputGroup = styled.div`
   display: flex;
   align-items: center;
@@ -176,23 +147,4 @@ const InputGroup = styled.div`
   }
 `;
 
-const ButtonGroup = styled.div`
-  padding: 6px 0 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  button {
-    cursor: pointer;
-    padding: 5px;
-    margin: 0 3px;
-    background: #404040;
-    border: none;
-    border-radius: 5px;
-    transition: all 0.3s ease 0s;
-
-    &:hover {
-      box-shadow: 0 0 0 2px #909090;
-    }
-  }
-`;
+export default Customer;

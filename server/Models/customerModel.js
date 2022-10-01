@@ -31,6 +31,14 @@ const customerSchema = new Schema({
     type: String,
     required: [true, "Customer Email is required"],
   },
+  noOfVisit: {
+    type: String,
+    required: true,
+  },
+  DateOfVisit: {
+    type: Date,
+    required: true,
+  },
 });
 
 const Customer = mongoose.model("customer", customerSchema);

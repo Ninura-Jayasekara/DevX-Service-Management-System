@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import React,{useState, useRef, useEffect} from 'react';
 import axios from 'axios';
 import {LoginValidate} from '../Validate';
+=======
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { LoginValidate } from "../Validate";
+>>>>>>> 0ebe5c23ef77ccdcdf69f50629c3d3759b6739ab
 import { Link, useNavigate } from "react-router-dom";
 import picture from "../../assets/Logo_login.png";
 
@@ -8,26 +14,72 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import styled from "styled-components";
 
 const Login = () => {
-	
   const navigate = useNavigate();
+<<<<<<< HEAD
     
     const [values,setValues]=useState({
         email:'',
         password:''
     });
+=======
+>>>>>>> 0ebe5c23ef77ccdcdf69f50629c3d3759b6739ab
 
-    const [role, setRole] = useState("");
-    
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
 
-    // Used to refer input fields
-    const inputUserEmail=useRef();
-    const inputPassword=useRef();
+  const [role, setRole] = useState("");
 
-    const handleChange=(event)=>{
-        setValues({...values,
-            [event.target.name]:event.target.value,
+  // Used to refer input fields
+  const inputUserEmail = useRef();
+  const inputPassword = useRef();
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Make Sure there is no spaces trailing and leading
+    Object.keys(values).map((k) => (values[k] = values[k].trim()));
+    // Validate input Fields
+    setErrors(LoginValidate(values));
+  };
+
+  useEffect(() => {
+    if (
+      Object.keys(errors).length === 0 &&
+      values.email !== "" &&
+      values.password !== ""
+    ) {
+      axios
+        .post("api/admin/login", values)
+        .then((res) => {
+          let userToken = res.data.token;
+
+          if (userToken !== null) {
+            sessionStorage.setItem("isAuth", "true");
+            sessionStorage.setItem("userToken", userToken);
+
+            if (role == "customer") {
+              window.location.pathname = "/customer";
+            } else if (role == "service") {
+              window.location.pathname = "/facilities";
+            } else if (role == "stock") {
+              window.location.pathname = "/fetch-stocks";
+            } else if (role == "payment") {
+              navigate("/viewpayment");
+            }
+          }
         })
+        .catch((e) => {
+          console.log("Error:", e.message);
+        });
     }
+<<<<<<< HEAD
 
     const [errors,setErrors]=useState({});
 
@@ -94,40 +146,103 @@ const Login = () => {
                 </div>
                 <div>
                   <br></br>
+=======
+  }, [errors]);
+
+  return (
+    <Container>
+      <Wrap>
+        <InputComponent>
+          <div className="table-head">Admin Login</div>
+          <InputGroup>
+            <Link to="/">
+              <KeyboardReturnIcon style={{ color: "white" }} />
+            </Link>
+          </InputGroup>
+        </InputComponent>
+        <Form onSubmit={handleSubmit}>
+          <Input>
+            <ImageWrapper src={picture} />
+            <InputWrapper>
+              <div>
+                <label htmlFor="Email">Email</label>
+                <input
+                  id="email"
+                  autocomplete="off"
+                  ref={inputUserEmail}
+                  type="text"
+                  name="email"
+                  placeholder="useremail"
+                  value={values.email}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label htmlFor="Password">Password</label>
+                <input
+                  id="password"
+                  ref={inputPassword}
+                  type="password"
+                  name="password"
+                  required
+                  placeholder="Password"
+                  value={values.password}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <br></br>
+>>>>>>> 0ebe5c23ef77ccdcdf69f50629c3d3759b6739ab
                 <ButtonGroup>
-                    <input type="radio" value="customer" name="role"  onChange={(e)=>{
-
-                            setRole(e.target.value);
-
-                    }} /> Customer
-                    <input type="radio" value="service" name="role" onChange={(e)=>{
-
-                    setRole(e.target.value);
-
-                    }}/> Services
-                    <input type="radio" value="stock" name="role" onChange={(e)=>{
-
-                    setRole(e.target.value);
-
-                    }}/> Stocks
-                    <input type="radio" value="payment" name="role" onChange={(e)=>{
-
-                    setRole(e.target.value);
-
-                    }}/> Payments
-                  </ButtonGroup>
-                    
-                </div>
-                <ButtonGroup>
-                  <input type="submit" value="Login" />
+                  <input
+                    type="radio"
+                    value="customer"
+                    name="role"
+                    onChange={(e) => {
+                      setRole(e.target.value);
+                    }}
+                  />{" "}
+                  Customer
+                  <input
+                    type="radio"
+                    value="service"
+                    name="role"
+                    onChange={(e) => {
+                      setRole(e.target.value);
+                    }}
+                  />{" "}
+                  Services
+                  <input
+                    type="radio"
+                    value="stock"
+                    name="role"
+                    onChange={(e) => {
+                      setRole(e.target.value);
+                    }}
+                  />{" "}
+                  Stocks
+                  <input
+                    type="radio"
+                    value="payment"
+                    name="role"
+                    onChange={(e) => {
+                      setRole(e.target.value);
+                    }}
+                  />{" "}
+                  Payments
                 </ButtonGroup>
-              </InputWrapper>
-            </Input>
-          </Form>
-        </Wrap>
-      </Container>
-    );
-  }
+              </div>
+              <ButtonGroup>
+                <input type="submit" value="Login" />
+              </ButtonGroup>
+            </InputWrapper>
+          </Input>
+        </Form>
+      </Wrap>
+    </Container>
+  );
+};
 
 export default Login;
 

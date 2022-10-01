@@ -14,7 +14,7 @@ const paymentDetailSchema = new Schema({
     },
 
     serviceDate: {
-        type: Date,
+        type: String,
         required: [true, 'Service Date is required']
     },
 

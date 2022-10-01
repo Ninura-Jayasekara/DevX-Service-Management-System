@@ -1,96 +1,36 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import ReactToPrint from "react-to-print";
 import "chart.js/auto";
-import { Pie, Bar } from "react-chartjs-2";
 import styled from "styled-components";
+
+import CustomerChartData from "./CustomerChartData";
 
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 function CustomerChart() {
-  const state = {
-    labels: ["Male", "Female"],
+  const componentRef = useRef();
 
-    datasets: [
-      {
-        label: "Patients",
-        backgroundColor: ["#B21F00", "#C9DE00"],
-        hoverBackgroundColor: ["#501800", "#4B5000"],
-        // noFeeds: isConsulted{true}
-        // noApp: isConsulted{false}
-        data: [12, 5],
-      },
-    ],
-  };
   return (
     <Container>
       <Wrap>
         <InputComponent>
           <div className="table-head">Customer Chart</div>
           <InputGroup>
+            <ReactToPrint
+              trigger={() => (
+                <ButtonGroup>
+                  <input type="submit" value="Print" />
+                </ButtonGroup>
+              )}
+              content={() => componentRef.current}
+            />
             <Link to="/customer/report">
               <KeyboardReturnIcon style={{ color: "white" }} />
             </Link>
           </InputGroup>
         </InputComponent>
-        <Chart>
-          <div>
-            <Pie
-              options={{
-                title: {
-                  display: true,
-                  text: "Customer",
-                  fontSize: 20,
-                },
-                legend: {
-                  display: true,
-                  position: "right",
-                },
-              }}
-              data={state}
-            />
-          </div>
-          <div>
-            <Bar
-              data={{
-                // Name of the variables on x-axies for each bar
-                labels: ["Active", "Non-Active", "Active", "Non-Active"],
-                datasets: [
-                  {
-                    // Label for bars
-                    label: "Customers",
-                    // Data or value of your each variable
-                    data: [8, 4, 3, 2],
-                    // Color of each bar
-                    backgroundColor: ["red", "red", "yellow", "yellow"],
-                    // Border color of each bar
-                    borderColor: ["red", "red", "yellow", "yellow"],
-                    borderWidth: 0.5,
-                  },
-                ],
-              }}
-              // Height of graph
-              height={400}
-              options={{
-                maintainAspectRatio: false,
-                scales: {
-                  yAxes: [
-                    {
-                      ticks: {
-                        // The y-axis value will start from zero
-                        beginAtZero: true,
-                      },
-                    },
-                  ],
-                },
-                legend: {
-                  labels: {
-                    fontSize: 15,
-                  },
-                },
-              }}
-            />
-          </div>
-        </Chart>
+        <CustomerChartData ref={componentRef} />
       </Wrap>
     </Container>
   );
@@ -170,13 +110,15 @@ const InputGroup = styled.div`
     }
   }
 `;
-const Chart = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-gap: 10px;
-  grid-auto-rows: max-content;
+const ButtonGroup = styled.span`
+  display: flex;
+  margin: 0 12px;
+  justify-content: space-around;
 
-  @media (max-width: 960px) {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+  input {
+    width: 100px;
+    height: 35px;
+    border-radius: 15px;
+    background: #3cb043;
   }
 `;

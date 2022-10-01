@@ -1,89 +1,89 @@
-import React,{ useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+<<<<<<< HEAD
 import 'react-toastify/dist/ReactToastify.css';
 import { Link ,useNavigate } from "react-router-dom";
+=======
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link, useNavigate } from "react-router-dom";
+>>>>>>> 0ebe5c23ef77ccdcdf69f50629c3d3759b6739ab
 import Stock from "../../assets/addparts.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
+export default function AddSpareParts() {
+  const accessToken = sessionStorage.getItem("userToken");
+  const navigate = useNavigate();
 
-export default function AddSpareParts(){
+  const [itemCode, setItemCode] = useState("");
+  const [brand, setBrand] = useState("");
+  const [country, setCountry] = useState("");
+  const [dealerName, setDealerName] = useState("");
+  const [sparePart, setSparePart] = useState("");
+  const [price, setPrice] = useState("");
 
-    const accessToken = sessionStorage.getItem('userToken');
-    const navigate = useNavigate();
-
-    const [itemCode, setItemCode] = useState("");
-    const [brand, setBrand] = useState("");
-    const [country, setCountry] = useState("");
-    const [dealerName, setDealerName] = useState("");
-    const [sparePart, setSparePart] = useState("");
-    const [price, setPrice] = useState("");
-   
-    const authAxios = axios.create({
-      
-      headers: {
-          Authorization: `Bearer ${accessToken}`
-      }
-  })
+  const authAxios = axios.create({
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
   const handleReset = () => {
-    setItemCode('');
-    setBrand('');
-    setCountry('');
-    setDealerName('');
-    setSparePart('');
-    setPrice('');
+    setItemCode("");
+    setBrand("");
+    setCountry("");
+    setDealerName("");
+    setSparePart("");
+    setPrice("");
   };
- 
-    function sendData(e){
-        e.preventDefault();
 
-      
-    
-        const newPart={
-            itemCode,
-            brand,
-            country,
-            dealerName,
-            sparePart,
-            price
-        }
+  function sendData(e) {
+    e.preventDefault();
 
-        
-        authAxios.post("/api/stock/",newPart).then(()=>{
-          alert("successful")
-            setItemCode("");
-            setBrand("");
-            setCountry("");
-            setDealerName("");
-            setSparePart("");
-            setPrice("");
-            navigate("/fetch-stocks");
+    const newPart = {
+      itemCode,
+      brand,
+      country,
+      dealerName,
+      sparePart,
+      price,
+    };
 
-        }).catch((err)=>{
-            alert(err)
-        })
-        }    
+    authAxios
+      .post("/api/stock/", newPart)
+      .then(() => {
+        alert("successful");
+        setItemCode("");
+        setBrand("");
+        setCountry("");
+        setDealerName("");
+        setSparePart("");
+        setPrice("");
+        navigate("/fetch-stocks");
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
 
-    return(
-
-        <Container>
-        <Wrap>
-          <InputComponent>
-            <div className="table-head">Add Spare Part</div>
-            <InputGroup>
-              <Link to="/fetch-stocks">
-                <KeyboardReturnIcon style={{ color: "white" }} />
-              </Link>
-            </InputGroup>
-          </InputComponent>
-          <Form onSubmit={sendData}>
-            <Input>
-              <ImageWrapper src={Stock} />
-              <InputWrapper>
-                <div>
-
-                  {/* <label htmlFor="ItemCode">Item Code</label>
+  return (
+    <Container>
+      <Wrap>
+        <InputComponent>
+          <div className="table-head">Add Spare Part</div>
+          <InputGroup>
+            <Link to="/stock">
+              <KeyboardReturnIcon style={{ color: "white" }} />
+            </Link>
+          </InputGroup>
+        </InputComponent>
+        <Form onSubmit={sendData}>
+          <Input>
+            <ImageWrapper src={Stock} />
+            <InputWrapper>
+              <div>
+                {/* <label htmlFor="ItemCode">Item Code</label>
                   <input type="text" id="itemCode" 
                     placeholder="Enter Item Code" 
                     minLength={5} maxLength={20}  
@@ -94,102 +94,119 @@ export default function AddSpareParts(){
 
                     }}  /> */}
 
-                  <label htmlFor="itemCode">Item Code</label>
+                <label htmlFor="itemCode">Item Code</label>
 
-                  <select id="itemCode" defaultValue="Select Item Code" value={itemCode}
-                          onChange={(e) => setItemCode(e.target.value)}>
+                <select
+                  id="itemCode"
+                  defaultValue="Select Item Code"
+                  value={itemCode}
+                  onChange={(e) => setItemCode(e.target.value)}
+                >
+                  <option value="Add">
+                    Choose Spare Part Name for the Item Code
+                  </option>
+                  <option value="Engine-Oil-001">Honda Engine oil 4l</option>
+                  <option value="Engine-Oil-002">Toyota Engine oil 4l </option>
+                  <option value="Engine-Oil-003">Honda Engine oil 1l </option>
+                  <option value="Engine-Oil-004">Toyota Engine oil 1l </option>
+                  <option value="Brake-Pad-001">Honda Brake Pad </option>
+                  <option value="Brake-Pad-002">Toyota Brake Pad </option>
+                  <option value="Brake-Pad-003">Kia Brake Pad </option>
+                  <option value="Brake-Oil-001">Honda Brake oil 1l </option>
+                  <option value="Brake-Oil-002">Toyota Brake oil 1l </option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="Brand">Brand</label>
+                <input
+                  type="text"
+                  id="brand"
+                  placeholder="Enter Item Brand"
+                  minLength={5}
+                  maxLength={20}
+                  required
+                  value={brand}
+                  onChange={(e) => {
+                    setBrand(e.target.value);
+                  }}
+                />
+              </div>
 
-                            <option value= "Add">Choose Spare Part Name for the Item Code</option>
-                            <option value= "Engine-Oil-001">Honda Engine oil 4l</option> 
-                            <option value = "Engine-Oil-002">Toyota Engine oil 4l </option>
-                            <option value = "Engine-Oil-003">Honda Engine oil 1l </option>
-                            <option value = "Engine-Oil-004">Toyota Engine oil 1l </option>
-                            <option value = "Brake-Pad-001">Honda Brake Pad </option>
-                            <option value = "Brake-Pad-002">Toyota Brake Pad </option>
-                            <option value = "Brake-Pad-003">Kia Brake Pad </option>
-                            <option value = "Brake-Oil-001">Honda Brake oil 1l </option>
-                            <option value = "Brake-Oil-002">Toyota Brake oil 1l </option>
-                   
-                  </select>
-                
-                </div>
-                <div>
-                  <label htmlFor="Brand">Brand</label>
-                  <input type="text" id="brand" 
-                    placeholder="Enter Item Brand" 
-                    minLength={5} maxLength={20}  
-                    required 
-                    value={brand} onChange={(e)=>{
+              <div>
+                <label htmlFor="Country">Country</label>
+                <input
+                  type="text"
+                  id="country"
+                  placeholder="Enter Manufactured Country"
+                  minLength={5}
+                  maxLength={20}
+                  required
+                  value={country}
+                  onChange={(e) => {
+                    setCountry(e.target.value);
+                  }}
+                />
+              </div>
 
-                        setBrand(e.target.value);
+              <div>
+                <label htmlFor="Dealer">Dealer</label>
+                <input
+                  type="text"
+                  id="dealer"
+                  placeholder="Enter Item Dealer"
+                  minLength={5}
+                  maxLength={30}
+                  required
+                  value={dealerName}
+                  onChange={(e) => {
+                    setDealerName(e.target.value);
+                  }}
+                />
+              </div>
 
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="Country">Country</label>
-                  <input type="text" id="country" 
-                    placeholder="Enter Manufactured Country" 
-                    minLength={5} maxLength={20}  
-                    required 
-                    value={country} onChange={(e)=>{
+              <div>
+                <label htmlFor="Part">Spare Part</label>
+                <input
+                  type="text"
+                  id="part"
+                  placeholder="Enter Spare Part"
+                  minLength={8}
+                  maxLength={20}
+                  required
+                  value={sparePart}
+                  onChange={(e) => {
+                    setSparePart(e.target.value);
+                  }}
+                />
+              </div>
 
-                        setCountry(e.target.value);
+              <div>
+                <label htmlFor="price">Selling Price (Rs.)</label>
+                <input
+                  type="text"
+                  id="price"
+                  placeholder="Enter Selling Price"
+                  required
+                  value={price}
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                  }}
+                />
+              </div>
 
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="Dealer">Dealer</label>
-                  <input type="text" id="dealer" 
-                    placeholder="Enter Item Dealer" 
-                    minLength={5} maxLength={30}  
-                    required 
-                    value={dealerName} onChange={(e)=>{
+              <ButtonGroup>
+                <input type="reset" value="Reset" onClick={handleReset} />
+                <input type="submit" value="Submit" />
+              </ButtonGroup>
+            </InputWrapper>
+          </Input>
+        </Form>
+      </Wrap>
+    </Container>
+  );
+}
 
-                        setDealerName(e.target.value);
-
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="Part">Spare Part</label>
-                  <input type="text" id="part" 
-                    placeholder="Enter Spare Part" 
-                    minLength={8} maxLength={20}  
-                    required 
-                    value={sparePart} onChange={(e)=>{
-
-                        setSparePart(e.target.value);
-
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="price">Selling Price (Rs.)</label>
-                  <input type="text" id="price" 
-                    placeholder="Enter Selling Price" 
-                    required 
-                    value={price} onChange={(e)=>{
-
-                        setPrice(e.target.value);
-
-                    }}  />
-                </div>
-               
-                <ButtonGroup>
-                  <input type="reset" value="Reset" onClick={handleReset} />
-                  <input type="submit" value="Submit" />
-                </ButtonGroup>
-              </InputWrapper>
-            </Input>
-          </Form>
-        </Wrap>
-      </Container>
-    );
-  }
-
-  const Container = styled.main`
+const Container = styled.main`
   min-height: calc(100vh);
   padding: 60px calc(3vw) 0px;
   overflow-x: hidden;

@@ -76,7 +76,7 @@ export default function UpdateFacilities(){
                         setFacilityCost(e.target.value);
                     }}/>
                 </div>
-                <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={onSubmit}><b>SUBMIT</b></button>
+                <button type="submit" id="btnsubmit" className="btn btn-primary" onClick={onSubmit}><b>UPDATE</b></button>
 
             </form>
         </div>

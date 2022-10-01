@@ -26,13 +26,14 @@ function CustomerAdd() {
     Gender: "Male",
     Address: "",
     Email: "",
+    noOfVisit: "1",
+    DateOfVisit: new Date().toLocaleDateString("en-CA"),
   });
 
   const authAxios = axios.create({
-    baseURL: "http://localhost:3001",
-    // headers: {
-    //   Authorization: `Bearer ${accessToken}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   const inputNIC = useRef();
@@ -349,7 +350,7 @@ const InputGroup = styled.div`
 const Input = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-gap: 20px;
+  grid-gap: 10px;
 `;
 
 const InputWrapper = styled.div`
@@ -370,13 +371,18 @@ const InputWrapper = styled.div`
       border: none;
       width: 100%;
       height: 30px;
-      border-radius: 15px;
       padding: 3px 12px;
       padding-left: 40px;
+
+      &:focus {
+        border-bottom: 1px solid white;
+      }
     }
     .input-group {
       display: block;
       position: relative;
+      overflow: hidden;
+      border-radius: 50px;
 
       .left {
         position: absolute;
