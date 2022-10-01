@@ -20,6 +20,7 @@ import DisplayStocks from "./components/StockComponents/DisplayStocks";
 import AddServiceFacilities from "./components/ServiceFacilityComponents/AddServiceFacilities";
 import ViewFacilities from "./components/ServiceFacilityComponents/ViewFacilities";
 import UpdateFacilities from "./components/ServiceFacilityComponents/UpdateFacilities";
+import AddService from "./components/ServiceComponents/AddService";
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
 import AddPaymentDetails from "./components/PaymentComponents/AddPaymentDetails";
 import ViewPayments from "./components/PaymentComponents/ViewPaymentDetails";
@@ -45,16 +46,10 @@ function App() {
           <Route path="/fetch-stocks" element={<DisplayStocks />}></Route>
           <Route path="/update-delete" element={<UpdateAndDelete />}></Route>
 
-          <Route
-            path="/addfacilities"
-            element={<AddServiceFacilities />}
-          ></Route>
-          <Route
-            path="/addfacilities"
-            element={<AddServiceFacilities />}
-          ></Route>
+          <Route path="/addfacilities" element={<AddServiceFacilities />}></Route>
           <Route path="/facilities" element={<ViewFacilities />}></Route>
           <Route path="/update/:fId" element={<UpdateFacilities />}></Route>
+          <Route path="/addservice" element={<AddService />}></Route>
 
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
