@@ -19,6 +19,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerEdit() {
+  const accessToken = sessionStorage.getItem("userToken");
   const [values, setValues] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const [isDOBEdit, setIsDOBEdit] = useState(false);
@@ -36,10 +37,9 @@ function CustomerEdit() {
   });
   const inputSearch = useRef();
   const authAxios = axios.create({
-    baseURL: "http://localhost:3001",
-    // headers: {
-    //   Authorization: `Bearer ${accessToken}`,
-    // },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
   const handleFilter = (e) => {
     const searchData = e.target.value;

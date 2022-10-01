@@ -1,64 +1,15 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import ReactToPrint from "react-to-print";
 import "chart.js/auto";
-import { Pie, Bar } from "react-chartjs-2";
 import styled from "styled-components";
+
+import CustomerChartData from "./CustomerChartData";
 
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 function CustomerChart() {
-  const date = new Date();
-  const [values, setValues] = useState([]);
-  const [noMale, setNoMale] = useState(0);
-  const [noFemale, setNoFemale] = useState(0);
-  const [activeMale, setActiveMale] = useState(0);
-  const [activeFemale, setActiveFemale] = useState(0);
-
-  const authAxios = axios.create({
-    baseURL: "http://localhost:3001",
-    // headers: {
-    //   Authorization: `Bearer ${accessToken}`,
-    // },
-  });
-  const state = {
-    labels: ["Male", "Female"],
-
-    datasets: [
-      {
-        label: "Patients",
-        backgroundColor: ["#B21F00", "#C9DE00"],
-        hoverBackgroundColor: ["#501800", "#4B5000"],
-        // noFeeds: isConsulted{true}
-        // noApp: isConsulted{false}
-        data: [noMale, noFemale],
-      },
-    ],
-  };
-
-  const customerData = (val) => {
-    const male = val.filter((val) => val.Gender === "Male");
-    setNoMale(male.length);
-
-    male.filter((val) => {
-      // date.getMonth()
-      // dateVisit = val.DateOfVisit.split("T")[0].split("-")[1] - 1;
-      // if(dateV)
-      // (val.DateOfVisit.split("T")[0].split("-")[1] - 1) - date.getMonth();
-    });
-
-    const female = val.filter((val) => val.Gender === "Female");
-    setNoFemale(female.length);
-
-    // console.log(val.DateOfVisit);
-  };
-
-  useEffect(() => {
-    authAxios.get("/api/customer/view").then((res) => {
-      setValues(res.data);
-      customerData(res.data);
-    });
-  }, []);
+  const componentRef = useRef();
 
   return (
     <Container>
@@ -66,91 +17,20 @@ function CustomerChart() {
         <InputComponent>
           <div className="table-head">Customer Chart</div>
           <InputGroup>
+            <ReactToPrint
+              trigger={() => (
+                <ButtonGroup>
+                  <input type="submit" value="Print" />
+                </ButtonGroup>
+              )}
+              content={() => componentRef.current}
+            />
             <Link to="/customer/report">
               <KeyboardReturnIcon style={{ color: "white" }} />
             </Link>
           </InputGroup>
         </InputComponent>
-        <Chart>
-          <div>
-            <Pie
-              options={{
-                responsive: true,
-                plugins: {
-                  title: {
-                    display: true,
-                    text: "Customer",
-                    fontSize: 20,
-                  },
-                  legend: {
-                    position: "top",
-                  },
-                },
-              }}
-              data={state}
-            />
-          </div>
-          <div>
-            <Bar
-              data={{
-                // Name of the variables on x-axies for each bar
-                labels: ["Active", "Non-Active"],
-                datasets: [
-                  {
-                    // Label for bars
-                    label: "Male",
-                    // Data or value of your each variable
-                    data: [8, 4],
-                    // Color of each bar
-                    backgroundColor: "red",
-                    // Border color of each bar
-                    borderColor: "red",
-                    borderWidth: 0.5,
-                  },
-                  {
-                    // Label for bars
-                    label: "Female",
-                    // Data or value of your each variable
-                    data: [3, 2],
-                    // Color of each bar
-                    backgroundColor: "yellow",
-                    // Border color of each bar
-                    borderColor: "yellow",
-                    borderWidth: 0.5,
-                  },
-                ],
-              }}
-              // Height of graph
-              // height={400}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                // scales: {
-                //   yAxes: [
-                //     {
-                //       ticks: {
-                //         // The y-axis value will start from zero
-                //         beginAtZero: true,
-                //       },
-                //     },
-                //   ],
-                // },
-                plugins: {
-                  title: {
-                    display: true,
-                    text: "Customer",
-                    fontSize: 20,
-                  },
-                  legend: {
-                    labels: {
-                      fontSize: 15,
-                    },
-                  },
-                },
-              }}
-            />
-          </div>
-        </Chart>
+        <CustomerChartData ref={componentRef} />
       </Wrap>
     </Container>
   );
@@ -230,13 +110,15 @@ const InputGroup = styled.div`
     }
   }
 `;
-const Chart = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-gap: 10px;
-  grid-auto-rows: max-content;
+const ButtonGroup = styled.span`
+  display: flex;
+  margin: 0 12px;
+  justify-content: space-around;
 
-  @media (max-width: 960px) {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+  input {
+    width: 100px;
+    height: 35px;
+    border-radius: 15px;
+    background: #3cb043;
   }
 `;

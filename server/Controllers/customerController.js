@@ -3,7 +3,6 @@ const { isValidObjectId } = require("mongoose");
 const Customer = require("../Models/customerModel");
 
 const addCustomer = asyncHandler(async (req, res) => {
-  // TODO: ADD Fields
   const {
     NIC,
     Name,
