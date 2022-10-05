@@ -17,6 +17,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
 
 function CustomerAdd() {
+  const accessToken = sessionStorage.getItem("userToken");
 
   const [values, setValues] = useState({
     NIC: "",
