@@ -1,101 +1,77 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MaterialTable from "material-table";
-import {Link} from "react-router-dom";
-import {
-  TableContainer,
-  Table,
-  Paper,
-} from "@mui/material";
+import { Link } from "react-router-dom";
+import { TableContainer, Table, Paper } from "@mui/material";
 import styled from "styled-components";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
-
 export default function StockReport() {
-
-  const accessToken = sessionStorage.getItem('userToken');
+  const accessToken = sessionStorage.getItem("userToken");
 
   const [stock, setStock] = useState([]);
 
   const authAxios = axios.create({
-      
     headers: {
-        Authorization: `Bearer ${accessToken}`
-    }
-})
-  
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 
-//function to get data
+  //function to get data
   useEffect(() => {
     function getData() {
-        authAxios.get("/api/stock/fetch-stock").then((res) => {
-          console.log(res.data)
-            setStock(res.data);
-            
-        }).catch((error) => {
-            alert(error.message);
+      authAxios
+        .get("/api/stock/fetch-stock")
+        .then((res) => {
+          console.log(res.data);
+          setStock(res.data);
         })
+        .catch((error) => {
+          alert(error.message);
+        });
     }
     getData();
-
-
-    }, [])
+  }, []);
 
   return (
-  
-<Container>
+    <Container>
       <Wrap>
         <InputComponent>
           <div className="table-head">Stock Report</div>
           <InputGroup>
-              <Link to="/stock">
-                <KeyboardReturnIcon style={{ color: "white" }} />
-              </Link>
-            </InputGroup>
+            <Link to="/stock">
+              <KeyboardReturnIcon style={{ color: "white" }} />
+            </Link>
+          </InputGroup>
         </InputComponent>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        
-          <MaterialTable title="Details of Stocks"
+            <MaterialTable
+              title="Details of Stocks"
               columns={[
                 {
                   title: "Item Code",
                   field: "itemCode",
                   type: "string",
                 },
-                { title: "Brand", 
-                  field: "brand", 
-                  type: "string" 
-                },
-                { title: "Country",
-                  field: "country", 
-                  type: "string" 
-                },
-                { title: "Dealer", 
-                  field: "dealerName", 
-                  type: "string" 
-                },
-                { title: "Spare Part", 
-                  field: "sparePart", 
-                  type: "string" 
-                },
-                { title: "Price", 
-                  field: "price", 
-                  type: "string" 
-                }
-          ]}
-          data={stock}
-          options={{
-            sorting: true,
-            actionsColumnIndex: -1,
-            exportButton: true,
-          }}
-        />
-        </Table>
-          </TableContainer>
-  </Wrap>
-  </Container>
-  ); 
+                { title: "Brand", field: "brand", type: "string" },
+                { title: "Country", field: "country", type: "string" },
+                { title: "Dealer", field: "dealerName", type: "string" },
+                { title: "Spare Part", field: "sparePart", type: "string" },
+                { title: "Price", field: "price", type: "string" },
+              ]}
+              data={stock}
+              options={{
+                sorting: true,
+                actionsColumnIndex: -1,
+                exportButton: true,
+              }}
+            />
+          </Table>
+        </TableContainer>
+      </Wrap>
+    </Container>
+  );
 }
 
 const Container = styled.main`
@@ -165,7 +141,3 @@ const InputGroup = styled.div`
     }
   }
 `;
-
-
-
-
