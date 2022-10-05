@@ -136,7 +136,7 @@ function Footer() {
         </div>
         <div>
           <DevImg src={MishanImg} />
-          <div>Perara W. A. M. K.</div>
+          <div>Perera W. A. M. K.</div>
         </div>
       </DeveloperDetails>
       {/* CopyRight */}

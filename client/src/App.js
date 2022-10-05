@@ -30,6 +30,7 @@ import AddServiceFacilities from "./components/ServiceFacilityComponents/AddServ
 import ViewFacilities from "./components/ServiceFacilityComponents/ViewFacilities";
 import UpdateFacilities from "./components/ServiceFacilityComponents/UpdateFacilities";
 import AddService from "./components/ServiceComponents/AddService";
+import ViewService from "./components/ServiceComponents/ViewService"
 
 // IT20173722 - M.U. Dahanayake
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
@@ -53,6 +54,7 @@ function App() {
               <Route path="/customer" element={<Customer />}></Route>
               <Route path="/facilities" element={<CustomerFacility />}></Route>
               <Route path="/search-stock" element={<SearchParts />}></Route>
+              
             </>
           ) : (
             <>
@@ -69,12 +71,14 @@ function App() {
               ></Route>
               <Route path="/customer/chart" element={<CustomerChart />}></Route>
               {/* Mishan */}
-              <Route path="/viewservicefacilities" element={<ViewFacilities />}></Route>
+              <Route path="/viewfacilities" element={<ViewFacilities />}></Route>
               <Route
-                path="/facilities/add"
+                path="/addfacilities"
                 element={<AddServiceFacilities />}
               ></Route>
               <Route path="/update/:fId" element={<UpdateFacilities />}></Route>
+              
+              <Route path="/services" element={<ViewService/>}></Route>
 
               {/* Ninura */}
               <Route path="/stock" element={<DisplayStocks />}></Route>
@@ -93,11 +97,7 @@ function App() {
           <Route path="/stock" element={<DisplayStocks />}></Route>
           <Route path="/stock/update-delete" element={<UpdateAndDelete />}></Route>
           <Route path="/stock-report" element={<StockReport />}></Route>
-          
 
-          <Route path="/addfacilities" element={<AddServiceFacilities />}></Route>
-          <Route path="/viewservicefacilities" element={<ViewFacilities />}></Route>
-          <Route path="/update/:fId" element={<UpdateFacilities />}></Route>
           <Route path="/addservice" element={<AddService />}></Route>
 
           <Route path="/add-card" element={<AddCardDetails />}></Route>

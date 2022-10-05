@@ -50,7 +50,7 @@ const Login = () => {
                       navigate("/fetch-stocks");
                     }
                     else if(role==='service'){
-                      navigate("/viewservicefacilities");
+                      navigate("/viewfacilities");
                     }
                     else if(role==='stock'){
                       navigate("/stock");

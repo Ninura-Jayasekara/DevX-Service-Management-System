@@ -43,7 +43,7 @@ export default function AddServiceFacilities() {
             <h2 className="heading">ADD SERVICE FACILITY</h2>
           </center>
           <br></br>
-          <Link to="/facilities">
+          <Link to="/viewfacilities">
             <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
           </Link>
           <div id="addfac" className="mb-3">

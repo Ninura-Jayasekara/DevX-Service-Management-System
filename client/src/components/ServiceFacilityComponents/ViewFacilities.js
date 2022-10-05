@@ -4,6 +4,7 @@ import "../../Form.css";
 import axios from "axios";
 
 export default function ViewFacilities() {
+  
   const [facilities, setFacilities] = useState([]);
 
   useEffect(() => {
@@ -43,9 +44,6 @@ export default function ViewFacilities() {
   return (
     <div>
       <div className="view">
-        <center>
-          <h2 className="text-white">SERVICE MANAGEMENT</h2>
-        </center>
         <br />
 
         <div className="card" style={{ background: "#151e3d" }}>
@@ -105,14 +103,16 @@ export default function ViewFacilities() {
               })}
             </tbody>
           </table>
-          <Link to={"/facilities/add"}>
+          <Link to={"/addfacilities"}>
             <button type="submit" id="btnadd" className="btn btn-primary">
               <b>ADD SERVICE FACILITY</b>
             </button>
-          </Link>
+          </Link >
+          <Link to={"/services"}>
           <button type="submit" id="btnview" className="btn btn-primary">
             <b>VIEW RESERVATIONS</b>
           </button>
+          </Link>
           <button type="submit" id="btnreport" className="btn btn-primary">
             <b>GENERATE SERVICE REPORT</b>
           </button>

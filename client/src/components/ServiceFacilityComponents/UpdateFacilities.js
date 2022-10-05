@@ -58,7 +58,7 @@ export default function UpdateFacilities(){
             <center>
             <h2 className="heading">UPDATE FACILITY COST</h2>
             </center><br/>
-            <Link to={"/facilities"}>
+            <Link to={"/viewfacilities"}>
               <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
             </Link> 
                 <div  id="addfac"className="mb-3">
