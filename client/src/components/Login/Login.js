@@ -1,7 +1,6 @@
-
-import React,{useState, useRef, useEffect} from 'react';
-import axios from 'axios';
-import {LoginValidate} from '../Validate';
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { LoginValidate } from "../Validate";
 import { Link, useNavigate } from "react-router-dom";
 import picture from "../../assets/Logo_login.png";
 
@@ -26,45 +25,47 @@ const Login = () => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
+  const [errors, setErrors] = useState({});
 
-    const [errors,setErrors]=useState({});
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Make Sure there is no spaces trailing and leading
+    Object.keys(values).map((k) => (values[k] = values[k].trim()));
+    // Validate input Fields
+    setErrors(LoginValidate(values));
+  };
 
-    const handleSubmit= (event)=>{
-        event.preventDefault();
-        // Make Sure there is no spaces trailing and leading
-        Object.keys(values).map(k=>values[k]=values[k].trim());
-        // Validate input Fields
-        setErrors(LoginValidate(values));
-    }
+  useEffect(() => {
+    if (
+      Object.keys(errors).length === 0 &&
+      values.email !== "" &&
+      values.password !== ""
+    ) {
+      axios
+        .post("api/admin/login", values)
+        .then((res) => {
+          let userToken = res.data.token;
 
-    useEffect(() => {
-        if(Object.keys(errors).length === 0  && values.email !=='' && values.password !==''){
-            axios.post('api/admin/login',values).then((res)=>{
-                let userToken = res.data.token;
+          if (userToken !== null) {
+            sessionStorage.setItem("isAuth", "true");
+            sessionStorage.setItem("userToken", userToken);
 
-                if(userToken !== null) {
-                    sessionStorage.setItem('isAuth',"true");
-                    sessionStorage.setItem('userToken', userToken);
-                    
-                    if(role==='customer'){
-                      navigate("/fetch-stocks");
-                    }
-                    else if(role==='service'){
-                      navigate("/viewfacilities");
-                    }
-                    else if(role==='stock'){
-                      navigate("/stock");
-                    }
-                    else if(role==='payment'){
-                      navigate("/viewpayment");
-                    }
-                }
-            }).catch(e => {
-                console.log('Error:', e.message)
+            if (role === "customer") {
+              window.location.pathname = "/customer";
+            } else if (role === "service") {
+              window.location.pathname ="/service";
+            } else if (role === "stock") {
+              navigate("/stock");
+            } else if (role === "payment") {
+              navigate("/viewpayment");
             }
-            );
-        }
-    }, [errors])
+          }
+        })
+        .catch((e) => {
+          console.log("Error:", e.message);
+        });
+    }
+  }, [errors]);
 
   return (
     <Container>

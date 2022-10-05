@@ -7,6 +7,7 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 import { Link } from "react-router-dom";
 
 export default function AddServiceFacilities() {
+  
   const [facilityName, setFacilityName] = useState("");
   const [facilityCost, setFacilityCost] = useState("");
 
@@ -43,7 +44,7 @@ export default function AddServiceFacilities() {
             <h2 className="heading">ADD SERVICE FACILITY</h2>
           </center>
           <br></br>
-          <Link to="/viewfacilities">
+          <Link to="/service">
             <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
           </Link>
           <div id="addfac" className="mb-3">

@@ -4,7 +4,6 @@ import "../../Form.css";
 import axios from "axios";
 
 export default function ViewFacilities() {
-  
   const [facilities, setFacilities] = useState([]);
 
   useEffect(() => {
@@ -79,7 +78,7 @@ export default function ViewFacilities() {
                     <td class="text-center">{facilities.facilityCost} </td>
 
                     <td class="text-center">
-                      <Link to={"/update/" + facilities._id}>
+                      <Link to={"/service/update"}>
                         <button
                           className="btn btn-primary btn-sm"
                           style={{ background: "#2f3e54", width: "100px" }}
@@ -103,12 +102,12 @@ export default function ViewFacilities() {
               })}
             </tbody>
           </table>
-          <Link to={"/addfacilities"}>
+          <Link to={"/service/addfacilities"}>
             <button type="submit" id="btnadd" className="btn btn-primary">
               <b>ADD SERVICE FACILITY</b>
             </button>
           </Link >
-          <Link to={"/services"}>
+          <Link to={"/service/services"}>
           <button type="submit" id="btnview" className="btn btn-primary">
             <b>VIEW RESERVATIONS</b>
           </button>

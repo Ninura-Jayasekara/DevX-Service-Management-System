@@ -54,6 +54,7 @@ function App() {
               <Route path="/customer" element={<Customer />}></Route>
               <Route path="/facilities" element={<CustomerFacility />}></Route>
               <Route path="/search-stock" element={<SearchParts />}></Route>
+              <Route path="/service" element={<AddService />}></Route>
               
             </>
           ) : (
@@ -71,14 +72,14 @@ function App() {
               ></Route>
               <Route path="/customer/chart" element={<CustomerChart />}></Route>
               {/* Mishan */}
-              <Route path="/viewfacilities" element={<ViewFacilities />}></Route>
+              <Route path="/service" element={<ViewFacilities />}></Route>
               <Route
-                path="/addfacilities"
+                path="/service/addfacilities"
                 element={<AddServiceFacilities />}
               ></Route>
-              <Route path="/update/:fId" element={<UpdateFacilities />}></Route>
+              <Route path="/service/update" element={<UpdateFacilities />}></Route>
               
-              <Route path="/services" element={<ViewService/>}></Route>
+              <Route path="/service/services" element={<ViewService/>}></Route>
 
               {/* Ninura */}
               <Route path="/stock" element={<DisplayStocks />}></Route>
@@ -97,8 +98,6 @@ function App() {
           <Route path="/stock" element={<DisplayStocks />}></Route>
           <Route path="/stock/update-delete" element={<UpdateAndDelete />}></Route>
           <Route path="/stock-report" element={<StockReport />}></Route>
-
-          <Route path="/addservice" element={<AddService />}></Route>
 
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>

@@ -42,7 +42,7 @@ export default function UpdateFacilities(){
                 .put(`/api/facility/update/${fId}`, newFacility)
                 .then(() => {
                   alert("Service Facility Cost Updated Successfully");
-                  navigate("/facilities");
+                  navigate("/service");
                 })
                 .catch((err) => {
                   alert(err);
@@ -58,7 +58,7 @@ export default function UpdateFacilities(){
             <center>
             <h2 className="heading">UPDATE FACILITY COST</h2>
             </center><br/>
-            <Link to={"/viewfacilities"}>
+            <Link to={"/service"}>
               <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
             </Link> 
                 <div  id="addfac"className="mb-3">

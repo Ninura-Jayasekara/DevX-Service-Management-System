@@ -31,7 +31,7 @@ export default function ViewFacilities() {
             <h2 className="text-white">RESERVATIONS</h2>
           </center>
           <br /><br></br>
-          <Link to="/viewfacilities">
+          <Link to="/service">
             <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
           </Link>
           <table
