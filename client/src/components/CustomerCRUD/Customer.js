@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { RingLoader } from "react-spinners";
 import axios from "axios";
 import styled from "styled-components";
 import {
@@ -14,6 +15,7 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 
 function Customer() {
+  const [loading, setLoading] = useState(false);
   const [values, setValues] = useState([]);
   const [filterData, setFilterData] = useState([]);
   const authAxios = axios.create({});
@@ -28,53 +30,68 @@ function Customer() {
   };
 
   useEffect(() => {
+    setLoading(true);
     authAxios.get("/api/customer/view").then((res) => {
       setValues(res.data);
       setFilterData(res.data);
     });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
   return (
     <Container>
-      <Wrap>
-        <InputComponent>
-          <div className="table-head">Customer Details</div>
-          <InputGroup>
-            <SearchIcon />
-            <input type="text" placeholder="Search" onChange={handleFilter} />
-          </InputGroup>
-        </InputComponent>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead sx={{ background: "#36454f" }}>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>DOB</TableCell>
-                <TableCell>No&nbsp;of&nbsp;Visit</TableCell>
-                <TableCell>Last Visit</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filterData
-                ? filterData.map((value) => (
-                    <TableRow
-                      key={value._id}
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {value.Name}
-                      </TableCell>
-                      <TableCell>{value.DOB.split("T")[0]}</TableCell>
-                      <TableCell>{value.noOfVisit}</TableCell>
-                      <TableCell>{value.DateOfVisit.split("T")[0]}</TableCell>
-                    </TableRow>
-                  ))
-                : null}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Wrap>
+      {loading ? (
+        <Wrap>
+          <InputComponent>
+            <div className="table-head">Customer Details</div>
+          </InputComponent>
+          <Loader>
+            <RingLoader color="#36d7b7" loading={loading} />
+          </Loader>
+        </Wrap>
+      ) : (
+        <Wrap>
+          <InputComponent>
+            <div className="table-head">Customer Details</div>
+            <InputGroup>
+              <SearchIcon />
+              <input type="text" placeholder="Search" onChange={handleFilter} />
+            </InputGroup>
+          </InputComponent>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead sx={{ background: "#36454f" }}>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>DOB</TableCell>
+                  <TableCell>No&nbsp;of&nbsp;Visit</TableCell>
+                  <TableCell>Last Visit</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filterData
+                  ? filterData.map((value) => (
+                      <TableRow
+                        key={value._id}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {value.Name}
+                        </TableCell>
+                        <TableCell>{value.DOB.split("T")[0]}</TableCell>
+                        <TableCell>{value.noOfVisit}</TableCell>
+                        <TableCell>{value.DateOfVisit.split("T")[0]}</TableCell>
+                      </TableRow>
+                    ))
+                  : null}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Wrap>
+      )}
     </Container>
   );
 }
@@ -145,6 +162,11 @@ const InputGroup = styled.div`
       box-shadow: 0 0 0 2px #909090;
     }
   }
+`;
+
+const Loader = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default Customer;

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ReactToPrint from "react-to-print";
@@ -9,6 +9,14 @@ import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 function CustomerReport() {
   const componentRef = useRef();
   const [isSort, setIsSort] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   return (
     <Container>
@@ -22,20 +30,22 @@ function CustomerReport() {
           </InputGroup>
         </InputComponent>
         <CustomerReportData ref={componentRef} isSort={isSort} />
-        <ButtonGroup>
-          <Link to="#">
-            <button onClick={() => setIsSort(!isSort)}>Sort</button>
-          </Link>
-          <Link to="#">
-            <ReactToPrint
-              trigger={() => <button>Print</button>}
-              content={() => componentRef.current}
-            />
-          </Link>
-          <Link to="/customer/chart">
-            <button>Chart</button>
-          </Link>
-        </ButtonGroup>
+        {!loading && (
+          <ButtonGroup>
+            <Link to="#">
+              <button onClick={() => setIsSort(!isSort)}>Sort</button>
+            </Link>
+            <Link to="#">
+              <ReactToPrint
+                trigger={() => <button>Print</button>}
+                content={() => componentRef.current}
+              />
+            </Link>
+            <Link to="/customer/chart">
+              <button>Chart</button>
+            </Link>
+          </ButtonGroup>
+        )}
       </Wrap>
     </Container>
   );
@@ -113,7 +123,6 @@ const ButtonGroup = styled.div`
   padding: 6px 0 0;
   display: flex;
   justify-content: flex-end;
-  align-items: center;
 
   button {
     cursor: pointer;

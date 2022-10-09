@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RingLoader } from "react-spinners";
 import axios from "axios";
 import "chart.js/auto";
 import { Pie, Bar } from "react-chartjs-2";
@@ -8,6 +9,7 @@ const CustomerChartData = React.forwardRef((props, ref) => {
   const accessToken = sessionStorage.getItem("userToken");
   const date = new Date();
   const [noMale, setNoMale] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [noFemale, setNoFemale] = useState(0);
   const [activeMale, setActiveMale] = useState(0);
   const [activeFemale, setActiveFemale] = useState(0);
@@ -60,70 +62,82 @@ const CustomerChartData = React.forwardRef((props, ref) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     authAxios.get("/api/customer/view").then((res) => {
       customerData(res.data);
     });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
   return (
-    <Chart ref={ref}>
-      <div>
-        <Pie
-          options={{
-            plugins: {
-              title: {
-                display: true,
-                text: "Customer",
-                fontSize: 20,
-              },
-              legend: {
-                position: "top",
-              },
-            },
-          }}
-          data={state}
-        />
-      </div>
-      <div>
-        <Bar
-          data={{
-            labels: ["Active", "Non-Active"],
-            datasets: [
-              {
-                label: "Male",
-                data: [activeMale, noMale - activeMale],
-                backgroundColor: "red",
-                borderColor: "red",
-                borderWidth: 0.5,
-              },
-              {
-                label: "Female",
-                data: [activeFemale, noFemale - activeFemale],
-                backgroundColor: "yellow",
-                borderColor: "yellow",
-                borderWidth: 0.5,
-              },
-            ],
-          }}
-          // Height of graph
-          // height={400}
-          options={{
-            maintainAspectRatio: false,
-            plugins: {
-              title: {
-                display: true,
-                text: "Customer",
-                fontSize: 20,
-              },
-              legend: {
-                labels: {
-                  fontSize: 15,
+    <>
+      {loading ? (
+        <Loader>
+          <RingLoader color="#36d7b7" loading={loading} />
+        </Loader>
+      ) : (
+        <Chart ref={ref}>
+          <div>
+            <Pie
+              options={{
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Customer",
+                    fontSize: 20,
+                  },
+                  legend: {
+                    position: "top",
+                  },
                 },
-              },
-            },
-          }}
-        />
-      </div>
-    </Chart>
+              }}
+              data={state}
+            />
+          </div>
+          <div>
+            <Bar
+              data={{
+                labels: ["Active", "Non-Active"],
+                datasets: [
+                  {
+                    label: "Male",
+                    data: [activeMale, noMale - activeMale],
+                    backgroundColor: "red",
+                    borderColor: "red",
+                    borderWidth: 0.5,
+                  },
+                  {
+                    label: "Female",
+                    data: [activeFemale, noFemale - activeFemale],
+                    backgroundColor: "yellow",
+                    borderColor: "yellow",
+                    borderWidth: 0.5,
+                  },
+                ],
+              }}
+              // Height of graph
+              // height={400}
+              options={{
+                maintainAspectRatio: false,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: "Customer",
+                    fontSize: 20,
+                  },
+                  legend: {
+                    labels: {
+                      fontSize: 15,
+                    },
+                  },
+                },
+              }}
+            />
+          </div>
+        </Chart>
+      )}
+    </>
   );
 });
 
@@ -137,6 +151,11 @@ const Chart = styled.div`
   @media (max-width: 960px) {
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
+`;
+
+const Loader = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default CustomerChartData;
