@@ -108,7 +108,7 @@ function CustomerDelete() {
               <ClearIcon sx={{ marginRight: "5px" }} onClick={clearInput} />
             )}
             <input
-              type="text"
+              type="search"
               placeholder="Search"
               ref={inputSearch}
               onChange={handleFilter}

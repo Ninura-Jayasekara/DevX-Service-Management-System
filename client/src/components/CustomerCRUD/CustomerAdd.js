@@ -121,6 +121,9 @@ function CustomerAdd() {
                     id="NIC"
                     ref={inputNIC}
                     value={values.NIC}
+                    placeholder="970893342v"
+                    minLength={10}
+                    maxLength={11}
                     required
                     onChange={handleChange}
                   />
@@ -142,6 +145,8 @@ function CustomerAdd() {
                     type="text"
                     name="Name"
                     id="Name"
+                    placeholder="John Smith"
+                    minLength={2}
                     required
                     ref={inputName}
                     value={values.Name}
@@ -180,9 +185,13 @@ function CustomerAdd() {
                   <PhoneIcon className="left" />
                   <input
                     type="text"
+                    placeholder="0775645645"
+                    pattern="(?:7|0|(?:\+94))[0-9]{9,10}$"
+                    minLength={9}
+                    maxLength={10}
+                    required
                     name="Phone"
                     id="Phone"
-                    required
                     ref={inputPhone}
                     value={values.Phone}
                     onChange={handleChange}
@@ -207,6 +216,7 @@ function CustomerAdd() {
                     id="Gender"
                     ref={inputGender}
                     value={values.Gender}
+                    required
                     onChange={handleChange}
                   >
                     <option value="" disabled selected>
@@ -228,6 +238,7 @@ function CustomerAdd() {
                     name="Address"
                     id="Address"
                     required
+                    placeholder="No: 88/1, Princess Gate, Colombo-12"
                     ref={inputAddress}
                     value={values.Address}
                     onChange={handleChange}
@@ -247,8 +258,9 @@ function CustomerAdd() {
                 <div className="input-group">
                   <EmailIcon className="left" />
                   <input
-                    type="text"
+                    type="email"
                     name="Email"
+                    placeholder="abc@gmail.com"
                     id="Email"
                     required
                     ref={inputEmail}
