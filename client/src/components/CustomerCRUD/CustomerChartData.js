@@ -84,7 +84,7 @@ const CustomerChartData = React.forwardRef((props, ref) => {
                 plugins: {
                   title: {
                     display: true,
-                    text: "Customer",
+                    text: "Customer Data",
                     fontSize: 20,
                   },
                   legend: {
@@ -116,14 +116,12 @@ const CustomerChartData = React.forwardRef((props, ref) => {
                   },
                 ],
               }}
-              // Height of graph
-              // height={400}
               options={{
                 maintainAspectRatio: false,
                 plugins: {
                   title: {
                     display: true,
-                    text: "Customer",
+                    text: "Customer Status",
                     fontSize: 20,
                   },
                   legend: {
@@ -142,11 +140,8 @@ const CustomerChartData = React.forwardRef((props, ref) => {
 });
 
 const Chart = styled.div`
-  margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  // grid-gap: 10px;
-  grid-auto-rows: max-content;
 
   @media (max-width: 960px) {
     grid-template-columns: repeat(1, minmax(0, 1fr));

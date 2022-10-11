@@ -37,6 +37,8 @@ function CustomerReport() {
             </Link>
             <Link to="#">
               <ReactToPrint
+                bodyClass="print"
+                pageStyle="A3"
                 trigger={() => <button>Print</button>}
                 content={() => componentRef.current}
               />
@@ -63,7 +65,8 @@ const Container = styled.main`
 `;
 
 const Wrap = styled.div`
-  padding: 10px calc(0.5vw + 5px);
+  padding: 5px calc(0.5vw);
+  margin: 5px;
   background: #151e3d;
   border-radius: 12px;
   width: 100%;

@@ -68,7 +68,7 @@ function CustomerDetails() {
             </InputGroup>
           </InputComponent>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 1100 }} aria-label="simple table">
               <TableHead sx={{ background: "#36454f" }}>
                 <TableRow>
                   <TableCell>NIC</TableCell>
@@ -134,7 +134,8 @@ const Container = styled.main`
 `;
 
 const Wrap = styled.div`
-  padding: 10px calc(0.5vw + 5px);
+  padding: 5px calc(0.5vw);
+  margin: 5px;
   background: #151e3d;
   border-radius: 12px;
   width: 100%;

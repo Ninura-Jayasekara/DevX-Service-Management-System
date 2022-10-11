@@ -17,6 +17,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import WcIcon from "@mui/icons-material/Wc";
 import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
+import ManIcon from "@mui/icons-material/Man";
+import WomanIcon from "@mui/icons-material/Woman";
 
 function CustomerEdit() {
   const accessToken = sessionStorage.getItem("userToken");
@@ -29,7 +31,7 @@ function CustomerEdit() {
     Name: "",
     DOB: "",
     Phone: "",
-    Gender: "none",
+    Gender: "None",
     Address: "",
     Email: "",
     noOfVisit: "",
@@ -65,12 +67,10 @@ function CustomerEdit() {
     }));
   };
 
-  const inputNIC = useRef();
   const inputName = useRef();
   const inputPhone = useRef();
   const inputAddress = useRef();
   const inputEmail = useRef();
-  const inputDOB = useRef();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,7 +95,7 @@ function CustomerEdit() {
           );
         })
         .catch((e) => {
-          toast.error(e.response, {
+          toast.error("Update Failed", {
             position: "top-center",
             autoClose: 2000,
             hideProgressBar: true,
@@ -128,7 +128,7 @@ function CustomerEdit() {
       <ToastContainer />
       <Wrap>
         <InputComponent>
-          <div className="table-head">Customer Registeration</div>
+          <div className="table-head">Update Customer</div>
           <InputGroup>
             {filterData.length === 0 ? (
               <SearchIcon sx={{ marginRight: "5px" }} />
@@ -168,12 +168,21 @@ function CustomerEdit() {
                     }}
                   >
                     <div>
-                      <PersonIcon
-                        sx={{
-                          height: "40px",
-                          width: "40px",
-                        }}
-                      />
+                      {val.Gender === "Male" ? (
+                        <ManIcon
+                          sx={{
+                            height: "40px",
+                            width: "40px",
+                          }}
+                        />
+                      ) : (
+                        <WomanIcon
+                          sx={{
+                            height: "40px",
+                            width: "40px",
+                          }}
+                        />
+                      )}
                     </div>
                     <div>{val.NIC}</div>
                     <div>{val.Name}</div>
@@ -183,7 +192,7 @@ function CustomerEdit() {
             )}
           </InputGroup>
         </InputComponent>
-        <Form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <Input>
             <ImageWrapper src={Image} />
             <InputWrapper>
@@ -196,7 +205,6 @@ function CustomerEdit() {
                     name="NIC"
                     id="NIC"
                     disabled
-                    ref={inputNIC}
                     value={formData.NIC}
                   />
                 </div>
@@ -232,22 +240,9 @@ function CustomerEdit() {
                     type="date"
                     name="DOB"
                     disabled
-                    ref={inputDOB}
                     value={formData.DOB}
                     id="DOB"
-                    onChange={handleChange}
                   />
-                  {!isDOBEdit && (
-                    <EditIcon
-                      className="right"
-                      onClick={() => {
-                        setIsDOBEdit(true);
-                        inputDOB.current.getAttribute("disabled") === null
-                          ? inputDOB.current.setAttribute("disabled", "")
-                          : inputDOB.current.removeAttribute("disabled");
-                      }}
-                    />
-                  )}
                 </div>
               </div>
               <div>
@@ -338,7 +333,7 @@ function CustomerEdit() {
               </ButtonGroup>
             </InputWrapper>
           </Input>
-        </Form>
+        </form>
       </Wrap>
     </Container>
   );
@@ -357,7 +352,8 @@ const Container = styled.main`
 `;
 
 const Wrap = styled.div`
-  padding: 10px calc(0.5vw + 5px);
+  padding: 5px calc(0.5vw);
+  margin: 5px;
   background: #151e3d;
   border-radius: 12px;
   width: 100%;
@@ -415,16 +411,19 @@ const InputGroup = styled.div`
     }
   }
 `;
-const Form = styled.form``;
 
 const Input = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-gap: 20px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
 `;
 
 const InputWrapper = styled.div`
-  padding: 20px 0;
+  padding: 20px;
+  border-left: 2px dashed black;
   display: flex;
   flex-direction: column;
   div {
@@ -435,8 +434,7 @@ const InputWrapper = styled.div`
       margin: 6px 0 6px;
     }
 
-    input,
-    select {
+    input {
       outline: none;
       border: none;
       width: 100%;
@@ -444,7 +442,7 @@ const InputWrapper = styled.div`
       border-radius: 15px;
       padding: 3px 12px;
       padding-left: 40px;
-      color: blue;
+      color: black;
     }
     .input-group {
       display: block;
@@ -470,16 +468,29 @@ const InputWrapper = styled.div`
         bottom: 0;
         right: 0;
         color: black;
-        border-left: 1px solid black;
       }
     }
+  }
+  @media (max-width: 600px) {
+    padding: 0 20px;
+    margin: 10px;
+    border: none;
+    border-top: 2px dashed black;
   }
 `;
 
 const ImageWrapper = styled.img`
-  width: 100%;
-  height: fit-content;
+  display: flex;
+  justify-self: flex-start;
+  align-self: center;
+  border-radius: 10px;
+  width: 95%;
+  height: 100%;
   object-fit: cover;
+
+  @media (max-width: 600px) {
+    justify-self: center;
+  }
 `;
 
 const ButtonGroup = styled.span`
@@ -500,7 +511,7 @@ const DataList = styled.div`
   position: absolute;
   top: 40px;
   right: 0;
-  left: -30px;
+  left: -40px;
   width: 300px;
   height: 200px;
   background: white;

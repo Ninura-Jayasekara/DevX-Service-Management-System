@@ -18,6 +18,8 @@ function CustomerChart() {
           <div className="table-head">Customer Chart</div>
           <InputGroup>
             <ReactToPrint
+              bodyClass="print"
+              pageStyle="A3"
               trigger={() => (
                 <ButtonGroup>
                   <input type="submit" value="Print" />
