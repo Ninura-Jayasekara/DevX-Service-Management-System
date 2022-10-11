@@ -92,7 +92,7 @@ export default function ViewFacilities() {
                       <button
                         className="btn btn-primary btn-sm"
                         style={{ background: "#2f3e54", width: "100px" }}
-                        onClick={() => deleteFacilities(facilities._id)}
+                        onClick={() => { if (window.confirm('Select "OK" If You Want To Delete the Service Facility')) deleteFacilities(facilities._id)}}
                       >
                         <b>DELETE</b>
                       </button>
@@ -111,10 +111,12 @@ export default function ViewFacilities() {
           <button type="submit" id="btnview" className="btn btn-primary">
             <b>VIEW RESERVATIONS</b>
           </button>
-          </Link>
+          </Link >
+          <Link to={"/service/report"}>
           <button type="submit" id="btnreport" className="btn btn-primary">
             <b>GENERATE SERVICE REPORT</b>
           </button>
+          </Link>
         </div>
       </div>
     </div>

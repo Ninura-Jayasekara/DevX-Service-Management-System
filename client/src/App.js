@@ -30,7 +30,8 @@ import AddServiceFacilities from "./components/ServiceFacilityComponents/AddServ
 import ViewFacilities from "./components/ServiceFacilityComponents/ViewFacilities";
 import UpdateFacilities from "./components/ServiceFacilityComponents/UpdateFacilities";
 import AddService from "./components/ServiceComponents/AddService";
-import ViewService from "./components/ServiceComponents/ViewService"
+import ViewService from "./components/ServiceComponents/ViewService";
+import GenerateReport from "./components/ServiceComponents/GenerateReport";
 
 // IT20173722 - M.U. Dahanayake
 import AddCardDetails from "./components/PaymentComponents/AddCardDetails";
@@ -80,6 +81,7 @@ function App() {
               <Route path="/service/update" element={<UpdateFacilities />}></Route>
               
               <Route path="/service/services" element={<ViewService/>}></Route>
+              <Route path="/service/report" element={<GenerateReport/>}></Route>
 
               {/* Ninura */}
               <Route path="/stock" element={<DisplayStocks />}></Route>
