@@ -81,9 +81,45 @@ const searchPayment = asyncHandler(async(req, res)=>{
     })
 })
 
+const updatePayment = asyncHandler(async (req, res) => {
+    let serviceId = req.params.serviceId;
+    const { amount } = req.body;
+  
+    const updateAmount = {
+      amount,
+    };
+  
+    const update = await Payment.findOneAndUpdate({ serviceId }, updateAmount)
+      .then(() => {
+        res.status(200).send({ status: "Price updated !" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res
+          .status(500)
+          .send({ status: "Error with updating price", error: err.message });
+      });
+  });
+  
+  const deletePayment = asyncHandler(async (req, res) => {
+    let serviceId = req.params.serviceId;
+  
+    const Delete = await Payment.findOneAndDelete({ serviceId })
+      .then(() => {
+        res.status(200).send({ status: "Payment Deleted!" });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res
+          .status(500)
+          .send({ status: "Error with delete payment!", error: err.message });
+      });
+  });
 module.exports = {
     addCard,
     addPayment,
     fetchAllPayments,
-    searchPayment
+    searchPayment,
+    updatePayment,
+    deletePayment
 }
