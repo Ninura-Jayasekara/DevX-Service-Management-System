@@ -55,12 +55,12 @@ export default function UpdateAndDelete() {
       });
   };
 
-  //creting a method for set readonly
+  //set readonly
   const activate = () => {
     setreadOnly(false);
   };
 
-  //creting a method for update selling price
+  //update selling price function
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -82,7 +82,7 @@ export default function UpdateAndDelete() {
       });
   };
 
-  //creting a method for delete items
+  //delete items functions
 
   const onDelete = async () => {
     await authAxios
@@ -146,7 +146,7 @@ export default function UpdateAndDelete() {
                 <TableCell align="right">{sparePart}</TableCell>
                 <TableCell align="right">
                   <input
-                    type="text"
+                    type="number"
                     name="part"
                     id="part"
                     value={price}

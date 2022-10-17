@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState({
     email: "",
@@ -41,10 +42,13 @@ const Login = () => {
       values.email !== "" &&
       values.password !== ""
     ) {
+        setLoading(true);
       axios
         .post("api/admin/login", values)
         .then((res) => {
+          
           let userToken = res.data.token;
+          
 
           if (userToken !== null) {
             sessionStorage.setItem("isAuth", "true");
@@ -55,7 +59,7 @@ const Login = () => {
             } else if (role === "service") {
               window.location.pathname = "/service";
             } else if (role === "stock") {
-              navigate("/stock");
+              window.location.pathname = "/stock";
             } else if (role === "payment") {
               navigate("/viewpayment");
             }
@@ -64,8 +68,9 @@ const Login = () => {
         .catch((e) => {
           console.log("Error:", e.message);
         });
-    }
-  }, [errors]);
+    }setLoading(false);
+  }, 
+  [errors]);
 
   return (
     <Container>
@@ -82,6 +87,8 @@ const Login = () => {
           <Input>
             <ImageWrapper src={picture} />
             <InputWrapper>
+            <div><h1>&emsp;&emsp;&emsp;&emsp;Welcome Admin !</h1> </div>
+            <br></br>
               <div>
                 <label htmlFor="Email">Email</label>
                 <input
@@ -93,8 +100,10 @@ const Login = () => {
                   placeholder="useremail"
                   value={values.email}
                   required
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                   onChange={handleChange}
                 />
+                {errors.email && <p>{errors.email}</p>}
               </div>
               <div>
                 <label htmlFor="Password">Password</label>
@@ -108,6 +117,7 @@ const Login = () => {
                   value={values.password}
                   onChange={handleChange}
                 />
+                {errors.password && <p>{errors.password}</p>}
               </div>
               <div>
                 <br></br>

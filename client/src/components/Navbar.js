@@ -37,7 +37,7 @@ function Navbar() {
           <ServiceIcon />
           <span>Services</span>
         </NavContainer>
-        <NavContainer to="/search-stock">
+        <NavContainer to="/stock">
           <InventoryIcon />
           <span>Stocks</span>
         </NavContainer>
@@ -83,7 +83,7 @@ function Navbar() {
         </li>
         <li>
           <Link
-            to="/search-stock"
+            to="/stock"
             style={({ isActive }) => ({
               color: isActive ? "greenyellow" : "inherit",
             })}

@@ -117,7 +117,7 @@ export default function AddSpareParts() {
                   type="text"
                   id="brand"
                   placeholder="Enter Item Brand"
-                  minLength={5}
+                  minLength={3}
                   maxLength={20}
                   required
                   value={brand}
@@ -178,7 +178,7 @@ export default function AddSpareParts() {
               <div>
                 <label htmlFor="price">Selling Price (Rs.)</label>
                 <input
-                  type="text"
+                  type="number"
                   id="price"
                   placeholder="Enter Selling Price"
                   required

@@ -3,7 +3,6 @@ import { RingLoader } from "react-spinners";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import {
   TableContainer,
   Table,
@@ -13,6 +12,7 @@ import {
   TableCell,
   Paper,
 } from "@mui/material";
+
 
 function DisplayStocks() {
   const accessToken = sessionStorage.getItem("userToken");
@@ -30,21 +30,12 @@ function DisplayStocks() {
   authAxios.get("/api/stock/fetch-stock").then((res) => {
     setStocks(res.data);
     console.log(res.data);
-    // toast.success(" Stock Fetched", {
-    //   position: "top-center",
-    //   autoClose: 1000,
-    //   hideProgressBar: true,
-    //   closeOnClick: true,
-    //   pauseOnHover: true,
-    //   draggable: false,
-    //   progress: undefined,
-    // });
-
   });
   setTimeout(() => {
     setLoading(false);
   }, 1000);
 }, []);
+
 
   return (
     <Container>

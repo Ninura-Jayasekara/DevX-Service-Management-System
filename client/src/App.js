@@ -54,7 +54,7 @@ function App() {
             <>
               <Route path="/customer" element={<Customer />}></Route>
               <Route path="/facilities" element={<CustomerFacility />}></Route>
-              <Route path="/search-stock" element={<SearchParts />}></Route>
+              <Route path="/stock" element={<SearchParts />}></Route>
               <Route path="/service" element={<AddService />}></Route>
               
             </>
@@ -95,11 +95,6 @@ function App() {
           )}
 
           <Route path="/login" element={<Login />}></Route>
-
-          <Route path="/stock/add" element={<AddSpareParts />}></Route>
-          <Route path="/stock" element={<DisplayStocks />}></Route>
-          <Route path="/stock/update-delete" element={<UpdateAndDelete />}></Route>
-          <Route path="/stock-report" element={<StockReport />}></Route>
 
           <Route path="/add-card" element={<AddCardDetails />}></Route>
           <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
