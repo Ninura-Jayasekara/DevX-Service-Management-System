@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const paymentDetailSchema = new Schema({
 
+    serviceId: {
+        type: String,
+        required: [true, 'Service id is required']
+    },
     customerName: {
         type: String,
         required: [true, 'Name is required']

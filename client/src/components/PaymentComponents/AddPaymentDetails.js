@@ -11,7 +11,7 @@ export default function AddPaymentDetails(){
     const accessToken = sessionStorage.getItem('userToken');
     const navigate = useNavigate();
 
-
+    const [serviceId, setServiceId] = useState("");
     const [customerName, setCustomerName] = useState("");
     const [vehicleNumber, setVehicleNumber] = useState("");
     const [serviceDate, setServiceDate] = useState("");
@@ -28,6 +28,7 @@ export default function AddPaymentDetails(){
         e.preventDefault();
     
         const newPayment={
+            serviceId,
             customerName,
             vehicleNumber,
             serviceDate,
@@ -37,6 +38,7 @@ export default function AddPaymentDetails(){
         
         authAxios.post("/api/payment/add-payment",newPayment).then(()=>{
             alert("Payment Added")
+            setServiceId("");
             setCustomerName("");
             setVehicleNumber("");
             setServiceDate("");
@@ -64,6 +66,17 @@ export default function AddPaymentDetails(){
             <Input>
               <ImageWrapper src={Payment} />
               <InputWrapper>
+              <div>
+                  <label htmlFor="serId">Service ID</label>
+                  <input type="text" id="serId" 
+                    placeholder="Enter service Id" 
+                    required 
+                    value={serviceId} onChange={(e)=>{
+
+                        setServiceId(e.target.value);
+
+                    }}  />
+                </div>
                 <div>
                   <label htmlFor="cusName">Customer Name</label>
                   <input type="text" id="cusname" 
