@@ -63,7 +63,7 @@ const Login = () => {
             } else if (role === "stock") {
               window.location.pathname = "/stock";
             } else if (role === "payment") {
-              navigate("/viewpayment");
+              window.location.pathname="/payment";
             }
           }
         })

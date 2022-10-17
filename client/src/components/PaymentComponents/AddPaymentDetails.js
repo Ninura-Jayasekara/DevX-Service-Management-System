@@ -55,7 +55,7 @@ export default function AddPaymentDetails(){
           <InputComponent>
             <div className="table-head">Add Payment Details</div>
             <InputGroup>
-              <Link to="/viewpayment">
+              <Link to="/payment">
                 <KeyboardReturnIcon style={{ color: "white" }} />
               </Link>
             </InputGroup>

@@ -56,6 +56,7 @@ function App() {
               <Route path="/facilities" element={<CustomerFacility />}></Route>
               <Route path="/stock" element={<SearchParts />}></Route>
               <Route path="/service" element={<AddService />}></Route>
+              <Route path="/payment" element={<AddCardDetails />}></Route>
               
             </>
           ) : (
@@ -91,14 +92,16 @@ function App() {
                 element={<UpdateAndDelete />}
               ></Route>
               <Route path="/stock-report" element={<StockReport />}></Route>
+
+              <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
+              <Route path="/payment" element={<ViewPayments />}></Route>
             </>
           )}
 
           <Route path="/login" element={<Login />}></Route>
 
-          <Route path="/add-card" element={<AddCardDetails />}></Route>
-          <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
-          <Route path="/viewpayment" element={<ViewPayments />}></Route>
+          
+          
 
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
