@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { RingLoader } from "react-spinners";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -16,6 +17,7 @@ import {
 function DisplayStocks() {
   const accessToken = sessionStorage.getItem("userToken");
   const [stocks, setStocks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const authAxios = axios.create({
     headers: {
@@ -23,22 +25,39 @@ function DisplayStocks() {
     },
   });
 
+  useEffect(() => {
+    setLoading(true);
   authAxios.get("/api/stock/fetch-stock").then((res) => {
     setStocks(res.data);
     console.log(res.data);
-    toast.success(" Stock Fetched", {
-      position: "top-center",
-      autoClose: 1000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-    });
+    // toast.success(" Stock Fetched", {
+    //   position: "top-center",
+    //   autoClose: 1000,
+    //   hideProgressBar: true,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: false,
+    //   progress: undefined,
+    // });
+
   });
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
+}, []);
 
   return (
     <Container>
+      {loading ? (
+        <Wrap>
+          <InputComponent>
+            <div className="table-head">Spare Part Details</div>
+          </InputComponent>
+          <Loader>
+            <RingLoader color="#36d7b7" loading={loading} />
+          </Loader>
+        </Wrap>
+      ) : (
       <Wrap>
         <InputComponent>
           <div className="table-head">Spare Part Details</div>
@@ -84,6 +103,7 @@ function DisplayStocks() {
           </Link>
         </ButtonGroup>
       </Wrap>
+      )}
     </Container>
   );
 }
@@ -158,4 +178,9 @@ const ButtonGroup = styled.div`
       box-shadow: 0 0 0 2px #909090;
     }
   }
+`;
+
+const Loader = styled.div`
+  display: flex;
+  justify-content: center;
 `;
