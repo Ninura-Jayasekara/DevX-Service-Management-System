@@ -20,7 +20,6 @@ import UpdateIcon from "@mui/icons-material/Update";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 export default function UpdateAndDelete() {
-
   const [itemCode, setItemCode] = useState("");
   const [brand, setBrand] = useState("");
   const [country, setCountry] = useState("");

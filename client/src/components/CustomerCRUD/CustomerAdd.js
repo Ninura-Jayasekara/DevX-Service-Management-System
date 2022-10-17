@@ -15,6 +15,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import WcIcon from "@mui/icons-material/Wc";
 import HomeIcon from "@mui/icons-material/Home";
 import EmailIcon from "@mui/icons-material/Email";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 function CustomerAdd() {
   const accessToken = sessionStorage.getItem("userToken");
@@ -24,7 +25,7 @@ function CustomerAdd() {
     Name: "",
     DOB: new Date().toLocaleDateString("en-CA"),
     Phone: "",
-    Gender: "Male",
+    Gender: "",
     Address: "",
     Email: "",
     noOfVisit: "1",
@@ -60,8 +61,8 @@ function CustomerAdd() {
     values.Phone = "";
     inputName.current.value = "";
     values.Name = "";
-    inputGender.current.value = "Male";
-    values.Gender = "Male";
+    inputGender.current.value = "";
+    values.Gender = "";
     inputDOB.current.value = new Date().toLocaleDateString("en-CA");
   };
 
@@ -120,6 +121,9 @@ function CustomerAdd() {
                     id="NIC"
                     ref={inputNIC}
                     value={values.NIC}
+                    placeholder="970893342v"
+                    minLength={10}
+                    maxLength={11}
                     required
                     onChange={handleChange}
                   />
@@ -141,6 +145,8 @@ function CustomerAdd() {
                     type="text"
                     name="Name"
                     id="Name"
+                    placeholder="John Smith"
+                    minLength={2}
                     required
                     ref={inputName}
                     value={values.Name}
@@ -179,9 +185,13 @@ function CustomerAdd() {
                   <PhoneIcon className="left" />
                   <input
                     type="text"
+                    placeholder="0775645645"
+                    pattern="(?:7|0|(?:\+94))[0-9]{9,10}$"
+                    minLength={9}
+                    maxLength={10}
+                    required
                     name="Phone"
                     id="Phone"
-                    required
                     ref={inputPhone}
                     value={values.Phone}
                     onChange={handleChange}
@@ -206,11 +216,16 @@ function CustomerAdd() {
                     id="Gender"
                     ref={inputGender}
                     value={values.Gender}
+                    required
                     onChange={handleChange}
                   >
+                    <option value="" disabled selected>
+                      None
+                    </option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
+                  <KeyboardArrowDownIcon className="right" />
                 </div>
               </div>
 
@@ -223,6 +238,7 @@ function CustomerAdd() {
                     name="Address"
                     id="Address"
                     required
+                    placeholder="No: 88/1, Princess Gate, Colombo-12"
                     ref={inputAddress}
                     value={values.Address}
                     onChange={handleChange}
@@ -242,8 +258,9 @@ function CustomerAdd() {
                 <div className="input-group">
                   <EmailIcon className="left" />
                   <input
-                    type="text"
+                    type="email"
                     name="Email"
+                    placeholder="abc@gmail.com"
                     id="Email"
                     required
                     ref={inputEmail}
@@ -290,7 +307,8 @@ const Container = styled.main`
 `;
 
 const Wrap = styled.div`
-  padding: 10px calc(0.5vw + 5px);
+  padding: 5px calc(0.5vw);
+  margin: 5px;
   background: #151e3d;
   border-radius: 12px;
   min-height: 50vh;
@@ -351,11 +369,15 @@ const InputGroup = styled.div`
 const Input = styled.div`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-gap: 10px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
 `;
 
 const InputWrapper = styled.div`
-  padding: 20px 0;
+  padding: 20px;
+  border-left: 2px dashed black;
   display: flex;
   flex-direction: column;
   div {
@@ -370,6 +392,7 @@ const InputWrapper = styled.div`
     select {
       outline: none;
       border: none;
+      appearance: none;
       width: 100%;
       height: 30px;
       padding: 3px 12px;
@@ -398,21 +421,34 @@ const InputWrapper = styled.div`
       .right {
         position: absolute;
         height: 100%;
-        margin-right: 5px;
+        margin-right: 10px;
         top: 0;
         bottom: 0;
         right: 0;
         color: black;
-        border-left: 1px solid black;
       }
     }
+  }
+
+  @media (max-width: 600px) {
+    padding: 0 20px;
+    margin: 10px;
+    border: none;
+    border-top: 2px dashed black;
   }
 `;
 
 const ImageWrapper = styled.img`
-  width: 100%;
-  height: fit-content;
+  display: flex;
+  justify-self: flex-start;
+  align-self: center;
+  border-radius: 10px;
+  width: 95%;
+  height: 100%;
   object-fit: cover;
+  @media (max-width: 600px) {
+    justify-self: center;
+  }
 `;
 
 const ButtonGroup = styled.span`

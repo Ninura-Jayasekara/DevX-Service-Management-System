@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../../../src/Form.css";
+import {useNavigate} from "react-router-dom";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 //import styled from "styled-components";
 //import {toast, ToastContainer} from 'react-toastify';
@@ -10,6 +11,8 @@ export default function AddServiceFacilities() {
   
   const [facilityName, setFacilityName] = useState("");
   const [facilityCost, setFacilityCost] = useState("");
+
+  const navigate = useNavigate();
 
   function sendData(e) {
     e.preventDefault();
@@ -25,7 +28,7 @@ export default function AddServiceFacilities() {
         alert("New Service Facility is Added to the System");
         setFacilityName("");
         setFacilityCost("");
-        window.location = "/facilities";
+        navigate("/service");
       })
       .catch((err) => {
         alert(err);
@@ -37,7 +40,7 @@ export default function AddServiceFacilities() {
       <div className="addFacilities">
         <form
           className="Form"
-          onSubmit={sendData}
+          onSubmit={(e) => { if (window.confirm('Select "OK" If You Want To Add The Service Facility to the Database'))sendData(e)}}
           style={{ background: "#151e3d" }}
         >
           <center>

@@ -53,7 +53,7 @@ const Login = () => {
             if (role === "customer") {
               window.location.pathname = "/customer";
             } else if (role === "service") {
-              window.location.pathname ="/service";
+              window.location.pathname = "/service";
             } else if (role === "stock") {
               navigate("/stock");
             } else if (role === "payment") {
@@ -117,38 +117,42 @@ const Login = () => {
                     type="radio"
                     value="customer"
                     name="role"
+                    id="customer"
                     onChange={(e) => {
                       setRole(e.target.value);
                     }}
-                  />{" "}
-                  Customer
+                  />
+                  <label htmlFor="customer">Customer</label>
                   <input
                     type="radio"
                     value="service"
                     name="role"
+                    id="service"
                     onChange={(e) => {
                       setRole(e.target.value);
                     }}
-                  />{" "}
-                  Services
+                  />
+                  <label htmlFor="service">Services</label>
                   <input
                     type="radio"
                     value="stock"
                     name="role"
+                    id="stock"
                     onChange={(e) => {
                       setRole(e.target.value);
                     }}
-                  />{" "}
-                  Stocks
+                  />
+                  <label htmlFor="stock">Stocks</label>
                   <input
                     type="radio"
                     value="payment"
                     name="role"
+                    id="payment"
                     onChange={(e) => {
                       setRole(e.target.value);
                     }}
-                  />{" "}
-                  Payments
+                  />
+                  <label htmlFor="payment">Payments</label>
                 </ButtonGroup>
               </div>
               <ButtonGroup>

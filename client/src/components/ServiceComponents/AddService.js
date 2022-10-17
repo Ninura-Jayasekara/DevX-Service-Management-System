@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../../src/Form.css"
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
-import { Link } from "react-router-dom";
+
 
 export default function AddService() {
 
@@ -55,7 +54,7 @@ export default function AddService() {
 
         axios.post("/api/service/add", newService).then(() => {
             alert("New Service is Added to the System")
-
+            window.location = "/service";
         }).catch((err) => {
             alert(err)
         })
@@ -64,7 +63,7 @@ export default function AddService() {
     return (
         <div>
             <div className="addService">
-                <form className="Form2" onSubmit={() => { if (window.confirm('Select "OK" If You Want To Confirm The Reservation')) sendData() }} style={{ background: "#151e3d" }}>
+                <form className="Form2" onSubmit={(e) => { if (window.confirm('Select "OK" If You Want To Confirm The Reservation'))sendData(e)}} style={{ background: "#151e3d" }}>
 
                     <center>
                         <h2 className="heading">SERVICE RESERVATION</h2>

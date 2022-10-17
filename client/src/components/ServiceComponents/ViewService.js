@@ -30,9 +30,9 @@ export default function ViewFacilities() {
           <center>
             <h2 className="text-white">RESERVATIONS</h2>
           </center>
-          <br /><br></br>
+          <br />
           <Link to="/service">
-            <KeyboardReturnIcon id="addreturn" style={{ color: "white" }} />
+            <KeyboardReturnIcon id="addreturn1" style={{ color: "white" }} />
           </Link>
           <table
             class="table table-hover"
@@ -68,7 +68,7 @@ export default function ViewFacilities() {
                     <td class="text-center">{services.cusName} </td>
                     <td class="text-center">{services.entryDate} </td>
                     <td class="text-center">{services.handoverDate} </td>
-                    <td class="text-center">{services.descriptione} </td>
+                    <td class="text-center">{services.description} </td>
                     <td class="text-center">{services.totalCost} </td>
                   </tr>
                 );

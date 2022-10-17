@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RingLoader } from "react-spinners";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -17,6 +18,7 @@ import SearchIcon from "@mui/icons-material/Search";
 function CustomerDetails() {
   const accessToken = sessionStorage.getItem("userToken");
 
+  const [loading, setLoading] = useState(false);
   const [values, setValues] = useState([]);
   const [filterData, setFilterData] = useState([]);
 
@@ -31,77 +33,91 @@ function CustomerDetails() {
     const newFilter = values.filter((val) =>
       val.NIC.slice(0, searchData.length).includes(searchData)
     );
-
     setFilterData(newFilter);
   };
 
   useEffect(() => {
+    setLoading(true);
     authAxios.get("/api/customer/view").then((res) => {
       setValues(res.data);
       setFilterData(res.data);
     });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   }, []);
 
   return (
     <Container>
-      <Wrap>
-        <InputComponent>
-          <div className="table-head">Customer Details</div>
-          <InputGroup>
-            <SearchIcon />
-            <input type="text" placeholder="Search" onChange={handleFilter} />
-          </InputGroup>
-        </InputComponent>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead sx={{ background: "#36454f" }}>
-              <TableRow>
-                <TableCell>NIC</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Phone&nbsp;Number</TableCell>
-                <TableCell>Address</TableCell>
-                <TableCell>Date</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filterData
-                ? filterData.map((value) => (
-                    <TableRow
-                      key={value.NIC}
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {value.NIC}
-                      </TableCell>
-                      <TableCell>{value.Name}</TableCell>
-                      <TableCell>{value.Email}</TableCell>
-                      <TableCell>{value.Phone}</TableCell>
-                      <TableCell>{value.Address}</TableCell>
-                      <TableCell>{value.DOB.split("T")[0]}</TableCell>
-                    </TableRow>
-                  ))
-                : null}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <ButtonGroup>
-          <Link to="add">
-            <button>Add</button>
-          </Link>
-          <Link to="edit">
-            <button>Edit</button>
-          </Link>
-          <Link to="delete">
-            <button>Delete</button>
-          </Link>
-          <Link to="report">
-            <button>Report</button>
-          </Link>
-        </ButtonGroup>
-      </Wrap>
+      {loading ? (
+        <Wrap>
+          <InputComponent>
+            <div className="table-head">Customer Details</div>
+          </InputComponent>
+          <Loader>
+            <RingLoader color="#36d7b7" loading={loading} />
+          </Loader>
+        </Wrap>
+      ) : (
+        <Wrap>
+          <InputComponent>
+            <div className="table-head">Customer Details</div>
+            <InputGroup>
+              <SearchIcon />
+              <input type="text" placeholder="Search" onChange={handleFilter} />
+            </InputGroup>
+          </InputComponent>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 1100 }} aria-label="simple table">
+              <TableHead sx={{ background: "#36454f" }}>
+                <TableRow>
+                  <TableCell>NIC</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Email</TableCell>
+                  <TableCell>Phone&nbsp;Number</TableCell>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Date</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filterData
+                  ? filterData.map((value) => (
+                      <TableRow
+                        key={value.NIC}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {value.NIC}
+                        </TableCell>
+                        <TableCell>{value.Name}</TableCell>
+                        <TableCell>{value.Email}</TableCell>
+                        <TableCell>{value.Phone}</TableCell>
+                        <TableCell>{value.Address}</TableCell>
+                        <TableCell>{value.DOB.split("T")[0]}</TableCell>
+                      </TableRow>
+                    ))
+                  : null}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <ButtonGroup>
+            <Link to="add">
+              <button>Add</button>
+            </Link>
+            <Link to="edit">
+              <button>Edit</button>
+            </Link>
+            <Link to="delete">
+              <button>Delete</button>
+            </Link>
+            <Link to="report">
+              <button>Report</button>
+            </Link>
+          </ButtonGroup>
+        </Wrap>
+      )}
     </Container>
   );
 }
@@ -118,7 +134,8 @@ const Container = styled.main`
 `;
 
 const Wrap = styled.div`
-  padding: 10px calc(0.5vw + 5px);
+  padding: 5px calc(0.5vw);
+  margin: 5px;
   background: #151e3d;
   border-radius: 12px;
   width: 100%;
@@ -195,4 +212,9 @@ const ButtonGroup = styled.div`
       box-shadow: 0 0 0 2px #909090;
     }
   }
+`;
+
+const Loader = styled.div`
+  display: flex;
+  justify-content: center;
 `;

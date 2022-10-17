@@ -23,6 +23,16 @@ code {
     monospace;
 }
 
+.print {
+  display: flex;
+  padding: 5px;
+  margin: 5px;
+  border-top: 1px dashed black;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

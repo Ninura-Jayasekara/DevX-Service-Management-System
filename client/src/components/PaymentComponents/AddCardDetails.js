@@ -1,156 +1,171 @@
-import React,{ useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Card from "../../assets/addcard.jpg";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
-export default function AddCardDetails(){
+export default function AddCardDetails() {
+  const [userName, setUserName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expDate, setExpDate] = useState("");
+  const [cvc, setCVC] = useState("");
+  const [cardType, setCardType] = useState("");
+  const [amount, setAmount] = useState("");
 
+  function sendData(e) {
+    e.preventDefault();
 
-    const [userName, setUserName] = useState("");
-    const [cardNumber, setCardNumber] = useState("");
-    const [expDate, setExpDate] = useState("");
-    const [cvc, setCVC] = useState("");
-    const [cardType, setCardType] = useState("");
-    const [amount, setAmount] = useState("");
-   
-    
+    const newCard = {
+      userName,
+      cardNumber,
+      expDate,
+      cvc,
+      cardType,
+      amount,
+    };
 
-    function sendData(e){
-        e.preventDefault();
-    
-        const newCard={
-            userName,
-            cardNumber,
-            expDate,
-            cvc,
-            cardType,
-            amount
-        }
-
-        
-        axios.post("/api/payment/add-card",newCard).then(()=>{
-            alert("Card Details Added")
-            setUserName("");
-            setCardNumber("");
-            setExpDate("");
-            setCVC("");
-            setCardType("");
-            setAmount("");
-            window.location.reload(true);
-
-        }).catch((err)=>{
-            alert(err)
-        })
-        }    
-
-    return(
-
-        <Container>
-        <Wrap>
-          <InputComponent>
-            <div className="table-head">Add Card Details</div>
-            <InputGroup>
-              <Link to="/">
-                <KeyboardReturnIcon style={{ color: "white" }} />
-              </Link>
-            </InputGroup>
-          </InputComponent>
-          <Form onSubmit={sendData}>
-            <Input>
-              <ImageWrapper src={Card} />
-              <InputWrapper>
-                <div>
-                <ButtonGroup>
-                    <input type="radio" value="Visa" name="cardType"  onChange={(e)=>{
-
-                            setCardType(e.target.value);
-
-                    }} /> Visa
-                    <input type="radio" value="Master" name="cardType" onChange={(e)=>{
-
-                    setCardType(e.target.value);
-
-                    }}/> Master
-                    </ButtonGroup>
-                    
-                </div>
-
-                <div>
-                  <label htmlFor="name">Name On Card</label>
-                  <input type="text" id="name" 
-                    placeholder="Enter Name"  
-                    required 
-                    value={userName} onChange={(e)=>{
-
-                        setUserName(e.target.value);
-
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="cardNo">Card No</label>
-                  <input type="text" id="cardNo" 
-                    placeholder="1234-5678-9012-3456" 
-                    minLength={19} maxLength={19}  
-                    required 
-                    value={cardNumber} onChange={(e)=>{
-
-                        setCardNumber(e.target.value);
-
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="expDate">Expiry Date</label>
-                  <input type="text" id="expDate" 
-                    placeholder="MM/YYYY" 
-                    required 
-                    value={expDate} onChange={(e)=>{
-
-                        setExpDate(e.target.value);
-
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="cvc">CVC</label>
-                  <input type="text" id="cvc" 
-                    placeholder="Enter cvc" 
-                    minLength={3} maxLength={3}  
-                    required 
-                    value={cvc} onChange={(e)=>{
-
-                        setCVC(e.target.value);
-
-                    }}  />
-                </div>
-  
-                <div>
-                  <label htmlFor="price">Amount (Rs.)</label>
-                  <input type="text" id="price" 
-                    placeholder="Enter amount" 
-                    required 
-                    value={amount} onChange={(e)=>{
-
-                        setAmount(e.target.value);
-
-                    }}  />
-                </div>
-               
-                <ButtonGroup>
-                  <input type="submit" value="Submit"  />
-                </ButtonGroup>
-              </InputWrapper>
-            </Input>
-          </Form>
-        </Wrap>
-      </Container>
-    );
+    axios
+      .post("/api/payment/add-card", newCard)
+      .then(() => {
+        alert("Card Details Added");
+        setUserName("");
+        setCardNumber("");
+        setExpDate("");
+        setCVC("");
+        setCardType("");
+        setAmount("");
+        window.location.reload(true);
+      })
+      .catch((err) => {
+        alert(err);
+      });
   }
 
-  const Container = styled.main`
+  return (
+    <Container>
+      <Wrap>
+        <InputComponent>
+          <div className="table-head">Add Card Details</div>
+          <InputGroup>
+            <Link to="/">
+              <KeyboardReturnIcon style={{ color: "white" }} />
+            </Link>
+          </InputGroup>
+        </InputComponent>
+        <Form onSubmit={sendData}>
+          <Input>
+            <ImageWrapper src={Card} />
+            <InputWrapper>
+              <div>
+                <ButtonGroup>
+                  <input
+                    type="radio"
+                    value="Visa"
+                    name="cardType"
+                    onChange={(e) => {
+                      setCardType(e.target.value);
+                    }}
+                  />{" "}
+                  Visa
+                  <input
+                    type="radio"
+                    value="Master"
+                    name="cardType"
+                    onChange={(e) => {
+                      setCardType(e.target.value);
+                    }}
+                  />{" "}
+                  Master
+                </ButtonGroup>
+              </div>
+
+              <div>
+                <label htmlFor="name">Name On Card</label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Enter Name"
+                  required
+                  value={userName}
+                  onChange={(e) => {
+                    setUserName(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="cardNo">Card No</label>
+                <input
+                  type="text"
+                  id="cardNo"
+                  placeholder="1234-5678-9012-3456"
+                  minLength={19}
+                  maxLength={19}
+                  required
+                  value={cardNumber}
+                  onChange={(e) => {
+                    setCardNumber(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="expDate">Expiry Date</label>
+                <input
+                  type="text"
+                  id="expDate"
+                  placeholder="MM/YYYY"
+                  required
+                  value={expDate}
+                  onChange={(e) => {
+                    setExpDate(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="cvc">CVC</label>
+                <input
+                  type="text"
+                  id="cvc"
+                  placeholder="Enter cvc"
+                  minLength={3}
+                  maxLength={3}
+                  required
+                  value={cvc}
+                  onChange={(e) => {
+                    setCVC(e.target.value);
+                  }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="price">Amount (Rs.)</label>
+                <input
+                  type="text"
+                  id="price"
+                  placeholder="Enter amount"
+                  required
+                  value={amount}
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}
+                />
+              </div>
+
+              <ButtonGroup>
+                <input type="submit" value="Submit" />
+              </ButtonGroup>
+            </InputWrapper>
+          </Input>
+        </Form>
+      </Wrap>
+    </Container>
+  );
+}
+
+const Container = styled.main`
   min-height: calc(100vh);
   padding: 60px calc(3vw) 0px;
   overflow-x: hidden;
