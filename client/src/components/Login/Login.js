@@ -65,7 +65,7 @@ const Login = () => {
         })
         .catch((e) => {
           console.log("Error:", e.message);
-          toast.warning("Incorrect Username or Password", {
+          toast.error("Incorrect Username or Password", {
             position: "top-center",
             autoClose: 1000,
             hideProgressBar: true,
