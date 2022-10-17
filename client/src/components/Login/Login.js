@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { LoginValidate } from "../Validate";
 import { Link, useNavigate } from "react-router-dom";
 import picture from "../../assets/Logo_login.png";
@@ -67,6 +69,15 @@ const Login = () => {
         })
         .catch((e) => {
           console.log("Error:", e.message);
+          toast.error("Incorrect Username or Password", {
+            position: "top-center",
+            autoClose: 1000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+          });
         });
     }setLoading(false);
   }, 
@@ -74,6 +85,7 @@ const Login = () => {
 
   return (
     <Container>
+      <ToastContainer />
       <Wrap>
         <InputComponent>
           <div className="table-head">Admin Login</div>
