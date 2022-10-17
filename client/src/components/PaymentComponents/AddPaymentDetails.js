@@ -41,7 +41,7 @@ export default function AddPaymentDetails(){
             setVehicleNumber("");
             setServiceDate("");
             setAmount("");
-            navigate("/viewpayment");
+            navigate("/payment");
 
         }).catch((err)=>{
             alert(err)
@@ -64,11 +64,10 @@ export default function AddPaymentDetails(){
             <Input>
               <ImageWrapper src={Payment} />
               <InputWrapper>
-                
                 <div>
-                  <label htmlFor="cusname">Customer Name</label>
-                  <input type="text" id="cusName" 
-                    placeholder="Enter customer name"
+                  <label htmlFor="cusName">Customer Name</label>
+                  <input type="text" id="cusname" 
+                    placeholder="Enter customer name" 
                     required 
                     value={customerName} onChange={(e)=>{
 
@@ -76,7 +75,7 @@ export default function AddPaymentDetails(){
 
                     }}  />
                 </div>
-  
+
                 <div>
                   <label htmlFor="vehiNo">Vehicle Number</label>
                   <input type="text" id="vehiNo" 
