@@ -15,6 +15,7 @@ export default function AddService() {
     const [facilities, setFacilities] = useState([]);
     const [totalCost, setTotalCost] = useState(0);
 
+    //(?=.*[-]).{10,}
 
 
     useEffect(() => {
