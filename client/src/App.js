@@ -104,9 +104,6 @@ function App() {
 
           <Route path="/login" element={<Login />}></Route>
 
-          ///
-          
-
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
         <LargeFooter />
