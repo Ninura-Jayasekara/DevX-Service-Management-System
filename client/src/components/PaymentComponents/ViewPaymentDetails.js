@@ -46,6 +46,7 @@ function ViewPayments() {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ background: "#36454f" }}>
               <TableRow>
+              <TableCell align="right">Service ID</TableCell>
                 <TableCell align="right">Cutomer Name</TableCell>
                 <TableCell align="right">Vehicle Number</TableCell>
                 <TableCell align="right">Service Date</TableCell>
@@ -58,6 +59,7 @@ function ViewPayments() {
                   key={row.name}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
+                  <TableCell align="right">{row.serviceId}</TableCell>
                   <TableCell align="right">{row.customerName}</TableCell>
                   <TableCell align="right">{row.vehicleNumber}</TableCell>
                   <TableCell align="right">{row.serviceDate}</TableCell>
@@ -71,10 +73,10 @@ function ViewPayments() {
           <Link to="/add-payment">
             <button>Add</button>
           </Link>
-          <Link to="edit">
+          <Link to="/payment/edit">
             <button>Edit</button>
           </Link>
-          <Link to="report">
+          <Link to="/payment/report">
             <button>Report</button>
           </Link>
         </ButtonGroup>

@@ -36,7 +36,7 @@ const addCard = asyncHandler(async (req, res) => {
 
 const addPayment = asyncHandler(async (req, res) => {
 
-
+    const serviceId = req.body.serviceId;
     const customerName = req.body.customerName;
     const vehicleNumber = req.body.vehicleNumber;
     const serviceDate = req.body.serviceDate;
@@ -44,6 +44,8 @@ const addPayment = asyncHandler(async (req, res) => {
 
     const newPayment = new Payment({
 
+    
+        serviceId,
        customerName,
        vehicleNumber,
        serviceDate,
@@ -68,8 +70,68 @@ const fetchAllPayments = asyncHandler(async(req, res)=>{
  })
 
 
+const searchPayment = asyncHandler(async (req, res) => {
+    let q = req.query.q;
+    let filter = [];
+  
+    filter.push(...[{ serviceId: q }]);
+  
+    console.log(filter);
+  
+    Payment.findOne({ $or: filter })
+      .then((payments) => {
+        console.log(payments);
+        res
+          .status(200)
+          .send({ status: "Payment fetched successfully !", payments });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res
+          .status(500)
+          .send({ status: "Error with fetching...", error: err.message });
+      });
+  });
+
+const updatePayment = asyncHandler(async (req, res) => {
+    let serviceId = req.params.serviceId;
+    const { amount } = req.body;
+  
+    const updateAmount = {
+      amount,
+    };
+  
+    const update = await Payment.findOneAndUpdate({ serviceId }, updateAmount)
+      .then(() => {
+        res.status(200).send({ status: "Price updated !" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res
+          .status(500)
+          .send({ status: "Error with updating price", error: err.message });
+      });
+  });
+  
+  const deletePayment = asyncHandler(async (req, res) => {
+    let serviceId = req.params.serviceId;
+  
+    const Delete = await Payment.findOneAndDelete({ serviceId })
+      .then(() => {
+        res.status(200).send({ status: "Payment Deleted!" });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res
+          .status(500)
+          .send({ status: "Error with delete payment!", error: err.message });
+      });
+  });
 module.exports = {
     addCard,
     addPayment,
-    fetchAllPayments
+    fetchAllPayments,
+    searchPayment,
+    updatePayment,
+    deletePayment
 }

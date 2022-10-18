@@ -19,18 +19,17 @@ import Button from "@mui/material/Button";
 import UpdateIcon from "@mui/icons-material/Update";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
-export default function UpdateAndDelete() {
-  const [itemCode, setItemCode] = useState("");
-  const [brand, setBrand] = useState("");
-  const [country, setCountry] = useState("");
-  const [dealer, setDealer] = useState("");
-  const [sparePart, setSparePart] = useState("");
-  const [price, setPrice] = useState("");
+export default function EditPayment() {
+  const [serviceId, setServiceId] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [vehicleNumber, setVehicleNumber] = useState("");
+  const [serviceDate, setServiceDate] = useState("");
+  const [amount, setAmount] = useState("");
+  const [input, setInput] = useState("");
 
   const [readOnly, setreadOnly] = useState(true);
   const navigate = useNavigate();
 
-  const [input, setInput] = useState("");
   const accessToken = sessionStorage.getItem("userToken");
 
   const authAxios = axios.create({
@@ -39,16 +38,15 @@ export default function UpdateAndDelete() {
     },
   });
 
-  const loadStockDetails = async () => {
+  const loadPaymentDetails = async () => {
     await authAxios
-      .get(`/api/stock/search?q=${input}`)
+      .get(`/api/payment/search?q=${input}`)
       .then((res) => {
-        setItemCode(res.data.stocks.itemCode);
-        setBrand(res.data.stocks.brand);
-        setCountry(res.data.stocks.country);
-        setDealer(res.data.stocks.dealerName);
-        setSparePart(res.data.stocks.sparePart);
-        setPrice(res.data.stocks.price);
+        setServiceId(res.data.payments.serviceId)
+        setCustomerName(res.data.payments.customerName);
+        setVehicleNumber(res.data.payments.vehicleNumber);
+        setServiceDate(res.data.payments.serviceDate);
+        setAmount(res.data.payments.amount);
         console.log(res.data)
       })
       .catch((err) => {
@@ -66,16 +64,16 @@ export default function UpdateAndDelete() {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    const newprice = {
-      price,
+    const newAmount = {
+      amount,
     };
-    console.log(newprice);
+    console.log(newAmount);
 
     await authAxios
-      .put(`/api/stock/update/${itemCode}`, newprice)
+      .patch(`/api/payment/update/${serviceId}`, newAmount)
       .then(() => {
         alert("Price updated Successfully");
-        navigate("/stock");
+        navigate("/payment");
         window.location.reload(true);
       })
       .catch((err) => {
@@ -87,11 +85,11 @@ export default function UpdateAndDelete() {
 
   const onDelete = async () => {
     await authAxios
-      .delete(`/api/stock/delete/${itemCode}`)
+      .delete(`/api/payment/delete/${serviceId}`)
       .then(() => {
-        window.alert("Do you want to delete the selected item?");
-        alert("Item Deleted Successfully");
-        navigate("/stock");
+        window.alert("Do you want to delete the selected payment?");
+        alert("Payment Deleted Successfully");
+        navigate("/payment");
         window.location.reload(true);
       })
       .catch((err) => {
@@ -103,9 +101,9 @@ export default function UpdateAndDelete() {
     <Container>
       <Wrap>
         <InputComponent>
-          <div className="table-head">Update And Delete Spare Parts</div>
+          <div className="table-head">Update And Delete Payment</div>
           <InputGroup>
-            <SearchIcon onClick={loadStockDetails} />
+            <SearchIcon onClick={loadPaymentDetails} />
             <input
               type="text"
               id="input"
@@ -117,43 +115,38 @@ export default function UpdateAndDelete() {
             />
           </InputGroup>
           <InputGroup>
-            <Link to="/stock">
+            <Link to="/payment">
               <KeyboardReturnIcon style={{ color: "white" }} />
             </Link>
           </InputGroup>
         </InputComponent>
         <br></br>
-        <br></br>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead sx={{ background: "#36454f" }}>
               <TableRow>
-                <TableCell align="right">Item Code</TableCell>
-                <TableCell align="right">Brand</TableCell>
-                <TableCell align="right">Country</TableCell>
-                <TableCell align="right">Dealer</TableCell>
-                <TableCell align="right">Spare Part</TableCell>
-                <TableCell align="right">Price (Rs.)</TableCell>
+                <TableCell align="right">Customer Name</TableCell>
+                <TableCell align="right">vehicle Number</TableCell>
+                <TableCell align="right">Service Date</TableCell>
+                <TableCell align="right">Payment (Rs.)</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="right">{itemCode}</TableCell>
-                <TableCell align="right">{brand}</TableCell>
-                <TableCell align="right">{country}</TableCell>
-                <TableCell align="right">{dealer}</TableCell>
-                <TableCell align="right">{sparePart}</TableCell>
+                <TableCell align="right">{customerName}</TableCell>
+                <TableCell align="right">{vehicleNumber}</TableCell>
+                <TableCell align="right">{serviceDate}</TableCell>
                 <TableCell align="right">
                   <input
                     type="number"
-                    name="part"
-                    id="part"
-                    value={price}
+                    name="amount"
+                    id="amount"
+                    value={amount}
                     readOnly={readOnly}
                     onChange={(e) => {
-                      setPrice(e.target.value);
+                      setAmount(e.target.value);
                     }}
                   />
 
