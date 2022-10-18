@@ -78,7 +78,7 @@ export default function AddService() {
                         </div>
                         <div className="col" style={{ marginRight: "200px" }}>
                             <input type="text" className="form-control" id="vNo" placeholder="WP ABC-1234" required
-                                minLength={10} maxLength={11}
+                                minLength={10} maxLength={11} 
                                 onChange={(e) => {
                                     setVNo(e.target.value);
                                 }} />
