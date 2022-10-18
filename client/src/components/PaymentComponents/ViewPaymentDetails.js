@@ -73,10 +73,10 @@ function ViewPayments() {
           <Link to="/add-payment">
             <button>Add</button>
           </Link>
-          <Link to="edit">
+          <Link to="/payment/edit">
             <button>Edit</button>
           </Link>
-          <Link to="report">
+          <Link to="/payment/report">
             <button>Report</button>
           </Link>
         </ButtonGroup>

@@ -41,6 +41,8 @@ import ViewPayments from "./components/PaymentComponents/ViewPaymentDetails";
 
 
 import PageNotFound from "./components/PageNotFound";
+import EditPayment from "./components/PaymentComponents/editPaymentDetail";
+import PaymentReport from "./components/PaymentComponents/paymentReport";
 
 function App() {
   const accessToken = sessionStorage.getItem("userToken");
@@ -95,12 +97,14 @@ function App() {
 
               <Route path="/add-payment" element={<AddPaymentDetails />}></Route>
               <Route path="/payment" element={<ViewPayments />}></Route>
+              <Route path="/payment/edit" element={<EditPayment/>}></Route>
+              <Route path="/payment/report" element={<PaymentReport/>}></Route>
             </>
           )}
 
           <Route path="/login" element={<Login />}></Route>
 
-          
+          ///
           
 
           <Route path="/*" element={<PageNotFound />} />

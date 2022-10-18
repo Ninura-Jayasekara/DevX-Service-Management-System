@@ -16,9 +16,9 @@ const { protect } = require('../Middleware/authMiddleware')
 router.post('/add-card', addCard)
 router.post('/add-payment', protect, addPayment)
 router.get('/fetch-payments', protect,fetchAllPayments)
-router.get('/payment/search',protect, searchPayment)
-router.patch('/payment/update/:serviceId', protect, updatePayment )
-router.delete('/payment/delete/:serviceId',protect,deletePayment)
+router.get('/search',protect, searchPayment)
+router.patch('/update/:serviceId', protect, updatePayment )
+router.delete('/delete/:serviceId',protect,deletePayment)
 
 
 module.exports = router

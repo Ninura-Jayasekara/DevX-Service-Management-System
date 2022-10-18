@@ -69,17 +69,29 @@ const fetchAllPayments = asyncHandler(async(req, res)=>{
     })
  })
 
-const searchPayment = asyncHandler(async(req, res)=>{
-    let serviceId = req.params.serviceId;
-    const getPayment = await Payment.find({serviceId})
-    .then((count)=>{
-        res.status(200).send({status: "Payment fetched",count});
-    
-    }).catch((err)=>{
+
+const searchPayment = asyncHandler(async (req, res) => {
+    let q = req.query.q;
+    let filter = [];
+  
+    filter.push(...[{ serviceId: q }]);
+  
+    console.log(filter);
+  
+    Payment.findOne({ $or: filter })
+      .then((payments) => {
+        console.log(payments);
+        res
+          .status(200)
+          .send({ status: "Payment fetched successfully !", payments });
+      })
+      .catch((err) => {
         console.log(err.message);
-        res.status(500).send({status: "Error with get payment", error: err.message});
-    })
-})
+        res
+          .status(500)
+          .send({ status: "Error with fetching...", error: err.message });
+      });
+  });
 
 const updatePayment = asyncHandler(async (req, res) => {
     let serviceId = req.params.serviceId;
